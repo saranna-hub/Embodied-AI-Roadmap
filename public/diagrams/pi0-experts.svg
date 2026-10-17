@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 630" role="img" aria-label="π₀ 两组专家模型架构图：视觉语言上下文与动作专家通过联合注意力交互">
+<rect width="1120" height="630" rx="22" fill="#101b2d"/><style>text{font-family:Arial,'Microsoft YaHei','PingFang SC',sans-serif} .h{font-size:23px;font-weight:700;fill:#f4f8ff}.t{font-size:18px;fill:#e8f2ff}.s{font-size:14px;fill:#b7c9df}</style>
+<text x="42" y="55" font-size="29" font-weight="700" fill="#f3f7ff">π₀｜视觉语言专家 × 动作专家</text>
+<rect x="38" y="89" width="500" height="385" rx="18" fill="#132841" stroke="#527ba7" stroke-width="2"/>
+<text x="64" y="128" class="h">视觉语言侧 · Prefix</text>
+<rect x="66" y="157" width="205" height="75" rx="12" fill="#274e79"/><text x="168" y="188" text-anchor="middle" class="t">多路相机 RGB</text><text x="168" y="210" text-anchor="middle" class="s">Vision Encoder</text>
+<rect x="304" y="157" width="207" height="75" rx="12" fill="#274e79"/><text x="407" y="188" text-anchor="middle" class="t">语言指令</text><text x="407" y="210" text-anchor="middle" class="s">Tokenizer / Embedding</text>
+<path d="M168 232 V268 H287 M407 232 V268 H287 V292" fill="none" stroke="#97cafa" stroke-width="3"/>
+<rect x="115" y="293" width="345" height="111" rx="13" fill="#345b8d" stroke="#8fc7ff"/>
+<text x="287" y="333" text-anchor="middle" class="h">PaliGemma / Gemma 2B</text>
+<text x="287" y="363" text-anchor="middle" class="t">理解视觉、指令与场景</text><text x="287" y="386" text-anchor="middle" class="s">输出观测上下文 Token</text>
+<rect x="582" y="89" width="500" height="385" rx="18" fill="#15332f" stroke="#5da693" stroke-width="2"/>
+<text x="608" y="128" class="h">动作侧 · Suffix</text>
+<rect x="604" y="157" width="210" height="75" rx="12" fill="#255c51"/><text x="709" y="188" text-anchor="middle" class="t">Robot State</text><text x="709" y="210" text-anchor="middle" class="s">当前状态投影</text>
+<rect x="840" y="157" width="215" height="75" rx="12" fill="#255c51"/><text x="947" y="188" text-anchor="middle" class="t">Noisy Action + t</text><text x="947" y="210" text-anchor="middle" class="s">动作与时间嵌入</text>
+<path d="M709 232 V268 H828 M947 232 V268 H828 V292" fill="none" stroke="#96ebd1" stroke-width="3"/>
+<rect x="659" y="293" width="344" height="111" rx="13" fill="#226a5e" stroke="#92e8d1"/>
+<text x="831" y="333" text-anchor="middle" class="h">Action Expert / Gemma 300M</text>
+<text x="831" y="362" text-anchor="middle" class="t">预测整段动作的速度场</text><text x="831" y="386" text-anchor="middle" class="s">速度张量 [B,H,D]</text>
+<path d="M461 346 H655" stroke="#8cd5ed" stroke-width="4" stroke-dasharray="9 7" fill="none"/>
+<rect x="489" y="313" width="142" height="55" rx="11" fill="#29364d" stroke="#97a9c9"/>
+<text x="560" y="336" text-anchor="middle" font-size="15" fill="#eff5ff">联合注意力</text><text x="560" y="355" text-anchor="middle" font-size="13" fill="#b9cfe9">条件交互</text>
+<path d="M832 404 V503 H832" stroke="#f2bd78" stroke-width="4" fill="none"/>
+<path d="M823 494 L832 507 L841 494" fill="none" stroke="#f2bd78" stroke-width="3"/>
+<rect x="624" y="514" width="416" height="64" rx="13" fill="#60482c" stroke="#f2bd78"/>
+<text x="832" y="542" text-anchor="middle" font-size="20" font-weight="700" fill="#fff0d7">Flow Matching → 数值积分</text><text x="832" y="565" text-anchor="middle" class="s">生成 Action Chunk [H,D]</text>
+<text x="42" y="535" class="t">蓝：任务与观测语义</text><text x="42" y="568" class="t">绿：动作生成与状态条件</text><text x="42" y="601" class="s">注：教学示意，非逐层网络拓扑；真实 mask 决定双侧 Token 的可见性。</text>
+</svg>
