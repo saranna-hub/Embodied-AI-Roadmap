@@ -1,0 +1,7 @@
+@import 'katex/dist/katex.min.css';
+:root { --sl-color-accent-low:#153b46;--sl-color-accent:#30a7a6;--sl-color-accent-high:#b5f4eb;--sl-font:ui-sans-serif,system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; }
+.sl-markdown-content { font-size:1.02rem;line-height:1.85; }
+.sl-markdown-content img { border-radius:12px;border:1px solid var(--sl-color-gray-5); }
+.sl-markdown-content .katex-display { overflow-x:auto;overflow-y:hidden;padding:.6rem 0; }
+.sl-markdown-content table { display:block;overflow-x:auto; }
+.sl-markdown-content blockquote { border-inline-start-color:var(--sl-color-accent); }
