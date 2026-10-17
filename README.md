@@ -11,6 +11,8 @@
 | 内容 | 入口 |
 | --- | --- |
 | 按顺序学习 | [学习路线](docs/learning-path.md) |
+| 深入理解一组连续论文 | [π 系列技术专题](docs/papers/pi-series/README.md) |
+| 第一篇深度解读 | [π₀：架构、Flow Matching 与代码](docs/papers/pi-series/pi0-deep-dive.md) |
 | 做一个真实的系统项目 | [轮式双臂实践计划](docs/practice/mobile-dual-arm.md) |
 | 看近期论文和开源动态 | [研究记录](docs/daily/) |
 
