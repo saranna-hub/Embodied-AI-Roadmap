@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 740" role="img" aria-label="Transformer四层理解：输入Tokens，QKV投影，注意力加权，输出特征及梯度">
+<rect width="1200" height="740" rx="24" fill="#101c2e"/>
+<defs><marker id="end" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#95caff"/></marker></defs>
+<style>text{font-family:Arial,'Microsoft YaHei','PingFang SC',sans-serif}.h{font-size:27px;font-weight:700;fill:#eef6ff}.label{font-size:19px;font-weight:700;fill:#edf7ff}.small{font-size:16px;fill:#c2d6ef}.tiny{font-size:14px;fill:#b3c9df}</style>
+<text x="43" y="51" class="h">Self-Attention｜从张量到输出的完整计算关系</text>
+<rect x="38" y="88" width="240" height="111" rx="14" fill="#274976" stroke="#78aeef"/>
+<text x="158" y="127" text-anchor="middle" class="label">Token Embeddings</text><text x="158" y="159" text-anchor="middle" class="small">X: [B,L,d_model]</text>
+<path d="M278 142H330" stroke="#95caff" stroke-width="3" marker-end="url(#end)"/>
+<rect x="332" y="84" width="282" height="120" rx="14" fill="#274976" stroke="#78aeef"/>
+<text x="473" y="122" text-anchor="middle" class="label">三套不同投影参数</text>
+<text x="473" y="154" text-anchor="middle" class="small">Q = X Wq</text><text x="473" y="178" text-anchor="middle" class="small">K = X Wk,  V = X Wv</text>
+<path d="M614 142H661" stroke="#95caff" stroke-width="3" marker-end="url(#end)"/>
+<rect x="663" y="84" width="493" height="120" rx="14" fill="#235349" stroke="#70d7be"/>
+<text x="909" y="122" text-anchor="middle" class="label">按 Query 检索全部允许的 Key</text>
+<text x="909" y="156" text-anchor="middle" class="small">Score = Q Kᵀ / √dₖ + Mask</text><text x="909" y="182" text-anchor="middle" class="small">Score: [B,Lq,Lk]</text>
+<path d="M909 205V242" stroke="#95caff" stroke-width="3" marker-end="url(#end)"/>
+<rect x="663" y="245" width="493" height="114" rx="14" fill="#235349" stroke="#70d7be"/>
+<text x="909" y="281" text-anchor="middle" class="label">Softmax 沿 Key 轴归一化</text>
+<text x="909" y="313" text-anchor="middle" class="small">权重 P: [B,Lq,Lk]</text>
+<path d="M663 301H616" stroke="#95caff" stroke-width="3" marker-end="url(#end)"/>
+<rect x="332" y="242" width="282" height="121" rx="14" fill="#56432e" stroke="#f4c184"/>
+<text x="473" y="282" text-anchor="middle" class="label">聚合 Value</text>
+<text x="473" y="315" text-anchor="middle" class="small">O = P V</text><text x="473" y="337" text-anchor="middle" class="small">[B,Lq,dv]</text>
+<path d="M332 301H278" stroke="#95caff" stroke-width="3" marker-end="url(#end)"/>
+<rect x="38" y="243" width="240" height="120" rx="14" fill="#274976" stroke="#78aeef"/>
+<text x="158" y="285" text-anchor="middle" class="label">输出特征</text>
+<text x="158" y="318" text-anchor="middle" class="small">不是类别/动作</text><text x="158" y="342" text-anchor="middle" class="small">还将进入后续 Block</text>
+<rect x="38" y="408" width="1118" height="277" rx="18" fill="#19293e" stroke="#345371"/>
+<text x="70" y="454" class="h">与 π₀ 连接：两组专家不等于两套独立模型</text>
+<text x="70" y="503" class="label" fill="#8ec8ff">Prefix：视觉/语言 Token，由视觉语言专家处理</text>
+<text x="70" y="549" class="label" fill="#8cdec5">Suffix：State / Noisy Action / Time，进入动作专家</text>
+<text x="70" y="596" class="small">联合注意力决定 Suffix 怎样读取 Prefix；不同专家的投影/FFN 等参数不必相同。</text>
+<text x="70" y="640" class="tiny">训练：速度场损失通过 Attention 回传梯度。推理：积分迭代更新 Suffix，Prefix 可复用缓存。</text>
+</svg>
