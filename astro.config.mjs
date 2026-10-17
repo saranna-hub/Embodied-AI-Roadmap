@@ -15,6 +15,7 @@ export default defineConfig({
     social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/saranna-hub/Embodied-AI-Roadmap' }],
     sidebar: [
       { label: '开始学习', items: [{label:'阅读指南',slug:'start'}, {label:'技术地图',slug:'taxonomy'}, {label:'研究记录',slug:'radar'}] },
+      { label: '00 预备知识', autogenerate: { directory: '00-prerequisites' } },
       { label: '01 具身基础模型', autogenerate: { directory: '01-foundations' } },
       { label: '02 具身数据工程', autogenerate: { directory: '02-data-engineering' } },
       { label: '03 感知与重建', autogenerate: { directory: '03-perception' } },
