@@ -15,23 +15,9 @@ description: 从输入张量、双专家注意力到 Flow Matching 训练与推�
 
 ## 2. 架构图：Prefix 与 Suffix
 
-```mermaid
-flowchart TD
-  I[多相机 RGB] --> V[视觉编码器]
-  T[语言指令] --> L[文本 token]
-  V --> P[视觉语言 Prefix]
-  L --> P
-  S[Robot state] --> E[状态投影]
-  X[带噪 Action Chunk] --> A[动作投影]
-  Z[Flow 时间 t] --> A
-  E --> Q[Action Suffix]
-  A --> Q
-  P --> J[双专家联合 Attention]
-  Q --> J
-  J --> O[动作速度场 v]
-  O --> R[数值积分]
-  R --> Y[未来 Action Chunk]
-```
+![图：π₀ 的主要计算路径](/Embodied-AI-Roadmap/diagrams/pi0-flow.svg)
+
+*图：π₀ 的主要计算路径。教学重绘；图示未包含完整算法实现。*
 
 **这里的双专家不是路由型 MoE。** PaliGemma 的视觉语言 Transformer 和较小的动作 Transformer 拥有不同参数，但动作 token 能在联合注意力中读取视觉语言上下文。上图中的“联合 Attention”是对多层实现的概括，不是模型末端才增加的独立单层模块。
 
