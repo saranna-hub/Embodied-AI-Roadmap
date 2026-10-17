@@ -15,6 +15,10 @@ UMI-Bridge 的关键选择是：让**带有末端动作标签的 UMI** 充当两
 
 ## 2. 两阶段训练
 
+![UMI-Bridge：动作表征桥接](/Embodied-AI-Roadmap/diagrams/umi-bridge.svg)
+
+*第一阶段无需 Robot Demo，第二阶段使用少量机器人数据。 图示为教学重绘。*
+
 ```text
 阶段一：没有 Robot Demo
   EGO Head + UMI Head/Wrist + UMI Action
