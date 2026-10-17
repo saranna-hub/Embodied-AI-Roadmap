@@ -15,6 +15,10 @@ description: 相机坐标手、EGO-SLAM、运动补全与坐标变换
 
 ## 2. 数据流
 
+![HaWoR：局部手与世界轨迹合成](/Embodied-AI-Roadmap/diagrams/hawor.svg)
+
+*相机位姿与手的时间戳、尺度和坐标方向必须统一。 图示为教学重绘。*
+
 ```text
 EGO 视频 ─┬─→ Camera-space Hand Reconstruction ─┐
           └─→ Adaptive Ego-SLAM ─→ Camera Pose ─┤
