@@ -15,6 +15,10 @@ Ego4WAM 把研究对象拆成多个彼此不同的因素：**是否有人机动�
 
 ## 2. 三种监督强度
 
+![Ego4WAM：不同监督层](/Embodied-AI-Roadmap/diagrams/ego4wam.svg)
+
+*需要单独对照数据时长、多样性与对齐质量。 图示为教学重绘。*
+
 ```text
 A. Video-only EGO      只知道世界画面怎么变化
 B. Video + Human Action   可估计人手/末端运动
