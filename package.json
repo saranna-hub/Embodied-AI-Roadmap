@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run validate:math && astro check && astro build",
+    "build": "npm run validate:math && astro check && astro build && npm run validate:render",
     "preview": "astro preview",
     "check": "astro check",
-    "validate:math": "node scripts/validate-math.mjs"
+    "validate:math": "node scripts/validate-math.mjs",
+    "validate:render": "node scripts/validate-render.mjs"
   },
   "dependencies": {
     "astro": "^5.10.0",
