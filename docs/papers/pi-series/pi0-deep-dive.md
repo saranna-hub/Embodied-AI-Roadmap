@@ -1,5 +1,8 @@
 # π₀：从视觉语言模型到连续机器人动作
 
+> **旧版归档。** 此页来自早期手写 Markdown 阶段，不再独立维护。正式、带 KaTeX 与技术图的新版教程见 [π₀ 正式正文](../../../src/content/docs/01-foundations/vla/pi0.md)；网页版见 [π₀：连续动作生成](https://saranna-hub.github.io/Embodied-AI-Roadmap/01-foundations/vla/pi0/)。
+
+
 > **阅读定位**：适合已经理解 Transformer、基本模仿学习和机器人状态/动作表示的读者。目标是看懂 π₀ 的核心计算链路，以及官方 openpi 代码如何实现；本篇不是已验证的复现报告。
 >
 > 原始论文：[π₀: A Vision-Language-Action Flow Model for General Robot Control](https://arxiv.org/abs/2410.24164)（2024-10-31） · [官方代码](https://github.com/Physical-Intelligence/openpi) · [官方博客](https://www.pi.website/blog/pi0) · [系列目录](./README.md)
