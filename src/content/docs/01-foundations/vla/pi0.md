@@ -7,6 +7,10 @@ sidebar:
 
 > **本篇沿用此前详细教学版，保留公式、张量和工程解释；页面通过 Astro Starlight 渲染，示意图为教学图，未完成真实机器人复现实验。**
 
+## 学习前先补这些基础
+
+如果你还不熟悉矩阵、反向传播、Attention 或 Flow Matching，推荐依次阅读：[张量与反向传播](../../../00-prerequisites/tensors-training/) → [Transformer 与 QKV](../../../00-prerequisites/transformer/) → [视觉 Backbone 与 VLM](../../../00-prerequisites/vision/) → [Flow Matching](../../../00-prerequisites/flow-matching/)。先搞清这些机制，再看 π₀ 的两组专家与连续动作输出，会容易得多。
+
 ## 可视化导读：沿着数据流理解 π₀
 
 > **阅读路线**：先明确动作块是什么 → 追踪图像与语言如何形成 Prefix → 观察 State、Noisy Action、Time 如何形成 Suffix → 推导 Flow Matching 的监督 → 阅读 openpi 源码 → 设计机器人实验。下面三图是教学重绘，不是网络实现的逐层精确拓扑图。
