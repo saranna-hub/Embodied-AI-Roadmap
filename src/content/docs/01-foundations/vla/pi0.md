@@ -11,9 +11,32 @@ sidebar:
 
 > **阅读路线**：先明确动作块是什么 → 追踪图像与语言如何形成 Prefix → 观察 State、Noisy Action、Time 如何形成 Suffix → 推导 Flow Matching 的监督 → 阅读 openpi 源码 → 设计机器人实验。下面三图是教学重绘，不是网络实现的逐层精确拓扑图。
 
-![图 1：π₀ 视觉语言与动作专家的结构示意](/Embodied-AI-Roadmap/diagrams/pi0-flow.svg)
+![π₀ 模型整体架构：图像、指令、状态、带噪动作的详细输入输出，以及训练和推理的数据流](/Embodied-AI-Roadmap/diagrams/pi0-flow.svg)
 
-*图 1｜π₀ 信息流示意。视觉语言侧与动作侧分别持有参数，借助受控联合注意力传递条件信息；不要误读为标准路由 MoE。*
+*图 1｜π₀ 的完整数据流、双专家计算、训练监督与推理采样。建议在桌面端放大查看；下表按编号逐项解释。*
+
+### 如何读总图：每条数据具体经过什么处理？
+
+这一版把**前向计算主干、训练时的监督支路、推理时的采样支路**分开画。先读上半部分（①到④），再根据当前任务选择训练（⑤）或推理（⑥），不能把训练用的真实动作当成推理输入。
+
+| 编号 | 输入 | 处理模块 | 输出与形状（示例） | 哪一步使用 |
+| --- | --- | --- | --- | --- |
+| ① 图像 | 多路 RGB `[B,N,3,H,W]` | 逐相机预处理 → SigLIP 视觉编码 → patch/token embedding | 视觉 token 序列（token 数由编码器与图像尺寸决定） | 训练/推理 |
+| ① 语言 | 指令字符串 | tokenizer → token embedding | `[B,L,d_v]` 示意 | 训练/推理 |
+| ① 状态 | Robot state `[B,D_s]` | 线性投影 | action-side state embedding | 训练/推理 |
+| ② Prefix | 视觉 token + 语言 token | PaliGemma / Gemma 视觉语言 Transformer | 视觉语言条件上下文（可复用 KV） | 训练/推理 |
+| ③ Suffix | state + 带噪动作 `x_t [B,H,D]` + `t` | action projection + time embedding，构造动作侧 token | Suffix token 序列 | 训练/推理 |
+| ④ 双专家 | Prefix 与 Suffix token | 多层联合注意力，利用 block attention mask 约束访问 | 动作专家输出 `vθ [B,H,D]` | 训练/推理 |
+| ⑤ 训练监督 | 示范真值 `A`、采样噪声 `ε`、时间 `t` | 构造 `x_t=(1-t)A+tε` 与目标 `ε-A`，计算 MSE | 标量损失并反向传播 | **仅训练** |
+| ⑥ 推理采样 | 随机噪声 `x_1` + 当前观测 | 重复 K 次动作专家前向和反向时间积分 | 归一化动作块 `Â [B,H,D]`，再适配实际控制器 | **仅推理** |
+
+**理解重点一：** SigLIP 编码的是图像，不是直接预测机器人动作；PaliGemma 提供视觉语言条件，而动作专家才输出用于 Flow Matching 的速度场。
+
+**理解重点二：** 这里的“双专家”是两套不同的 Transformer 权重参与一个受控注意力计算体系，**不是**先让 VLM 独立生成一段文字，再交给一个完全独立的控制网络；也不是通过 Router 做 top-k 专家选择。
+
+**理解重点三：** 教学图把双专家注意力画为单个概念模块，方便理解信息流。真实 openpi 的 prefix/suffix 是在多个 Transformer 层内协同计算，不能把图中的“联合注意力”理解成额外插入的一层网络。
+
+**理解重点四：** 实际机器人执行前必须完成动作空间映射与反归一化；`[B,50,32]` 仅表示默认配置容器，未必是 32 个真实关节；最终控制频率也不能从 50 步 horizon 推导出来。
 
 ### 为什么必须区分 Prefix 与 Suffix？
 
@@ -106,7 +129,7 @@ $$
 
 可以把核心结构理解为：
 
-![π₀ 双专家联合计算架构：相机和语言进入视觉语言侧，状态和带噪动作进入动作专家，两者通过注意力交互](/Embodied-AI-Roadmap/diagrams/pi0-experts.svg)
+![π₀ 双专家内部关系：Prefix 和 Suffix 采用不同权重并进行受控联合注意力](/Embodied-AI-Roadmap/diagrams/pi0-experts.svg)
 
 *图｜双专家计算路径（教学示意）。蓝色表示视觉语言 Prefix，绿色表示动作 Suffix，橙色表示速度场与生成动作；两侧在多层 Transformer 中协同计算，并非在模型末端才合并。*
 
