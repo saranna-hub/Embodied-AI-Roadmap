@@ -21,7 +21,13 @@ sidebar:
 
 **Softmax** 把匹配分数转换成权重：
 
-$$p_i=\frac{e^{s_i}}{\sum_j e^{s_j}}.$$
+
+
+$$
+p_i=\frac{e^{s_i}}{\sum_j e^{s_j}}.
+$$
+
+
 
 得分 [2,0] 时，$e^2\approx7.389$，所以两个权重分别为 $7.389/8.389\approx0.881$ 和 $1/8.389\approx0.119$。注意力权重不是类别概率，也不是反向传播梯度。
 
@@ -31,7 +37,13 @@ Tokenizer 将文本变为 token ID，Embedding 查表将每个 ID 映射成向�
 
 输入 $X\in\mathbb R^{B\times L\times d}$，经过三组**独立可学习**的线性权重：
 
-$$Q=XW_Q,\quad K=XW_K,\quad V=XW_V.$$
+
+
+$$
+Q=XW_Q,\quad K=XW_K,\quad V=XW_V.
+$$
+
+
 
 **类比检索资料**：Q 表示当前要找什么，K 表示每个候选提供何种索引，V 表示实际取回的信息。Q/K 用于算匹配分数，V 用于输出加权特征，因此三者作用不同。
 
@@ -41,8 +53,14 @@ Self-Attention 的 Q/K/V 常来自同一个 X 的不同投影；Cross-Attention 
 
 取一个 Query、两个 Key：
 
-$$Q=[1,0],\ K=\begin{bmatrix}1&0\\0&1\end{bmatrix},\
-V=\begin{bmatrix}10&0\\0&10\end{bmatrix}.$$
+
+
+$$
+Q=[1,0],\ K=\begin{bmatrix}1&0\\0&1\end{bmatrix},\
+V=\begin{bmatrix}10&0\\0&10\end{bmatrix}.
+$$
+
+
 
 步骤一：$QK^\top=[1,0]$。
 
@@ -56,7 +74,13 @@ V=\begin{bmatrix}10&0\\0&10\end{bmatrix}.$$
 
 完整公式：
 
-$$\operatorname{Attention}(Q,K,V)=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.$$
+
+
+$$
+\operatorname{Attention}(Q,K,V)=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
+$$
+
+
 
 为何除以 $\sqrt{d_k}$？在各维独立、零均值、单位方差的简化假设下，点积方差大致随维度增长。缩放可避免大维度点积造成 Softmax 过度饱和，但不意味着一定不会梯度不稳定。
 
@@ -78,15 +102,33 @@ $$\operatorname{Attention}(Q,K,V)=\operatorname{softmax}\left(\frac{QK^\top}{\sq
 
 多头注意力不是把同一个结果复制八遍，而是不同头有不同的 Q/K/V 投影：
 
-$$\mathrm{MHA}(X)=\mathrm{Concat}(head_1,\ldots,head_h)W_O.$$
+
+
+$$
+\mathrm{MHA}(X)=\mathrm{Concat}(head_1,\ldots,head_h)W_O.
+$$
+
+
 
 若隐藏维度 512、头数 8，常见每头宽度 64。**一个头可能学习物体关系，另一个可能关注长程位置**，但没有机制保证每头都有一个固定的人类可解释语义。
 
 典型 Pre-Norm Transformer Block：
 
-$$H=X+\mathrm{MHA}(\mathrm{Norm}(X)),$$
 
-$$Y=H+\mathrm{MLP}(\mathrm{Norm}(H)).$$
+
+$$
+H=X+\mathrm{MHA}(\mathrm{Norm}(X)),
+$$
+
+
+
+
+
+$$
+Y=H+\mathrm{MLP}(\mathrm{Norm}(H)).
+$$
+
+
 
 Attention 用于 token 间交互；MLP 对单个 token 的特征做非线性变换（例如 512→2048→512），通常不改变 token 数；残差让信号和梯度有更直接的路径。
 
@@ -98,7 +140,13 @@ LayerNorm 对特征做中心化及尺度归一；RMSNorm 主要按均方根做�
 
 RoPE 在 Q/K 的成对维度上施加与 token 位置有关的旋转，二维旋转矩阵是：
 
-$$R(m\theta)=\begin{bmatrix}\cos(m\theta)&-\sin(m\theta)\\\sin(m\theta)&\cos(m\theta)\end{bmatrix}.$$
+
+
+$$
+R(m\theta)=\begin{bmatrix}\cos(m\theta)&-\sin(m\theta)\\\sin(m\theta)&\cos(m\theta)\end{bmatrix}.
+$$
+
+
 
 通过位置旋转，Q/K 的匹配分数能够反映相对位置差。实际还有多组频率、不同 head 维度和缓存位置偏移，不能把“一个旋转矩阵”当成完整实现。
 
