@@ -15,6 +15,10 @@ HumanEgo 尝试用物体/交互中心的表示减少 Human–Robot embodiment ga
 
 ## 2. 数据与表示
 
+![HumanEgo：以物体为参考](/Embodied-AI-Roadmap/diagrams/humanego.svg)
+
+*物体中心表征不等于任何机器人都能直接执行。 图示为教学重绘。*
+
 原始输入是 EGO 视频，论文系统依赖同步视觉、相机运动与三维手部位置等结构化信息。Project Aria 及其处理输出可提供重要的轨迹与标定信息；它不是“普通手机随便拍一段视频就能得到完美三维动作”的方法。
 
 **Interaction-Centric Token** 可以理解为表示任务相关的相对几何，而不是固定机器人各关节值：
