@@ -15,17 +15,9 @@ description: 从多解动作、条件扩散到时序预测与闭环控制
 
 ## 2. 系统结构
 
-```mermaid
-flowchart LR
- I[RGB/State/历史观测] --> C[Observation Encoder]
- N[高斯噪声动作序列] --> U[Conditional Denoiser]
- C --> U
- T[扩散时间 step] --> U
- U --> P[重复去噪]
- P --> A[Action Horizon]
- A --> E[只执行前若干步]
- E --> I
-```
+![图：扩散策略的条件去噪和滚动控制](/Embodied-AI-Roadmap/diagrams/diffusion-policy.svg)
+
+*图：扩散策略的条件去噪和滚动控制。教学重绘；图示未包含完整算法实现。*
 
 视觉得来的 feature 是**条件**，去噪网络的主输入是带噪动作序列与 diffusion step。论文探讨的两个模型实现是时序 CNN 和时序 Diffusion Transformer；不要把它们混为唯一一种网络。
 
