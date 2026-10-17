@@ -21,7 +21,7 @@ function checkFile(path) {
     catch (e) { failures.push(path + ': invalid block math: ' + e.message); }
     return '';
   });
-  const inlineRe = /(?<!\\\\)\\$([^$\\n]+?)\\$/g;
+  const inlineRe = /(?<!\\)\\$([^$\\n]+?)\\$/g;
   source.replace(inlineRe, (_, math) => {
     try { katex.renderToString(math, { throwOnError: true }); count++; }
     catch (e) { failures.push(path + ': invalid inline math: ' + e.message); }
