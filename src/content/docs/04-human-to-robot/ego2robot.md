@@ -15,17 +15,9 @@ Ego2Robot 的目标是把人类示范转成两种相互配套的内容：**目�
 
 ## 2. 论文方法的三个关键步骤
 
-```mermaid
-flowchart TD
- E[第一视角人类操作视频] --> H[人手/物体/相机运动恢复]
- H --> A[Human → Robot Action Retarget]
- H --> V[Robot Arm / Gripper 视觉合成]
- A --> Q[多层数据质量筛选]
- V --> Q
- Q --> D[机器人格式视频 + 动作]
- D --> P[VLA 与真实机器人数据联合训练]
- P --> T[仿真和真实机器人 OOD 评测]
-```
+![图：Ego2Robot 数据转换链](/Embodied-AI-Roadmap/diagrams/ego2robot-pipeline.svg)
+
+*图：Ego2Robot 数据转换链。教学重绘；图示未包含完整算法实现。*
 
 该图是论文步骤的教学概括，不代表作者开源实现只有这几个模块；应以原始论文和项目页中的模块定义为准。
 
