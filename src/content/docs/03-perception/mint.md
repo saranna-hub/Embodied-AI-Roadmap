@@ -15,6 +15,10 @@ MINT 希望从一个共享的视频时空表示，同时预测**相机运动、�
 
 ## 2. 模型结构
 
+![MINT：联合时空重建](/Embodied-AI-Roadmap/diagrams/mint.svg)
+
+*伪标签输出必须保存来源和质量。 图示为教学重绘。*
+
 ```text
 EGO RGB clip
      │
