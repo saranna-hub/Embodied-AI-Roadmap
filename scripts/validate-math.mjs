@@ -11,13 +11,13 @@ function walk(dir) {
     if (entry.isDirectory()) { walk(path); continue; }
     if (!/\.(md|mdx)$/.test(entry.name)) continue;
     let source = readFileSync(path, 'utf8');
-    // Starlight/remark-math requires display delimiters on their own lines.
-    // An expression like "$E=mc^2$" may render literally despite being valid KaTeX.
+    // Detect display-math delimiters embedded in text lines.
     if (path.endsWith('00-prerequisites/transformer.md')) {
+      const delimiter = String.fromCharCode(36, 36);
       const lines = source.split(/\r?\n/);
       lines.forEach((line, index) => {
-        if (line.includes(') {
-          failures.push(`${path}:${index + 1}: display math delimiter must occupy its own line`);
+        if (line.includes(delimiter) && line.trim() !== delimiter) {
+          failures.push(path + ':' + (index + 1) + ': display math must be on its own line');
         }
       });
     }
