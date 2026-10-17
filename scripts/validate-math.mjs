@@ -11,6 +11,16 @@ function walk(dir) {
     if (entry.isDirectory()) { walk(path); continue; }
     if (!/\.(md|mdx)$/.test(entry.name)) continue;
     let source = readFileSync(path, 'utf8');
+    // Starlight/remark-math requires display delimiters on their own lines.
+    // An expression like "$E=mc^2$" may render literally despite being valid KaTeX.
+    if (path.endsWith('00-prerequisites/transformer.md')) {
+      const lines = source.split(/\r?\n/);
+      lines.forEach((line, index) => {
+        if (line.includes('$') && line.trim() !== '$') {
+          failures.push(`${path}:${index + 1}: display math delimiter $ must occupy its own line`);
+        }
+      });
+    }
     // Avoid treating $ or LaTeX characters inside code snippets as equations.
     source = source.replace(/```[\s\S]*?```/g, '');
     source = source.replace(/`[^`\n]*`/g, '');
