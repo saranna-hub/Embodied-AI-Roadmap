@@ -15,18 +15,9 @@ HaMeR 使用高容量 Vision Transformer 提取手部视觉特征，回归参数
 
 ## 2. 网络与表示
 
-```mermaid
-flowchart LR
- I[整张 RGB] --> D[Hand detector]
- D --> C[手部 Crop]
- C --> V[ViT Backbone]
- V --> H[参数回归器]
- H --> P[MANO Pose / Shape]
- P --> M[Hand Mesh / Joints]
- H --> K[Camera 参数]
- M --> R[2D Reprojection]
- K --> R
-```
+![图：HaMeR 视觉与 MANO 数据流](/Embodied-AI-Roadmap/diagrams/hamer-pipeline.svg)
+
+*图：HaMeR 视觉与 MANO 数据流。教学重绘；图示未包含完整算法实现。*
 
 这张图是对常见 HaMeR 推理组件的概括；具体检测器、Crop、迭代回归等细节取决于官方版本与推理脚本。读代码先看 [`demo.py`](https://github.com/geopavlakos/hamer/blob/main/demo.py)，再看模型构造与 MANO 前向流程。
 
