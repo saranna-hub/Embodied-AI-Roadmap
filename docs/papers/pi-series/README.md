@@ -24,7 +24,3 @@
 - [Physical Intelligence 官方研究日志](https://www.pi.website/blog)
 
 文中区分**论文原始设计**与 **openpi 仓库当前实现**。后者会持续更新，代码细节应以所引用的仓库版本为准。
-
-## 架构面试补充
-
-- [π₀ 架构深挖与 15 道面试追问](./pi0-interview.md)：从模型输入输出、Attention Mask、Flow Matching、缓存到训练与真机部署。
