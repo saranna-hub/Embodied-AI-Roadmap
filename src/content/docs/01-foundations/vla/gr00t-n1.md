@@ -13,6 +13,10 @@ description: Vision-Language 系统、Diffusion Transformer、异构训练数据
 
 ## 2. 整体结构
 
+![GR00T N1：双系统架构](/Embodied-AI-Roadmap/diagrams/gr00t.svg)
+
+*示意图；不同 GR00T 版本可能有不同网络与训练配置。 图示为教学重绘。*
+
 ```text
 多路视觉 + 指令 + 本体状态
           │
