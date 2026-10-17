@@ -106,15 +106,9 @@ $$
 
 可以把核心结构理解为：
 
-```text
-image(s) ── vision encoder ─┐
-language ── tokenizer ──────┼── VLM tokens ─┐
-                            │                │ shared attention context
-robot state ─ projection ───┘                │
-noisy action chunk + time ─ projection ─ action expert
-                                             │
-                                     velocity field [H, D]
-```
+![π₀ 双专家联合计算架构：相机和语言进入视觉语言侧，状态和带噪动作进入动作专家，两者通过注意力交互](/Embodied-AI-Roadmap/diagrams/pi0-experts.svg)
+
+*图｜双专家计算路径（教学示意）。蓝色表示视觉语言 Prefix，绿色表示动作 Suffix，橙色表示速度场与生成动作；两侧在多层 Transformer 中协同计算，并非在模型末端才合并。*
 
 这里的“专家”不是典型的 top-k gating MoE。两部分负责不同 token 的处理，并通过联合注意力交换信息；不是把 VLM 的结果简单拼到另一个独立网络最后一层。最值得读的代码是 [`pi0.py`](https://github.com/Physical-Intelligence/openpi/blob/main/src/openpi/models/pi0.py) 与 [`gemma.py`](https://github.com/Physical-Intelligence/openpi/blob/main/src/openpi/models/gemma.py)。
 
