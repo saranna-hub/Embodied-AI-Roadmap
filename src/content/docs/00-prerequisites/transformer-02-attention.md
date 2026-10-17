@@ -5,6 +5,10 @@ sidebar:
 ---
 # Attention 从输入、权重、形状到输出
 
+![从 Token 到 QKV、Softmax 与输出的结构图](/Embodied-AI-Roadmap/diagrams/prerequisites-transformer-detailed.svg)
+
+*图：每个箭头代表数据依赖，而非物理信号传输；训练时反向传播路径沿计算图求导。*
+
 ## 1. 它为什么被提出？
 
 循环神经网络要按时间依次处理 Token，长距离关系传递路径较长；Self-Attention 让 token 在单层里直接读取序列中其他允许访问的位置。它不是无条件优于 RNN，注意力矩阵的计算量和存储量也随序列长度增长。
