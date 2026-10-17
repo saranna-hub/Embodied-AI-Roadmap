@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
@@ -25,5 +24,5 @@ export default defineConfig({
       { label: '06 仿真与评测', autogenerate: { directory: '06-simulation' } }
     ]
   })],
-  markdown: { processor: unified({ remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }) }
+  markdown: { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 });
