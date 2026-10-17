@@ -21,10 +21,13 @@ description: 前四大领域的已完成页面、待撰写论文和复现状态
 | Diffusion Policy | 已上线解读 | [动作扩散](./01-foundations/imitation/diffusion-policy/) |
 | GR00T N1 | 已上线解读 | [双系统 VLA](./01-foundations/vla/gr00t-n1/) |
 | RDT-1B | 已上线解读 | [Diffusion Transformer](./01-foundations/vla/rdt-1b/) |
-| π₀-FAST、π₀.₅、π₀.₆ | 待深读 | — |
+| π₀-FAST | 已上线解读 | [动作频域 Tokenizer](./01-foundations/vla/pi0-fast/) |
+| π₀.₅、π₀.₆ | 待深读 | — |
 | RT-1、RT-2、OpenVLA | 待深读 | — |
-| ACT、强化学习基础 | 待深读 | — |
-| InternW0、Ego4WAM、IronMind、AtomEgo、Zeva-Ego、HABILIS | 需核验 | — |
+| ACT | 已上线解读 | [Action Chunking Transformer](./01-foundations/imitation/act/) |
+| 强化学习基础 | 待深读 | — |
+| Ego4WAM | 已上线解读 | [EGO 数据 scaling](./01-foundations/world-models/ego4wam/) |
+| InternW0、IronMind、AtomEgo、Zeva-Ego、HABILIS | 需核验 | — |
 | Dyna、Gen、世界模型其他家族 | 需核验成员的技术继承关系 | — |
 
 ## 02 具身数据工程
@@ -44,7 +47,8 @@ description: 前四大领域的已完成页面、待撰写论文和复现状态
 | --- | --- | --- |
 | HaMeR | 已上线解读 | [单帧三维手](./03-perception/hamer/) |
 | HaWoR | 已上线解读 | [世界坐标手部运动](./03-perception/hawor/) |
-| WiLoR、Dyn-HaMR、MINT、ACE-Ego-Hand | 需核验 | — |
+| MINT | 已上线解读 | [相机与双手联合恢复](./03-perception/mint/) |
+| WiLoR、Dyn-HaMR、ACE-Ego-Hand | 需核验 | — |
 | Ego-Exo4D-HM、HandMVNet、EgoForce | 需核验 | — |
 | ORB-SLAM3、VINS-Fusion、Basalt、OpenVINS | 待专题 | — |
 | Depth Anything、物体 6DoF、HOI 与 Affordance | 待专题 | — |
@@ -55,7 +59,8 @@ description: 前四大领域的已完成页面、待撰写论文和复现状态
 | --- | --- | --- |
 | Ego2Robot | 已上线解读 | [Robot-format 数据合成](./04-human-to-robot/ego2robot/) |
 | UMI-Bridge | 已上线解读 | [动作锚定潜变量](./04-human-to-robot/umi-bridge/) |
-| HumanEgo、EgoWild2Dex、DexRoam、EgoHumanoid-V2 | 需核验 | — |
+| HumanEgo | 已上线解读 | [物体中心交互](./04-human-to-robot/humanego/) |
+| EgoWild2Dex、DexRoam、EgoHumanoid-V2 | 需核验 | — |
 | FlashDexRetarget、DexAgent、RAPID、Praxis | 需核验 | — |
 | λ₀ / HumanVerse-500、Whole-Body UMI | 需核验 | — |
 | Object-centric / Contact-centric 技术比较 | 待专题 | — |
