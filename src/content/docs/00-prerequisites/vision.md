@@ -11,7 +11,9 @@ sidebar:
 
 例如 224×224 图片，Patch Size=16，不计算特殊 Token：
 
-$$N_{\mathrm{patch}}=(224/16)^2=196.$$
+$$
+N_{\mathrm{patch}}=(224/16)^2=196.
+$$
 
 每个 Patch 有 16×16×3=768 个数。模型使用线性投影将其映射到隐藏维度，再加位置关系，经 Transformer 处理。
 

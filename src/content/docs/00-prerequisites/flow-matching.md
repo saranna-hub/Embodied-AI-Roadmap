@@ -17,15 +17,21 @@ sidebar:
 
 使用 openpi 常见时间方向：t=0 是数据，t=1 是噪声。
 
-$$x_t=(1-t)A+t\epsilon,\qquad \epsilon\sim\mathcal N(0,I).$$
+$$
+x_t=(1-t)A+t\epsilon,\qquad \epsilon\sim\mathcal N(0,I).
+$$
 
 对 t 求导，直线路径的目标速度：
 
-$$u_t=\frac{dx_t}{dt}=\epsilon-A.$$
+$$
+u_t=\frac{dx_t}{dt}=\epsilon-A.
+$$
 
 网络在观测 o 条件下预测：
 
-$$\mathcal L_{\mathrm{FM}}=\mathbb E[\|v_\theta(x_t,t,o)-(\epsilon-A)\|_2^2].$$
+$$
+\mathcal L_{\mathrm{FM}}=\mathbb E[\|v_\theta(x_t,t,o)-(\epsilon-A)\|_2^2].
+$$
 
 “速度场”在这里是**动作表示空间里的变化方向**，不等同于机器人末端物理速度（m/s）。
 
@@ -43,7 +49,9 @@ $x_t=0.75\times2+0.25\times(-2)=1$。
 
 推理不知道 A，从随机 x₁ 出发，沿负时间方向用 Euler 积分：
 
-$$x_{t-\Delta t}=x_t-\Delta t\,v_\theta(x_t,t,o).$$
+$$
+x_{t-\Delta t}=x_t-\Delta t\,v_\theta(x_t,t,o).
+$$
 
 如果 Action Horizon=50，积分 K=10 次，每次更新的仍是**完整 50 步动作块**，不能把 K 和 H 混淆。
 
