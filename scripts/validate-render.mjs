@@ -1,4 +1,4 @@
-import {readFileSync,existsSync} from 'node:fs';
+import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {join} from 'node:path';
 
 const base='dist';
@@ -37,6 +37,21 @@ for(const name of diagrams){
  if(!svg.includes('<svg')||!svg.includes('viewBox')||!svg.includes('</svg>'))
    issues.push('INVALID SVG '+source);
 }
+// Scan ALL generated documentation pages, not just newly added pages.
+function scan(dir){
+ for(const item of readdirSync(dir,{withFileTypes:true})){
+  const path=join(dir,item.name);
+  if(item.isDirectory()){scan(path);continue;}
+  if(!path.endsWith('.html'))continue;
+  const html=readFileSync(path,'utf8');
+  if(/katex-error/.test(html))issues.push('SITE-WIDE MATH ERROR '+path);
+  // Check all handbook-owned static image links, including diagrams.
+  for(const match of html.matchAll(/(?:src|href)="\/Embodied-AI-Roadmap\/([^"#?]+\.(?:svg|png|jpg|jpeg|webp))"/g)){
+   if(!existsSync(join(base,match[1]))) issues.push('MISSING LOCAL IMAGE '+path+' -> '+match[1]);
+  }
+ }
+}
+scan(base);
 if(issues.length){
  console.error('SITE ACCEPTANCE FAILED\n'+issues.join('\n'));
  process.exit(1);
