@@ -3,6 +3,7 @@ import {join} from 'node:path';
 
 const base='dist';
 const pages=[
+  ['',0],
   ['00-prerequisites/transformer',5],
   ['02-data-engineering/hifi-umi-deep',1],
   ['02-data-engineering/kiwi-deep',1],
@@ -12,8 +13,7 @@ const pages=[
   ['01-foundations/vla/pi0',4],
 ];
 const diagrams=[
- 'hifi-umi-system.svg','kiwi-system.svg',
- 'monoego-system.svg','ego-oscar-system.svg'
+  ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg'])
 ];
 let issues=[];
 for(const [slug,minMath] of pages){
@@ -37,6 +37,8 @@ for(const name of diagrams){
  if(!svg.includes('<svg')||!svg.includes('viewBox')||!svg.includes('</svg>'))
    issues.push('INVALID SVG '+source);
 }
+const favicon=join(base,'favicon.svg');
+if(!existsSync(favicon) || !readFileSync(favicon,'utf8').includes('<svg'))issues.push('MISSING OR INVALID FAVICON '+favicon);
 // Scan ALL generated documentation pages, not just newly added pages.
 function scan(dir){
  for(const item of readdirSync(dir,{withFileTypes:true})){
