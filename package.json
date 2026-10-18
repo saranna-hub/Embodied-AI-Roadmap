@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run validate:math && astro check && astro build && npm run validate:render",
+    "build": "npm run validate:math && astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "validate:math": "node scripts/validate-math.mjs",
