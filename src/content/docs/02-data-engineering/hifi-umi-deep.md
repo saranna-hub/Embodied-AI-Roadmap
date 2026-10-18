@@ -281,3 +281,70 @@ $$
 **第四关：动作和数据集。** 明确 Rot6D 转 SO(3) 的正交化过程、夹爪开合单位和范围、动作 Horizon、无效维度 Mask。不能把绝对 next-state 标签不经说明就替换成 Delta Action。
 
 **第五关：模型实测。** 固定机器人本体、采样频率、动作空间、训练预算和测试任务，分别评估动作标签有效率、闭环任务成功率、接触失败、轨迹安全与推理延迟。只有这些结果具备完整日志，才能判断数据价值，不能以下载完成视为复现完成。
+
+
+## 独立专项：按 HiFi-UMI 一步步做出最小复现
+
+### 第一步：先确认数据契约，而不是立即训练
+
+先在记录表中固定一条 episode 的全部相机名称、每路图像分辨率、帧时间戳、有效性，以及左/右工具 pose 与 gripper 的原始字段。每一个字段都记录**数据出处、单位、坐标系、原始/派生性质**。任何缺失字段不能用“应该有”代替实测。
+
+### 第二步：验证从 rot6d 到 SE(3)
+
+6D Rotation Representation 通常将两个三维向量正交化，恢复合法旋转矩阵。下方是可运行的 NumPy 教学实现，不能把它误认为官方数据读取器：
+
+~~~python
+import numpy as np
+
+def rot6d_to_R(x):
+    a=np.asarray(x[:3], dtype=np.float64)
+    b=np.asarray(x[3:6], dtype=np.float64)
+    assert np.linalg.norm(a)>1e-8
+    x1=a/np.linalg.norm(a)
+    b=b-x1*np.dot(x1,b)
+    assert np.linalg.norm(b)>1e-8
+    x2=b/np.linalg.norm(b)
+    x3=np.cross(x1,x2)
+    return np.stack([x1,x2,x3],axis=-1)
+
+R=rot6d_to_R([1,0,0,0,1,0])
+assert np.allclose(R.T@R, np.eye(3), atol=1e-7)
+assert np.isclose(np.linalg.det(R),1.0)
+print("R =",R)
+~~~
+
+旋转矩阵必须满足：
+
+$$
+R^\top R=I,\qquad \det R=1.
+$$
+
+原始 6D 向量出现退化或零长度时必须显式报错，不能让 NaN 悄悄进入 Action Label。
+
+### 第三步：动作绝对值与局部增量不能混淆
+
+设某帧末端世界系位姿为 $T_{WE,t}$。若采用工具**局部系相邻增量**，应计算：
+
+$$
+\Delta T_t=T_{WE,t}^{-1}T_{WE,t+1}.
+$$
+
+但如果训练模型要求基坐标系下的绝对末端目标，这个 $\Delta T$ 不能原样输入。先确定机器人 action adapter 的语义，再转换数据。训练、离线回放与部署三端必须保持一致。
+
+### 第四步：建立最小可视化验收
+
+把一条 episode 展示成四个同步视图：头戴 RGB、左手腕 RGB、右手腕 RGB、三维双手轨迹。用时间轴标红被 mask 的帧，同时绘制夹爪开合状态。你应该能用肉眼核查“接近杯子—夹紧—抬起—释放”等事件是否与动作曲线一致。
+
+### 第五步：把动作训练拆成可判定的实验
+
+第一组只用有效帧做模仿学习；第二组加入补插的低置信帧；第三组只改变动作坐标表达；第四组比较单手与双手相对表示。数据划分必须按**任务/场景/采集段**隔离，不能把同一条演示的相邻窗口泄漏到训练与验证两侧。
+
+**交付判据**：提供数据 Schema、1 条完整 episode 的同步预览、重投影/时间偏差统计、动作空间单元测试、训练配置与日志。缺少其中任何一项都只能认为“教程完成”，而不是“论文已复现”。
+
+### 核心技术图索引
+
+![HiFi-UMI 原始采集与处理过程](/Embodied-AI-Roadmap/diagrams/hifi-umi-system.svg)
+
+![HiFi-UMI 处理分支与动作生成细图](/Embodied-AI-Roadmap/diagrams/hifi-umi-detail.svg)
+
+*说明：两张图均为按论文概念重绘的教学示意，部分实现未公开的细节不会冒充作者原始电路或 SLAM 代码。*
