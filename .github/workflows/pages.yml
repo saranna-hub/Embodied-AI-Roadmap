@@ -25,7 +25,6 @@ jobs:
       - name: Check and build
         run: npm run build
       - name: Audit rendered pages (diagnostic)
-        continue-on-error: true
         run: npm run validate:render
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -43,36 +42,53 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify published website and four technical pages
+      - name: Verify all published HTML, math, SVGs and favicon
         shell: bash
         run: |
           set -euo pipefail
           ROOT="https://saranna-hub.github.io/Embodied-AI-Roadmap"
-          for route in \
-            "/" \
-            "/02-data-engineering/hifi-umi-deep/" \
-            "/02-data-engineering/kiwi-deep/" \
-            "/02-data-engineering/monoego-deep/" \
-            "/02-data-engineering/ego-oscar-deep/" \
-            "/02-data-engineering/capture-systems-comparison/" \
-            "/00-prerequisites/transformer/" \
-            "/01-foundations/vla/pi0/"; do
-            echo "Checking $ROOT$route"
+          check_html() {
+            local route="$1" expected="$2" actual
             curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
               --max-time 25 --silent --show-error "$ROOT$route" -o /tmp/roadmap-page.html
             test "$(wc -c < /tmp/roadmap-page.html)" -gt 1200
             if grep -q 'katex-error' /tmp/roadmap-page.html; then
-              echo "KaTeX rendering error at $route"; exit 1
+              echo "FAIL KaTeX $route"; exit 1
+            fi
+            actual=$( (grep -o 'class="katex"' /tmp/roadmap-page.html || true) | wc -l | tr -d '[:space:]')
+            if (( actual < expected )); then
+              echo "FAIL KaTeX count $route: $actual < $expected"; exit 1
             fi
             if [[ "$route" == *"-deep/" ]]; then
               grep -q 'BOM' /tmp/roadmap-page.html
               grep -q '复现' /tmp/roadmap-page.html
+              grep -q '数据' /tmp/roadmap-page.html
             fi
-          done
+            echo "PASS HTML $route KaTeX=$actual expected>=$expected"
+          }
+          check_html "/" 0
+          check_html "/00-prerequisites/transformer/" 5
+          check_html "/02-data-engineering/hifi-umi-deep/" 1
+          check_html "/02-data-engineering/kiwi-deep/" 1
+          check_html "/02-data-engineering/monoego-deep/" 1
+          check_html "/02-data-engineering/ego-oscar-deep/" 0
+          check_html "/02-data-engineering/capture-systems-comparison/" 0
+          check_html "/01-foundations/vla/pi0/" 4
           for name in hifi-umi kiwi monoego ego-oscar; do
-            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
-              --silent --show-error "$ROOT/diagrams/${name}-system.svg" \
-              -o /tmp/roadmap-diagram.svg
-            grep -q '<svg' /tmp/roadmap-diagram.svg
+            for kind in system detail; do
+              file="/diagrams/$name-$kind.svg"
+              curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+                --max-time 25 --silent --show-error "$ROOT$file" \
+                -o /tmp/roadmap-diagram.svg
+              grep -q '<svg' /tmp/roadmap-diagram.svg
+              grep -q '</svg>' /tmp/roadmap-diagram.svg
+              echo "PASS SVG $file"
+            done
           done
-          echo "Live GitHub Pages validation passed."
+          curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+            --max-time 25 --silent --show-error "$ROOT/favicon.svg" \
+            -o /tmp/roadmap-favicon.svg
+          grep -q '<svg' /tmp/roadmap-favicon.svg
+          grep -q '</svg>' /tmp/roadmap-favicon.svg
+          echo "PASS FAVICON /favicon.svg"
+          echo "PASS: 8 published HTML pages with KaTeX counts, 8 SVG diagrams and favicon."
