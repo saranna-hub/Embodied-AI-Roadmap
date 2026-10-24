@@ -11,9 +11,11 @@ const pages=[
   ['02-data-engineering/ego-oscar-deep',0],
   ['02-data-engineering/capture-systems-comparison',0],
   ['01-foundations/vla/pi0',4],
+  ['01-foundations/vla/delta-flow-matching',12],
 ];
 const diagrams=[
-  ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg'])
+  ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),
+  'delta-flow-architecture.svg', 'delta-flow-timeline.svg'
 ];
 let issues=[];
 for(const [slug,minMath] of pages){
