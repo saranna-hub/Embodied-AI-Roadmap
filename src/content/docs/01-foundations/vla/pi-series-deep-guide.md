@@ -16,6 +16,11 @@ sidebar:
 
 ## 0. 一张技术谱系图
 
+![π系列技术演进：动作生成、泛化、经验学习与可控通才](/Embodied-AI-Roadmap/diagrams/pi-series-evolution.svg)
+
+*图：按官方公开版本整理；π₀.₈ 尚无可核实官方技术资料。*
+
+
 ```text
        视觉-语言预训练 + 多机器人示范
                       │
