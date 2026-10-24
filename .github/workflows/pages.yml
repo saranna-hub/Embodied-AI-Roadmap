@@ -74,6 +74,7 @@ jobs:
           check_html "/02-data-engineering/ego-oscar-deep/" 0
           check_html "/02-data-engineering/capture-systems-comparison/" 0
           check_html "/01-foundations/vla/pi0/" 4
+          check_html "/01-foundations/vla/delta-flow-matching/" 12
           for name in hifi-umi kiwi monoego ego-oscar; do
             for kind in system detail; do
               file="/diagrams/$name-$kind.svg"
@@ -91,4 +92,14 @@ jobs:
           grep -q '<svg' /tmp/roadmap-favicon.svg
           grep -q '</svg>' /tmp/roadmap-favicon.svg
           echo "PASS FAVICON /favicon.svg"
+          for name in delta-flow-architecture delta-flow-timeline; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" \
+              -o /tmp/delta-flow-diagram.svg
+            grep -q '<svg' /tmp/delta-flow-diagram.svg
+            grep -q '</svg>' /tmp/delta-flow-diagram.svg
+            echo "PASS SVG $file"
+          done
           echo "PASS: 8 published HTML pages with KaTeX counts, 8 SVG diagrams and favicon."
+          echo "PASS: Delta-Flow ninth HTML with KaTeX counts and 2 additional SVG diagrams."
