@@ -7,7 +7,7 @@ sidebar:
 
 # Δ-Flow Matching：为什么从历史动作出发，未来动作可以一步生成？
 
-> 论文：[Zuo et al., Δ Flow Matching for Robot Foundation Models](https://arxiv.org/html/2610.15794)，arXiv:2610.15794v1，2026-10-11；[作者项目页](https://zuo-kuangji.github.io/delta-flow/)。本文逐项核对论文第 3–7 节及附录 A–E。**本文两张图是教学重绘而不是作者原始架构图；示例代码为最小原理复现，非作者官方训练代码。**
+> 论文：[Zuo et al., Δ Flow Matching for Robot Foundation Models](https://arxiv.org/html/2610.15794)，arXiv:2610.15794v1，2026-10-11；[作者项目页](https://zuo-kuangji.github.io/delta-flow/)。本文逐项核对论文第 3–7 节及附录 A–E。**本文两张图是教学重绘而不是作者原始架构图；示例代码为最小原理复现，非作者官方训练代码。[官方 GitHub 仓库](https://github.com/NTUMARS/delta-flow-matching) 的 README 明确写明“code is not released yet”（2026-10-24 核查）。**
 
 前置学习：[Transformer / QKV](../../../00-prerequisites/transformer/) → [Flow Matching](../../../00-prerequisites/flow-matching/) → [π₀ 深度教程](../pi0/)。
 
@@ -324,6 +324,6 @@ print('FM:',fm.item(),'EC:',ec.item())
 - [论文附录 A.1–A.3](https://arxiv.org/html/2610.15794)：三种模型的图像布局、动作长度、视觉时刻与 loss 系数；尤其 Table 6–8。
 - [作者项目页](https://zuo-kuangji.github.io/delta-flow/)：训练收敛图、LIBERO-Plus 类别指标、动作 jerk、LoRA、模型对比与消融。
 - [π₀ 深读](../pi0/)：回顾动作 Expert 与传统多步 Flow Matching。
-- **开源边界**：项目页含 GitHub 入口，但本文没有独立验证完整 Δ-Flow 训练代码及对应权重已经发布；因此上面的 PyTorch 是**原理等效练习**，不冒充作者完整复现。
+- **开源边界**：[作者官方 GitHub 仓库](https://github.com/NTUMARS/delta-flow-matching) 目前只有 README 和 assets；README 明确说明训练代码尚未发布。因此上面的 PyTorch 是**原理等效练习**，不能冒充作者完整复现。
 
 **核心结论**：不是“把网络换成更大的 Transformer”，而是让生成从历史附近出发，FM 学残差速度、EC 约束一步终点、WAM 动作分支读取但不反向干扰视觉分支。真机落地首先要保证历史执行反馈与动作标签可靠。
