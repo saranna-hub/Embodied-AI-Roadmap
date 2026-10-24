@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 910" role="img" aria-label="Δ-flow VLA 和 WAM 双分支的数据流、训练与推理，标注 Stop-Gradient">
+<defs><marker id="arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0 0 L14 7 L0 14Z" fill="#78c6ef"/></marker><style>text{font-family:Arial,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#eff9ff} .title{font-size:34px;font-weight:bold}.caption{font-size:22px}.minor{font-size:18px}.line{fill:none;stroke:#78c6ef;stroke-width:4;marker-end:url(#arrow)} .outline{stroke:#5c829e;stroke-width:2}</style></defs>
+<rect width="1600" height="910" fill="#101b31" rx="22"/>
+<text x="42" y="58" class="title">Δ-Flow：过去 + 轻噪声 → 单步预测未来（教学重绘）</text>
+<text x="43" y="99" class="caption">训练：τ ∼ U(0,1) 学速度；τ=1 学单步终点。推理：τ=1 → τ=0，一次 Euler。</text>
+<rect x="37" y="136" width="1526" height="326" rx="17" fill="#1a3049" class="outline"/>
+<text x="62" y="176" class="title">A · VLA（π₀.₅）：只预测动作</text>
+<rect x="65" y="215" width="284" height="98" rx="15" fill="#274760"/><text x="207" y="255" class="caption" text-anchor="middle">已执行动作历史 hₐ</text><text x="207" y="283" class="minor" text-anchor="middle">[B,H,Dₐ]</text>
+<rect x="425" y="215" width="288" height="98" rx="15" fill="#34506b"/><text x="569" y="255" class="caption" text-anchor="middle">构造源 sₐ</text><text x="569" y="285" class="minor" text-anchor="middle">αhₐ + σ(b ⊙ ε)</text>
+<rect x="797" y="215" width="298" height="98" rx="15" fill="#285b56"/><text x="946" y="255" class="caption" text-anchor="middle">动作 Expert + 条件 cₜ</text><text x="946" y="285" class="minor" text-anchor="middle">fₐ(sₐ,1,cₜ)</text>
+<rect x="1204" y="215" width="310" height="98" rx="15" fill="#534f78"/><text x="1359" y="255" class="caption" text-anchor="middle">未来动作 ŷₐ</text><text x="1359" y="285" class="minor" text-anchor="middle">sₐ − fₐ</text>
+<path class="line" d="M349 265H417"/><path class="line" d="M713 265H789"/><path class="line" d="M1095 265H1196"/>
+<text x="76" y="373" class="caption">训练目标：yₐ = 真实未来动作</text><text x="75" y="413" class="caption">L_FM = ‖f(yᵀ,τ,cₜ) − (s−y)‖²；L_EC = ‖s−f(s,1,cₜ)−y‖₁</text>
+<rect x="37" y="486" width="1526" height="362" rx="17" fill="#1a3049" class="outline"/>
+<text x="62" y="529" class="title">B · WAM（ImageWAM / Fast-WAM）：视觉 Δ + 动作 Δ</text>
+<rect x="68" y="570" width="340" height="98" rx="15" fill="#315c71"/><text x="238" y="612" class="caption" text-anchor="middle">视觉历史 → 视觉源 sᵥ</text><text x="238" y="644" class="minor" text-anchor="middle">Pᵥ(Eᵥ(观测)) + εᵥ</text>
+<rect x="501" y="570" width="330" height="98" rx="15" fill="#285b56"/><text x="666" y="612" class="caption" text-anchor="middle">视觉网络 fᵥ / Rᵥ</text><text x="666" y="644" class="minor" text-anchor="middle">预测视觉 latent 与特征</text>
+<rect x="944" y="570" width="302" height="98" rx="15" fill="#77563b"/><text x="1095" y="610" class="caption" text-anchor="middle">Stop-Gradient</text><text x="1095" y="644" class="minor" text-anchor="middle">动作损失不回传视觉</text>
+<path class="line" d="M408 620H493"/><path class="line" d="M831 620H936"/>
+<rect x="68" y="718" width="340" height="93" rx="15" fill="#315c71"/><text x="238" y="754" class="caption" text-anchor="middle">历史动作 → 动作源 sₐ</text><text x="238" y="785" class="minor" text-anchor="middle">噪声不加在 gripper / PAD</text>
+<rect x="501" y="718" width="330" height="93" rx="15" fill="#285b56"/><text x="666" y="756" class="caption" text-anchor="middle">动作 Expert fₐ</text><text x="666" y="786" class="minor" text-anchor="middle">读取视觉中间特征</text>
+<rect x="944" y="718" width="302" height="93" rx="15" fill="#534f78"/><text x="1095" y="755" class="caption" text-anchor="middle">未来动作 ŷₐ</text><text x="1095" y="785" class="minor" text-anchor="middle">单步 sₐ − fₐ</text>
+<path class="line" d="M408 766H493"/><path class="line" d="M831 766H936"/>
+<path d="M1095 669V689H665V712" class="line"/>
+<text x="1296" y="616" class="minor">视觉分支：</text><text x="1296" y="646" class="minor">预测 latent</text><text x="1296" y="680" class="minor">不必 RGB 解码</text>
+<text x="50" y="887" class="minor">原理来自 Zuo et al., arXiv:2610.15794，Fig. 2 与 Eq. 3–9；示意图并非作者原图，输入布局依架构而异。</text>
+</svg>
