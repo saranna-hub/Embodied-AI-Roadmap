@@ -186,12 +186,12 @@ $$
 
 $$
 \mathbf s_v=\frac{\mathbf h_v+\boldsymbol\epsilon_v}{\sqrt2}
-\quad\text{（50% 历史平方系数占比）}.
+\quad\text{（50\% 历史平方系数占比）}.
 $$
 
 $$
 \mathbf s_v=\mathbf h_v+0.5\boldsymbol\epsilon_v
-\quad\text{（80% 历史平方系数占比）}.
+\quad\text{（80\% 历史平方系数占比）}.
 $$
 
 这两个 50%/80% **不是图片像素保留比例或 token Mask 比例**。不能凭输入 RGB 的尺寸推断 latent token 数量；真正的 latent 布局要以 FLUX 的 VAE 和视觉处理实现为准。
