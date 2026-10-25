@@ -11,6 +11,7 @@ sidebar:
 
 1. [π₀：双专家与 Flow Matching 逐层追踪](./pi0/)（已有深度教程）。
 2. [π₀-FAST：DCT、离散动作与自回归](./pi0-fast/)（已有教程）。
+3. [π₀ × π₀.₅ 源码深挖：双专家 QKV、Attention Mask、KV Cache 与 AdaRMS](./pi0-joint-attention-code-audit/)（2026-10-25 新增，含两张逐层技术图与 Mask 单元测试）。
 3. 本篇：整个系列的**统一技术谱系、关键公式、训练数据闭环、评测与复现清单**。
 4. **本篇目录内章节**：π₀.₅（开放世界泛化）、π₀.₆ / π*₀.₆（RECAP）、π₀.₇（steerable generalist）、π₀.₈（待证实）。
 
