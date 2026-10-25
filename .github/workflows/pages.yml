@@ -75,6 +75,7 @@ jobs:
           check_html "/02-data-engineering/capture-systems-comparison/" 0
           check_html "/01-foundations/vla/pi0/" 4
           check_html "/01-foundations/vla/delta-flow-matching/" 12
+          check_html "/01-foundations/vla/pi0-joint-attention-code-audit/" 8
           for name in hifi-umi kiwi monoego ego-oscar; do
             for kind in system detail; do
               file="/diagrams/$name-$kind.svg"
@@ -101,5 +102,15 @@ jobs:
             grep -q '</svg>' /tmp/delta-flow-diagram.svg
             echo "PASS SVG $file"
           done
-          echo "PASS: 8 published HTML pages with KaTeX counts, 8 SVG diagrams and favicon."
+          echo "PASS: 8 baseline published HTML pages with KaTeX counts, 8 base SVG diagrams and favicon."
           echo "PASS: Delta-Flow ninth HTML with KaTeX counts and 2 additional SVG diagrams."
+          for name in pi0-joint-attention-dataflow pi0-joint-attention-mask; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" \
+              -o /tmp/pi0-code-audit-diagram.svg
+            grep -q '<svg' /tmp/pi0-code-audit-diagram.svg
+            grep -q '</svg>' /tmp/pi0-code-audit-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: π₀ source-audit tenth HTML with KaTeX >= 8 and 2 additional SVG diagrams."
