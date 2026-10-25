@@ -7,6 +7,8 @@ sidebar:
 
 > **本篇沿用此前详细教学版，保留公式、张量和工程解释；页面通过 Astro Starlight 渲染，示意图为教学图，未完成真实机器人复现实验。**
 
+> **源码级补充（2026-10-25）**：新增 [π₀ × π₀.₅ 联合注意力、Mask、KV Cache、AdaRMS 专题](./pi0-joint-attention-code-audit/)，逐行核查官方 JAX 代码、头维度、训练/推理差异与动作块注意力的双向性。
+
 ## 学习前先补这些基础
 
 如果你还不熟悉矩阵、反向传播、Attention 或 Flow Matching，推荐依次阅读：[张量与反向传播](../../../00-prerequisites/tensors-training/) → [Transformer 与 QKV](../../../00-prerequisites/transformer/) → [视觉 Backbone 与 VLM](../../../00-prerequisites/vision/) → [Flow Matching](../../../00-prerequisites/flow-matching/)。先搞清这些机制，再看 π₀ 的两组专家与连续动作输出，会容易得多。
