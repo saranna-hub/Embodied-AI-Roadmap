@@ -7,7 +7,7 @@ sidebar:
 
 # Ego-Pi：跨本体的语义迁移与动作对齐
 
-[原论文](https://arxiv.org/abs/2606.08107) · [官方项目与演示](https://egopipaper.github.io/) · [π₀.₅ 基础](../01-foundations/vla/pi05-deep/)
+[原论文](https://arxiv.org/abs/2606.08107) · [官方项目与演示](https://egopipaper.github.io/) · [π₀.₅ 基础](../../01-foundations/vla/pi05-deep/)
 
 ## 1. 到底转移了什么？
 
