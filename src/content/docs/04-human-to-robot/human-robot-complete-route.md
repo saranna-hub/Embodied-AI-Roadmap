@@ -9,6 +9,8 @@ sidebar:
 
 > **阅读顺序**：先读这篇总纲，再读 [迁移涌现](./human-robot-emergence-deep/) → [Ego-Pi](./ego-pi-deep/) → [EgoEngine](./egoengine-deep/)。三篇研究问题相互关联但并非同一个实现，也不能将其所有方法拼起来就宣称完成了作者的复现。
 
+👉 **从零跟跑入口**：[EgoEngine 官方源码复现：Prepared 输入、视觉生成、动作优化和 HDF5](./egoengine-code-reproduction/)。请先看清哪些模块已开源、哪些仍需自己实现。
+
 ## 先搞清三种技术路线
 
 | 路线 | 关键问题 | 人类数据的作用 | 需要什么基础 |
@@ -73,7 +75,7 @@ x_\tau=(1-\tau)\epsilon+\tau A,\quad
 \mathcal L_{FM}=\mathbb E\|v_\theta(x_\tau,\tau,o,\ell)-(A-\epsilon)\|_2^2.
 $$
 
-**符号提醒**：此处 $`\tau=0`$ 是噪声端，$`\tau=1`$ 是数据端；openpi 不同讲义采用的时间方向可能相反，核源码时必须统一约定。训练时真值可见、推理时真值不可见。
+**符号提醒**：此处 $\tau=0$ 是噪声端，$\tau=1$ 是数据端；openpi 不同讲义采用的时间方向可能相反，核源码时必须统一约定。训练时真值可见、推理时真值不可见。
 
 
 ## 训练闭环必备的数据契约（教学复现，不冒充论文官方代码）
