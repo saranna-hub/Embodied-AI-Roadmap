@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="690" viewBox="0 0 1280 690">
+<rect width="1280" height="690" fill="#101b2a"/>
+<text x="640" y="53" font-family="sans-serif" font-weight="bold" font-size="30" text-anchor="middle" fill="#eff6ff">EgoEngine 官方源码复现边界与数据流水线</text>
+<g font-family="sans-serif" text-anchor="middle">
+<rect x="42" y="115" width="253" height="157" rx="16" fill="#273951" stroke="#638cb6" stroke-width="3"/>
+<text x="168" y="153" font-size="23" fill="#f2fbff">原始 EGO 视频</text><text x="168" y="187" font-size="18" fill="#c9ddef">物体6DoF / 相机标定</text><text x="168" y="220" font-size="18" fill="#c9ddef">人物去除背景</text><text x="168" y="249" font-size="16" fill="#f8aeaf">前端感知未完整开放</text>
+<rect x="350" y="115" width="253" height="157" rx="16" fill="#203f50" stroke="#54c4b5" stroke-width="3"/>
+<text x="476" y="153" font-size="23" fill="#d7fff0">Prepared Inputs</text><text x="476" y="187" font-size="18" fill="#c2f3e2">scene + assets</text><text x="476" y="218" font-size="18" fill="#c2f3e2">retarget + K + timestamps</text><text x="476" y="247" font-size="16" fill="#aff5db">官方提供6个示例</text>
+<rect x="658" y="99" width="275" height="153" rx="16" fill="#243b66" stroke="#6caaff" stroke-width="3"/>
+<text x="796" y="138" font-size="23" fill="#e7f5ff">Visual 分支</text><text x="796" y="174" font-size="18" fill="#cfe4ff">重放 + 渲染</text><text x="796" y="206" font-size="18" fill="#cfe4ff">Mask + Composite</text><text x="796" y="234" font-size="16" fill="#a8ceff">RGB 观察</text>
+<rect x="658" y="306" width="275" height="168" rx="16" fill="#3e3649" stroke="#dfb1fe" stroke-width="3"/>
+<text x="796" y="349" font-size="23" fill="#f4dcff">Action 分支</text><text x="796" y="388" font-size="19" fill="#ebd4ff">Replay → MPC → RL</text><text x="796" y="420" font-size="17" fill="#eadfff">两块验证 / 一块提交</text><text x="796" y="448" font-size="16" fill="#e9c8ff">可执行 EEF 轨迹</text>
+<rect x="1000" y="170" width="236" height="209" rx="16" fill="#2d483d" stroke="#6ed6a8" stroke-width="3"/>
+<text x="1118" y="215" font-size="23" fill="#e1ffef">HDF5</text><text x="1118" y="250" font-size="18" fill="#c8efd9">图像 + EEF Action</text><text x="1118" y="281" font-size="18" fill="#c8efd9">Sim State + K</text><text x="1118" y="312" font-size="18" fill="#c8efd9">timestamps</text><text x="1118" y="347" font-size="15" fill="#a2eec3">egoengine.prepared.v1</text>
+<rect x="406" y="530" width="465" height="94" rx="14" fill="#53452a" stroke="#f2bf65" stroke-width="3"/>
+<text x="640" y="568" font-size="23" fill="#ffe7b9">自行适配 openpi / BC / ACT</text><text x="640" y="600" font-size="18" fill="#ffedcb">训练 + 仿真 Rollout + 真机闭环尚需另做</text>
+<g fill="none" stroke="#a6cde3" stroke-width="4" stroke-linecap="round"><path d="M295 194 H348"/><path d="M603 194 H656"/><path d="M603 240 H631 V390 H656"/><path d="M933 177 H968 V240 H996"/><path d="M933 391 H964 V318 H996"/><path d="M1118 379 V497 H640 V527"/></g>
+<g fill="#a6cde3"><path d="M344 186 l12 8 -12 8z"/><path d="M652 186 l12 8 -12 8z"/><path d="M650 382 l12 8 -12 8z"/><path d="M991 232 l12 8 -12 8z"/><path d="M991 310 l12 8 -12 8z"/><path d="M632 522 l8 12 8 -12z"/></g>
+</g></svg>
