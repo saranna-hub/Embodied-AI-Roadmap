@@ -76,6 +76,16 @@ jobs:
           check_html "/01-foundations/vla/pi0/" 4
           check_html "/01-foundations/vla/delta-flow-matching/" 12
           check_html "/01-foundations/vla/pi0-joint-attention-code-audit/" 8
+          check_html "/01-foundations/vla/pi-series-deep-guide/" 1
+          check_html "/01-foundations/vla/pi0-fast/" 1
+          check_html "/01-foundations/vla/pi05-deep/" 1
+          check_html "/01-foundations/vla/pi06-recap-deep/" 1
+          check_html "/01-foundations/vla/pi07-deep/" 1
+          check_html "/04-human-to-robot/human-robot-complete-route/" 1
+          check_html "/04-human-to-robot/human-robot-emergence-deep/" 1
+          check_html "/04-human-to-robot/ego-pi-deep/" 1
+          check_html "/04-human-to-robot/egoengine-deep/" 1
+          check_html "/04-human-to-robot/egoengine-code-reproduction/" 1
           for name in hifi-umi kiwi monoego ego-oscar; do
             for kind in system detail; do
               file="/diagrams/$name-$kind.svg"
@@ -114,3 +124,12 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: π₀ source-audit tenth HTML with KaTeX >= 8 and 2 additional SVG diagrams."
+          for name in pi-series-evolution egoengine-repro-graph; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/roadmap-newdiagram.svg
+            grep -q '<svg' /tmp/roadmap-newdiagram.svg
+            grep -q '</svg>' /tmp/roadmap-newdiagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: π series and 5 human-to-robot deep pages, 2 additional SVG diagrams."
