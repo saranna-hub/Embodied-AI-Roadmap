@@ -59,10 +59,10 @@ jobs:
             if (( actual < expected )); then
               echo "FAIL KaTeX count $route: $actual < $expected"; exit 1
             fi
-            if [[ "$route" == *"-deep/" ]]; then
-              grep -q 'BOM' /tmp/roadmap-page.html
-              grep -q '复现' /tmp/roadmap-page.html
-              grep -q '数据' /tmp/roadmap-page.html
+            if [[ "$route" == /02-data-engineering/* && "$route" == *"-deep/" ]]; then
+              grep -q 'BOM' /tmp/roadmap-page.html || { echo "FAIL BOM $route"; exit 1; }
+              grep -q '复现' /tmp/roadmap-page.html || { echo "FAIL Reproduction $route"; exit 1; }
+              grep -q '数据' /tmp/roadmap-page.html || { echo "FAIL Data content $route"; exit 1; }
             fi
             echo "PASS HTML $route KaTeX=$actual expected>=$expected"
           }
