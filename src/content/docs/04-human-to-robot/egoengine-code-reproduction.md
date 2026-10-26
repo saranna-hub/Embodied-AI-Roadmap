@@ -7,6 +7,10 @@ sidebar:
 
 > **2026-10-26 一手源码核验**：本教程基于 [GaTech-RL2/EgoEngine-CoRL2026](https://github.com/GaTech-RL2/EgoEngine-CoRL2026) 的 [README](https://github.com/GaTech-RL2/EgoEngine-CoRL2026/blob/main/README.md)、[INPUTS](https://github.com/GaTech-RL2/EgoEngine-CoRL2026/blob/main/docs/INPUTS.md)、[REPRODUCIBILITY](https://github.com/GaTech-RL2/EgoEngine-CoRL2026/blob/main/docs/REPRODUCIBILITY.md)、[MODE_SWITCHING](https://github.com/GaTech-RL2/EgoEngine-CoRL2026/blob/main/docs/MODE_SWITCHING.md) 与 [RL_RECIPE](https://github.com/GaTech-RL2/EgoEngine-CoRL2026/blob/main/docs/RL_RECIPE.md)。命令是作者提供的实际入口；**本网站尚未在 GPU 或真机执行实验**。
 
+![EgoEngine 官方开源代码可复现边界、两分支和数据闭环](/Embodied-AI-Roadmap/diagrams/egoengine-repro-graph.svg)
+
+*图：源码审计重绘。红色标注的前端感知尚不属于当前可复现发布范围；机器人策略训练仍需要额外接入。*
+
 ## 1. 为什么这份开源代码对 EGO 研究特别重要？
 
 EgoEngine 从人类第一视角视频生成两个互相对齐的监督：机器人视角观察与机器人的可执行动作。然而，**当前仓库不是从任意原始 RGB 自动恢复物体模型并训练完整 VLA 的“一键系统”**；它从 prepared input 开始。FoundationPose 与早期感知重建不在本次代码发布的可复现范围内。后端的视觉与动作双分支、数据对齐、导出 HDF5 可调用。
