@@ -86,6 +86,7 @@ jobs:
           check_html "/04-human-to-robot/ego-pi-deep/" 1
           check_html "/04-human-to-robot/egoengine-deep/" 1
           check_html "/04-human-to-robot/egoengine-code-reproduction/" 1
+          check_html "/04-human-to-robot/ego-rgb-only-to-pi05/" 8
           for name in hifi-umi kiwi monoego ego-oscar; do
             for kind in system detail; do
               file="/diagrams/$name-$kind.svg"
@@ -133,3 +134,10 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: π series and 5 human-to-robot deep pages, 2 additional SVG diagrams."
+          file="/diagrams/ego-rgb-only-training-routes.svg"
+          curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+            --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/ego-rgb-only-diagram.svg
+          grep -q '<svg' /tmp/ego-rgb-only-diagram.svg
+          grep -q '</svg>' /tmp/ego-rgb-only-diagram.svg
+          echo "PASS SVG $file"
+          echo "PASS: RGB-only EGO tutorial HTML/KaTeX and supervision flow diagram."
