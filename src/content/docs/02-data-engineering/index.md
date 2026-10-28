@@ -9,3 +9,7 @@ sidebar:
 建议先读 [UMI](./umi/)：它展示了在人类操作时捕获与机器人控制相关的信息，并解释为什么传感器同步和动作表示必须在训练前解决。
 
 本领域将继续覆盖 EGO 数据集、采集手套、触觉、LeRobot/MCAP、QC 与训练数据清洗。
+
+## 专题：EGO/UMI 工位定位与训练数据质量
+
+从设备对比继续读 [双目鱼眼＋IMU＋桌面 AprilTag：时空标定、TCP 世界系位姿、训练标签质检](./ego-umi-spatiotemporal-calibration/)。本篇从 Kalibr、鱼眼 IPPE/PnP、工具外参、时间偏差到 VLA Action Chunk，附两张流程图与可执行合成反例；与 [HiFi-UMI](./hifi-umi-deep/) 和 [MonoEgo](./monoego-deep/) 配合学习。
