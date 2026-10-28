@@ -26,6 +26,12 @@ jobs:
         run: npm run build
       - name: Audit rendered pages (diagnostic)
         run: npm run validate:render
+      - name: Validate executable EGO UMI synthetic pose benchmark
+        run: |
+          python -m pip install --quiet numpy opencv-python-headless
+          python examples/ego_umi_pose_qc_demo.py | tee /tmp/ego-umi-synthetic.log
+          grep -q 'p95 reprojection=' /tmp/ego-umi-synthetic.log
+          grep -q 'p95 world tool translation=' /tmp/ego-umi-synthetic.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -87,6 +93,7 @@ jobs:
           check_html "/04-human-to-robot/egoengine-deep/" 1
           check_html "/04-human-to-robot/egoengine-code-reproduction/" 1
           check_html "/04-human-to-robot/ego-rgb-only-to-pi05/" 8
+          check_html "/02-data-engineering/ego-umi-spatiotemporal-calibration/" 15
           for name in hifi-umi kiwi monoego ego-oscar; do
             for kind in system detail; do
               file="/diagrams/$name-$kind.svg"
@@ -141,3 +148,12 @@ jobs:
           grep -q '</svg>' /tmp/ego-rgb-only-diagram.svg
           echo "PASS SVG $file"
           echo "PASS: RGB-only EGO tutorial HTML/KaTeX and supervision flow diagram."
+          for name in ego-umi-calibration-chain ego-umi-calibration-qc; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/ego-umi-calibration.svg
+            grep -q '<svg' /tmp/ego-umi-calibration.svg
+            grep -q '</svg>' /tmp/ego-umi-calibration.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: EGO UMI calibration tutorial HTML/KaTeX and both new diagrams."
