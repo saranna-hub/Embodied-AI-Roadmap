@@ -32,6 +32,14 @@ jobs:
           python examples/ego_umi_pose_qc_demo.py | tee /tmp/ego-umi-synthetic.log
           grep -q 'p95 reprojection=' /tmp/ego-umi-synthetic.log
           grep -q 'p95 world tool translation=' /tmp/ego-umi-synthetic.log
+      - name: Validate Pi05 LIBERO action contract without GPU
+        run: |
+          set -euo pipefail
+          python3 examples/pi05_libero_contract_demo.py | tee /tmp/pi05-libero-contract.log
+          grep -q 'PASS delta-contract:' /tmp/pi05-libero-contract.log
+          grep -q 'PASS q01/q99 normalization' /tmp/pi05-libero-contract.log
+          grep -q 'PASS loss denominator:' /tmp/pi05-libero-contract.log
+          grep -q 'PASS ALL:' /tmp/pi05-libero-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -157,3 +165,14 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: EGO UMI calibration tutorial HTML/KaTeX and both new diagrams."
+          check_html "/01-foundations/vla/pi05-libero-data-loss-lora-source-guide/" 9
+          for name in pi05-libero-contract-pipeline pi05-libero-loss-mask; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/pi05-libero-diagram.svg
+            grep -q '<svg' /tmp/pi05-libero-diagram.svg
+            grep -q '</svg>' /tmp/pi05-libero-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: π0.5 LIBERO data contract tutorial HTML/KaTeX and 2 diagrams."
+
