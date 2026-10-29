@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1380" height="600" viewBox="0 0 1380 600">
+<title>π₀.₅ 的 7D 有效动作与 25D 填充动作损失</title>
+<desc>LIBERO 7 维动作填充到 32 维，官方默认 Flow MSE 沿 32 维求均值，填充维也产生噪声目标与损失。</desc>
+<rect width="1380" height="600" fill="#0e1726"/>
+<g font-family="Arial, Noto Sans CJK SC, sans-serif">
+<text x="690" y="56" font-size="32" text-anchor="middle" fill="#f4f8ff" font-weight="bold">7D → 32D：为什么 padding 也会影响 Flow Loss？</text>
+<text x="690" y="96" font-size="19" fill="#bbcedf" text-anchor="middle">训练张量 [B, H=10, D=32]；默认按 D=32 求 MSE（源码并无显式有效动作维 mask）</text>
+<text x="55" y="153" font-size="22" fill="#ffdb94">有效机器人控制维 0–6</text>
+<text x="340" y="153" font-size="22" fill="#aeb8c5">padding 维 7–31</text>
+<g>
+<rect x="55" y="189" width="270" height="122" rx="10" fill="#713b26" stroke="#ffc278" stroke-width="2"/>
+<rect x="335" y="189" width="989" height="122" rx="10" fill="#2c394a" stroke="#899ab0" stroke-width="2"/>
+<g stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.2">
+<path d="M93 189V311 M131 189V311 M169 189V311 M207 189V311 M245 189V311 M283 189V311"/>
+<path d="M375 189V311 M415 189V311 M455 189V311 M495 189V311 M535 189V311 M575 189V311 M615 189V311 M655 189V311 M695 189V311 M735 189V311 M775 189V311 M815 189V311 M855 189V311 M895 189V311 M935 189V311 M975 189V311 M1015 189V311 M1055 189V311 M1095 189V311 M1135 189V311 M1175 189V311 M1215 189V311 M1255 189V311 M1295 189V311"/>
+</g>
+<text x="190" y="242" text-anchor="middle" fill="white" font-size="23">7 个真实控制量</text>
+<text x="190" y="273" text-anchor="middle" fill="#fbd8b6" font-size="18">训练+部署都要解码</text>
+<text x="830" y="242" text-anchor="middle" fill="white" font-size="23">25 个用于张量填充的维度</text>
+<text x="830" y="273" text-anchor="middle" fill="#c5d2e2" font-size="18">训练目标仍为 noise − 0；推理最终丢弃</text>
+</g>
+<rect x="55" y="350" width="1270" height="154" rx="16" fill="#1a2a3f"/>
+<text x="88" y="396" font-size="24" fill="#deebff">官方 loss：每个时间步对全部 32 维计算平方误差并平均；训练 step 再跨 B×H 求均值</text>
+<text x="88" y="442" font-size="24" fill="#ffe3a9">教学对照：若仅 7 维存在平方误差 1，padding 维误差为 0，则 full32 = 7/32 ≈ 0.219</text>
+<text x="88" y="478" font-size="20" fill="#9fc8e8">注意：真实训练的 25 个 padding 维也受噪声监督，不会天然为零；0.219 只是构造的反例。</text>
+<text x="690" y="557" font-size="18" fill="#b6c9dc" text-anchor="middle">是否引入 masked loss 是研究性改动，必须重新比较梯度尺度与机器人任务成功率。</text>
+</g></svg>
