@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="800" viewBox="0 0 1480 800">
+<title>π₀.₅ LIBERO 数据契约：训练与部署双路径</title>
+<desc>从 LeRobot 数据集，经 Repack、LiberoInputs、分位数归一化、ModelTransform、Flow Matching 到部署的反归一化与动作提取。</desc>
+<rect width="1480" height="800" fill="#0c1525"/>
+<g font-family="Arial, Noto Sans CJK SC, sans-serif">
+<text x="740" y="59" font-size="34" fill="#f4f8ff" text-anchor="middle" font-weight="bold">π₀.₅ × LIBERO：训练 / 推理的数据契约</text>
+<text x="740" y="94" font-size="19" fill="#adc4dd" text-anchor="middle">source pinned: openpi@215abfb · 物理动作语义与 norm stats 必须保持一致</text>
+<rect x="45" y="140" width="1390" height="278" rx="23" fill="#14263d" stroke="#467cae" stroke-width="2"/>
+<text x="83" y="181" font-size="25" fill="#7ec2fa" font-weight="bold">TRAIN · LeRobot → Flow Matching 监督</text>
+<g font-size="18" text-anchor="middle">
+<rect x="75" y="224" width="202" height="139" rx="15" fill="#1a3856" stroke="#76b8fa"/><text x="176" y="252" fill="white">LeRobot 样本</text><text x="176" y="283" fill="#d3ebfa">RGB / wrist / task</text><text x="176" y="313" fill="#d3ebfa">state, action [10,7]</text><text x="176" y="341" fill="#e8c87d">已是 DELTA</text>
+<rect x="312" y="224" width="202" height="139" rx="15" fill="#1a3856" stroke="#76b8fa"/><text x="413" y="252" fill="white">Repack + LiberoInputs</text><text x="413" y="283" fill="#d3ebfa">3 camera slots</text><text x="413" y="313" fill="#d3ebfa">缺失腕图 → 0</text><text x="413" y="341" fill="#e8c87d">image_mask=False</text>
+<rect x="549" y="224" width="202" height="139" rx="15" fill="#35402a" stroke="#f2c46e"/><text x="650" y="252" fill="white">Quantile Normalize</text><text x="650" y="283" fill="#fff0cc">q01 / q99</text><text x="650" y="313" fill="#fff0cc">训练资产写入 ckpt</text><text x="650" y="341" fill="#ffd38a">不重复 Delta</text>
+<rect x="786" y="224" width="202" height="139" rx="15" fill="#1a3856" stroke="#76b8fa"/><text x="887" y="252" fill="white">ModelTransform</text><text x="887" y="283" fill="#d3ebfa">resize 224 / tokenize</text><text x="887" y="313" fill="#d3ebfa">pad 7 → 32</text><text x="887" y="341" fill="#e8c87d">H=10, D=32</text>
+<rect x="1023" y="224" width="377" height="139" rx="15" fill="#253b54" stroke="#76b8fa"/><text x="1211" y="252" fill="white">Flow Matching 训练</text><text x="1211" y="284" fill="#d3ebfa">xτ = τ·noise + (1−τ)·action</text><text x="1211" y="315" fill="#d3ebfa">target = noise − action</text><text x="1211" y="344" fill="#e8c87d">MSE / 32D，非自动 valid mask</text>
+</g>
+<g font-size="31" fill="#a5d7ff"><text x="285" y="309">→</text><text x="521" y="309">→</text><text x="758" y="309">→</text><text x="995" y="309">→</text></g>
+<rect x="45" y="445" width="1390" height="274" rx="23" fill="#132e2b" stroke="#45b7a0" stroke-width="2"/>
+<text x="83" y="489" font-size="25" fill="#80e0c5" font-weight="bold">INFERENCE · 同一数据契约 → 安全执行</text>
+<g font-size="18" text-anchor="middle">
+<rect x="75" y="530" width="290" height="134" rx="15" fill="#214540" stroke="#78ddc2"/><text x="220" y="562" fill="white">机器人当前观测</text><text x="220" y="595" fill="#d7f5eb">与训练相同图像 / state 映射</text><text x="220" y="625" fill="#a9ebd6">checkpoint 的 norm stats</text>
+<rect x="405" y="530" width="286" height="134" rx="15" fill="#214540" stroke="#78ddc2"/><text x="548" y="562" fill="white">Prefix KV Cache</text><text x="548" y="595" fill="#d7f5eb">10 次 Flow 去噪（默认）</text><text x="548" y="625" fill="#a9ebd6">输出动作块 [10,32]</text>
+<rect x="731" y="530" width="286" height="134" rx="15" fill="#214540" stroke="#78ddc2"/><text x="874" y="562" fill="white">Unnormalize</text><text x="874" y="595" fill="#d7f5eb">恢复物理单位</text><text x="874" y="625" fill="#a9ebd6">LiberoOutputs → 前 7 维</text>
+<rect x="1057" y="530" width="343" height="134" rx="15" fill="#214540" stroke="#78ddc2"/><text x="1228" y="562" fill="white">控制闭环</text><text x="1228" y="595" fill="#d7f5eb">只执行 K ≤ H 步，重新观测</text><text x="1228" y="625" fill="#a9ebd6">限速 / 急停 / 失败录制</text>
+</g>
+<g font-size="31" fill="#85dbc1"><text x="373" y="605">→</text><text x="698" y="605">→</text><text x="1025" y="605">→</text></g>
+<text x="740" y="763" font-size="19" text-anchor="middle" fill="#c0d2e4">公式、接口和顺序基于官方源码；本图仅是教学重绘，不代表已经运行 GPU / 真机实验。</text>
+</g></svg>
