@@ -14,12 +14,14 @@ const pages=[
   ['01-foundations/vla/delta-flow-matching',12],
   ['01-foundations/vla/pi0-joint-attention-code-audit',8],
   ['02-data-engineering/ego-umi-spatiotemporal-calibration',15],
+  ['05-control/pact-vla-precommit-flowres',12],
 ];
 const diagrams=[
   ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),
   'delta-flow-architecture.svg', 'delta-flow-timeline.svg',
   'pi0-joint-attention-dataflow.svg', 'pi0-joint-attention-mask.svg',
-  'ego-umi-calibration-chain.svg', 'ego-umi-calibration-qc.svg'
+  'ego-umi-calibration-chain.svg', 'ego-umi-calibration-qc.svg',
+  'pact-vla-system.svg', 'pact-vla-detail.svg'
 ];
 let issues=[];
 for(const [slug,minMath] of pages){
