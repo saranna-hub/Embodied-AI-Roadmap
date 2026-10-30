@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="630" viewBox="0 0 1400 630" role="img" aria-label="PACT-VLA 流程：旧观测生成多候选，新观测验证，截止时刻选一个动作块">
+<rect width="1400" height="630" fill="#101b2b"/>
+<text x="700" y="57" font-size="32" text-anchor="middle" fill="#f5f8ff" font-family="sans-serif">PACT-VLA：生成阶段与提交前验证分离</text>
+<g font-family="sans-serif" font-size="20" text-anchor="middle">
+<rect x="35" y="130" width="220" height="140" rx="16" fill="#203e62" stroke="#7fc6ff" stroke-width="3"/>
+<text x="145" y="177" fill="#eaf7ff">t：旧观测 oₜ</text><text x="145" y="214" fill="#f5f8ff">当前语言 lₜ</text>
+<rect x="300" y="130" width="250" height="140" rx="16" fill="#203e62" stroke="#7fc6ff" stroke-width="3"/>
+<text x="425" y="170" fill="#eaf7ff">冻结 VLA</text><text x="425" y="205" fill="#eaf7ff">N 个动作块候选</text><text x="425" y="240" fill="#bdd6f4">不同采样噪声</text>
+<rect x="610" y="130" width="235" height="140" rx="16" fill="#294b3d" stroke="#86e4b7" stroke-width="3"/>
+<text x="727" y="175" fill="#edfff3">t+d−1：新观测</text><text x="727" y="212" fill="#edfff3">视觉前缀 / KV</text>
+<rect x="904" y="130" width="220" height="140" rx="16" fill="#574124" stroke="#f5ce79" stroke-width="3"/>
+<text x="1014" y="174" fill="#fff3d8">FlowRes 评分</text><text x="1014" y="207" fill="#fff3d8">N×M 批量前向</text><text x="1014" y="239" fill="#ffe4b4">最小 Eₙ 获胜</text>
+<rect x="1180" y="130" width="185" height="140" rx="16" fill="#294b3d" stroke="#86e4b7" stroke-width="3"/>
+<text x="1272" y="180" fill="#e9fff1">t+d 提交</text><text x="1272" y="214" fill="#e9fff1">完整动作块</text>
+<g stroke="#91bad5" stroke-width="4" fill="none"><path d="M255 200 H300"/><path d="M550 200 H610"/><path d="M845 200 H904"/><path d="M1124 200 H1180"/></g>
+<rect x="115" y="356" width="1160" height="170" rx="18" fill="#1a3048" stroke="#4b6f90" stroke-width="2"/>
+<text x="695" y="398" fill="#e9f5ff" font-size="26">动作执行时间线：旧动作持续执行，下一块在确定时刻统一切换</text>
+<path d="M200 458 H1200" stroke="#8ebbd9" stroke-width="8"/>
+<circle cx="280" cy="458" r="12" fill="#8cc8ff"/><circle cx="730" cy="458" r="12" fill="#8fe0b6"/><circle cx="1130" cy="458" r="12" fill="#f3c872"/>
+<text x="280" y="500" fill="#d5e6fb">t 发起生成</text><text x="730" y="500" fill="#d5e6fb">t+d−1 读取最新完整包</text><text x="1130" y="500" fill="#d5e6fb">t+d 切换</text>
+<text x="700" y="580" fill="#9db6ca" font-size="18">教学重绘；按原论文时序，验证必须满足截止时间，不能把“同一控制步延迟”说成“无额外计算”。</text>
+</g></svg>
