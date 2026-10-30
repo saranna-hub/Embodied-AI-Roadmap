@@ -40,6 +40,15 @@ jobs:
           grep -q 'PASS q01/q99 normalization' /tmp/pi05-libero-contract.log
           grep -q 'PASS loss denominator:' /tmp/pi05-libero-contract.log
           grep -q 'PASS ALL:' /tmp/pi05-libero-contract.log
+      - name: Validate PACT-VLA FlowRes synthetic contract without GPU
+        run: |
+          set -euo pipefail
+          python3 examples/pact_flowres_cpu_demo.py | tee /tmp/pact-flowres-cpu.log
+          grep -q 'PASS precommit switches candidate:' /tmp/pact-flowres-cpu.log
+          grep -q 'PASS masked 7 of 32 dims:' /tmp/pact-flowres-cpu.log
+          grep -q 'PASS executed 5 of 50 positions scored' /tmp/pact-flowres-cpu.log
+          grep -q 'PASS latency bucket:' /tmp/pact-flowres-cpu.log
+          grep -q 'PASS ALL:' /tmp/pact-flowres-cpu.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -175,4 +184,14 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: π0.5 LIBERO data contract tutorial HTML/KaTeX and 2 diagrams."
+          check_html "/05-control/pact-vla-precommit-flowres/" 12
+          for name in pact-vla-system pact-vla-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/pact-vla-diagram.svg
+            grep -q '<svg' /tmp/pact-vla-diagram.svg
+            grep -q '</svg>' /tmp/pact-vla-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: PACT-VLA HTML/KaTeX, two new SVGs, CPU contract test and pre-existing baseline gates."
 
