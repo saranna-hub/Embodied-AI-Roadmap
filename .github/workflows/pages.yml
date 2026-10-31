@@ -49,6 +49,16 @@ jobs:
           grep -q 'PASS executed 5 of 50 positions scored' /tmp/pact-flowres-cpu.log
           grep -q 'PASS latency bucket:' /tmp/pact-flowres-cpu.log
           grep -q 'PASS ALL:' /tmp/pact-flowres-cpu.log
+      - name: Validate MINERVA CPU synthetic evaluation contract
+        run: |
+          set -euo pipefail
+          python3 examples/minerva_eval_contract_demo.py | tee /tmp/minerva-contract.log
+          grep -q 'PASS H/K/E distinct:' /tmp/minerva-contract.log
+          grep -q 'PASS temporal ensemble:' /tmp/minerva-contract.log
+          grep -q 'PASS episode boundary:' /tmp/minerva-contract.log
+          grep -q 'PASS Wilson interval:' /tmp/minerva-contract.log
+          grep -q 'PASS task-ID permutation:' /tmp/minerva-contract.log
+          grep -q 'PASS ALL:' /tmp/minerva-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -194,4 +204,14 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: PACT-VLA HTML/KaTeX, two new SVGs, CPU contract test and pre-existing baseline gates."
+          check_html "/06-simulation/minerva-libero-capacity-and-generalization/" 10
+          for name in minerva-libero-system minerva-libero-protocol; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/minerva-diagram.svg
+            grep -q '<svg' /tmp/minerva-diagram.svg
+            grep -q '</svg>' /tmp/minerva-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: MINERVA tutorial math, system/detail SVGs, CPU synthetic contract and original baseline checks."
 
