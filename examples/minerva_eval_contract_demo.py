@@ -62,7 +62,7 @@ def main() -> None:
     assert len(merged) == 7
     assert 6.0 <= merged[0] <= 6.20
     assert merged[1:] == (0.0,) * 6
-    assert len([a for start, acts in chunks if 0 <= now - start < len(acts)]) == 7
+    assert len([(start, acts) for start, acts in chunks if 0 <= now - start < len(acts)]) == 7
     print("PASS temporal ensemble: overlap indices and 7D action dimensions")
 
     indices, mask = episode_action_indices(start=10, episode_length=12, horizon=16)
