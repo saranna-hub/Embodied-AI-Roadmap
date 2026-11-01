@@ -16,6 +16,7 @@ const pages=[
   ['02-data-engineering/ego-umi-spatiotemporal-calibration',15],
   ['05-control/pact-vla-precommit-flowres',12],
   ['06-simulation/minerva-libero-capacity-and-generalization',10],
+  ['04-human-to-robot/wing-ego-spectral-transfer',12],
 ];
 const diagrams=[
   ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),
@@ -23,7 +24,8 @@ const diagrams=[
   'pi0-joint-attention-dataflow.svg', 'pi0-joint-attention-mask.svg',
   'ego-umi-calibration-chain.svg', 'ego-umi-calibration-qc.svg',
   'pact-vla-system.svg', 'pact-vla-detail.svg',
-  'minerva-libero-system.svg', 'minerva-libero-protocol.svg'
+  'minerva-libero-system.svg', 'minerva-libero-protocol.svg',
+  'wing-spectral-system.svg', 'wing-spectral-detail.svg'
 ];
 let issues=[];
 for(const [slug,minMath] of pages){
