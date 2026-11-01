@@ -59,6 +59,15 @@ jobs:
           grep -q 'PASS Wilson interval:' /tmp/minerva-contract.log
           grep -q 'PASS task-ID permutation:' /tmp/minerva-contract.log
           grep -q 'PASS ALL:' /tmp/minerva-contract.log
+      - name: Validate WING camera and spectral guidance CPU contract
+        run: |
+          set -euo pipefail
+          python3 examples/wing_spectral_contract_demo.py | tee /tmp/wing-spectral-contract.log
+          grep -q 'PASS camera motion removed:' /tmp/wing-spectral-contract.log
+          grep -q 'PASS interaction residual retained:' /tmp/wing-spectral-contract.log
+          grep -q 'PASS DCT and spectral bandwidth:' /tmp/wing-spectral-contract.log
+          grep -q 'PASS no-future inference contract:' /tmp/wing-spectral-contract.log
+          grep -q 'PASS ALL:' /tmp/wing-spectral-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -214,4 +223,15 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: MINERVA tutorial math, system/detail SVGs, CPU synthetic contract and original baseline checks."
+          check_html "/04-human-to-robot/wing-ego-spectral-transfer/" 12
+          for name in wing-spectral-system wing-spectral-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/wing-spectral-diagram.svg
+            grep -q '<svg' /tmp/wing-spectral-diagram.svg
+            grep -q '</svg>' /tmp/wing-spectral-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: WING HTML, math, two SVGs, CPU contract, and all original gates."
+
 
