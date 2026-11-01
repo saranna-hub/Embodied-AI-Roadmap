@@ -19,3 +19,7 @@ sidebar:
 ## RGB-only EGO 训练 π₀.₅：新增源码级路线
 
 **[只有 RGB 的 EGO 如何训练 π₀.₅：监督构造、四条路线与端到端验收](./ego-rgb-only-to-pi05/)** —— 逐行核对 openpi `compute_loss` 的必要动作标签、分析视频自监督/人类 3D 伪标签/UMI 动作锚/机器人化数据生成各自能监督哪些参数，并给出世界系标定、同步、动作 mask、数据契约和真机消融方案。特别强调「只有像素」不等于「可以直接计算 Flow Matching 动作损失」。
+
+## 新增：WING——RGB-only EGO 的交互潜动作与频谱迁移
+
+**[WING 深度教程：相机运动解耦、WING-LAM、DCT 与门控 VLA 训练](./wing-ego-spectral-transfer/)** —— 衔接上面的 RGB-only EGO 路线，讲清为什么“头动引起的光流”不能当机器人的动作、如何蒸馏 RGB-only latent、为何只用低频作动作引导；附两张机制图和独立 CPU 合成契约验证（作者原版代码尚未公开）。
