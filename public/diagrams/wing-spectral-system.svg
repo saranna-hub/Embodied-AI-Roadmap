@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="770" viewBox="0 0 1500 770">
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101b2e"/><stop offset="1" stop-color="#152f42"/></linearGradient>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#9fc9ed"/></marker>
+  <style>
+  .title{font:700 32px system-ui,"Noto Sans SC",sans-serif;fill:#f4faff}
+  .head{font:700 23px system-ui,"Noto Sans SC",sans-serif;fill:#ffffff}
+  .txt{font:500 18px system-ui,"Noto Sans SC",sans-serif;fill:#d9eaf8}
+  .note{font:500 17px system-ui,"Noto Sans SC",sans-serif;fill:#c6dbeb}
+  .link{stroke:#9fc9ed;stroke-width:3;fill:none;marker-end:url(#arrow)}
+  </style>
+</defs>
+<rect width="1500" height="770" fill="url(#bg)"/>
+<text class="title" x="750" y="62" text-anchor="middle">WING｜人类第一视角视频 → 可迁移交互结构 → 机器人动作</text>
+<text class="note" x="750" y="95" text-anchor="middle">教学重绘 · 黄色 = 仅训练阶段可见；蓝色 = 推理阶段可用</text>
+<rect x="30" y="146" width="290" height="210" rx="20" fill="#244060" stroke="#79b9f3" stroke-width="2"/>
+<text class="head" x="175" y="192" text-anchor="middle">① EGO 视频训练集</text>
+<text class="txt" x="175" y="232" text-anchor="middle">帧对 RGB(t), RGB(t+Δ)</text>
+<text class="txt" x="175" y="271" text-anchor="middle">点跟踪 + 手物区域</text>
+<text class="txt" x="175" y="311" text-anchor="middle">头部运动是主要干扰</text>
+<rect x="385" y="146" width="305" height="210" rx="20" fill="#2c4d4f" stroke="#85dcbf" stroke-width="2"/>
+<text class="head" x="538" y="192" text-anchor="middle">② WING-LAM</text>
+<text class="txt" x="538" y="232" text-anchor="middle">全局相机 Warp</text>
+<text class="txt" x="538" y="272" text-anchor="middle">交互残差 / Teacher</text>
+<text class="txt" x="538" y="312" text-anchor="middle">RGB Student 蒸馏</text>
+<rect x="757" y="146" width="300" height="210" rx="20" fill="#58472b" stroke="#ebc678" stroke-width="2"/>
+<text class="head" x="907" y="192" text-anchor="middle">③ 频域交互结构</text>
+<text class="txt" x="907" y="232" text-anchor="middle">Latent 序列 Z [H,D]</text>
+<text class="txt" x="907" y="272" text-anchor="middle">时间轴 DCT-II</text>
+<text class="txt" x="907" y="312" text-anchor="middle">保留前 K 个低频系数</text>
+<rect x="1110" y="146" width="355" height="210" rx="20" fill="#314772" stroke="#c6a8fa" stroke-width="2"/>
+<text class="head" x="1288" y="192" text-anchor="middle">④ 策略学习（训练）</text>
+<text class="txt" x="1288" y="232" text-anchor="middle">当前观测预测谱引导</text>
+<text class="txt" x="1288" y="272" text-anchor="middle">门控 Cross-Attention</text>
+<text class="txt" x="1288" y="312" text-anchor="middle">机器人动作 Flow Loss</text>
+<path class="link" d="M320 251H385"/><path class="link" d="M690 251H757"/><path class="link" d="M1057 251H1110"/>
+<rect x="55" y="450" width="620" height="225" rx="20" fill="#203a52" stroke="#8ac6fa" stroke-width="2"/>
+<text class="head" x="365" y="492" text-anchor="middle">推理：没有未来真值视频</text>
+<text class="txt" x="365" y="533" text-anchor="middle">当前相机图像 + 语言指令 + 机器人状态</text>
+<text class="txt" x="365" y="577" text-anchor="middle">已训练谱预测器 → 低频引导 Token</text>
+<text class="txt" x="365" y="622" text-anchor="middle">不能把训练时的未来 latent 偷渡进来</text>
+<rect x="820" y="450" width="620" height="225" rx="20" fill="#234b41" stroke="#8ae5c0" stroke-width="2"/>
+<text class="head" x="1130" y="492" text-anchor="middle">执行：可落地的 Robot Action</text>
+<text class="txt" x="1130" y="533" text-anchor="middle">预训练 VLA / WAM + 门控引导</text>
+<text class="txt" x="1130" y="577" text-anchor="middle">动作块 [B, T_action, D_robot]</text>
+<text class="txt" x="1130" y="622" text-anchor="middle">归一化反变换 → 控制 → 闭环评估</text>
+<path class="link" d="M675 560H820"/>
+<path d="M1280 356V398H365V447" stroke="#ebc678" stroke-width="3" fill="none" stroke-dasharray="9 7"/>
+<text class="note" x="720" y="403" text-anchor="middle">训练好的谱预测器（不是未来视频）</text>
+<text class="note" x="750" y="736" text-anchor="middle">官方方法依据：WING 作者项目页 / arXiv:2610.03607；结构图简化了网络内部细节</text>
+</svg>
