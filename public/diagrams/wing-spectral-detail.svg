@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1460" height="840" viewBox="0 0 1460 840">
+<defs><style>
+.title{font:700 30px system-ui,"Noto Sans SC",sans-serif;fill:#f0f8ff}
+.h{font:700 23px system-ui,"Noto Sans SC",sans-serif;fill:#f1f8fe}
+.t{font:500 18px system-ui,"Noto Sans SC",sans-serif;fill:#dceefa}
+.small{font:500 16px system-ui,"Noto Sans SC",sans-serif;fill:#bcd4e5}
+.grid{stroke:#354b63;stroke-width:1}
+</style></defs>
+<rect width="1460" height="840" fill="#101d30"/>
+<text x="730" y="58" text-anchor="middle" class="title">WING 核心机制：相机运动补偿 + 时间低频迁移</text>
+<rect x="35" y="115" width="660" height="620" rx="20" fill="#192f49" stroke="#81bcf3" stroke-width="2"/>
+<text x="360" y="157" text-anchor="middle" class="h">A · 相机运动 ≠ 手物交互</text>
+<rect x="71" y="198" width="260" height="192" rx="13" fill="#263f58"/>
+<rect x="390" y="198" width="260" height="192" rx="13" fill="#263f58"/>
+<text x="201" y="227" text-anchor="middle" class="t">原始相邻帧</text>
+<text x="520" y="227" text-anchor="middle" class="t">用背景估计全局 Warp</text>
+<g fill="#8bb7db">
+<circle cx="110" cy="266" r="8"/><circle cx="196" cy="265" r="8"/><circle cx="285" cy="310" r="8"/><circle cx="133" cy="342" r="8"/><circle cx="249" cy="355" r="8"/>
+<circle cx="440" cy="272" r="8"/><circle cx="524" cy="264" r="8"/><circle cx="612" cy="314" r="8"/><circle cx="464" cy="348" r="8"/><circle cx="579" cy="349" r="8"/>
+</g>
+<path d="M151 313Q200 257 243 308" fill="none" stroke="#f4ba72" stroke-width="6"/>
+<path d="M462 313Q512 263 565 299" fill="none" stroke="#f4ba72" stroke-width="6"/>
+<text x="360" y="438" text-anchor="middle" class="t">先从背景估计全局运动 W，再把下一帧反变换</text>
+<text x="360" y="481" text-anchor="middle" class="t">残差 r = W⁻¹(p′) − p</text>
+<rect x="81" y="532" width="568" height="145" rx="15" fill="#254e48"/>
+<text x="365" y="567" text-anchor="middle" class="t">背景点残差 ≈ 0；手物交互残差保留</text>
+<text x="365" y="604" text-anchor="middle" class="t">Teacher 双分支 → RGB Student 蒸馏</text>
+<text x="365" y="643" text-anchor="middle" class="small">强视差/大深度差：单个全局 Warp 可能失效</text>
+<rect x="765" y="115" width="660" height="620" rx="20" fill="#1b3447" stroke="#90dcb7" stroke-width="2"/>
+<text x="1095" y="157" text-anchor="middle" class="h">B · 低频潜动作 → 谱条件</text>
+<rect x="805" y="206" width="572" height="235" rx="14" fill="#243d4d"/>
+<g stroke="#2f6b7e" stroke-width="2" fill="none">
+<path d="M827 321L1347 321"/>
+<path d="M833 240L833 393"/>
+</g>
+<path d="M835 314C890 304 917 260 959 262S1025 352 1068 330S1137 243 1194 265S1275 347 1350 320" stroke="#7ce1b4" stroke-width="5" fill="none"/>
+<path d="M835 301L866 330 898 296 931 331 964 295 997 334 1030 302 1063 343 1096 294 1129 331 1162 298 1195 333 1228 306 1261 333 1294 300 1327 334 1350 316" stroke="#faaf77" stroke-width="3" fill="none" opacity=".85"/>
+<text x="1093" y="230" text-anchor="middle" class="t">人/机器人同语义任务：快慢和抖动不同</text>
+<rect x="806" y="482" width="573" height="193" rx="15" fill="#29475a"/>
+<text x="1093" y="517" text-anchor="middle" class="t">DCT-II 沿时间维做变换；仅保留 K 个低频</text>
+<g fill="#7ee1b7"><rect x="858" y="566" width="39" height="75"/><rect x="909" y="573" width="39" height="68"/><rect x="960" y="585" width="39" height="56"/><rect x="1011" y="602" width="39" height="39"/></g>
+<g fill="#7b91a1"><rect x="1062" y="623" width="39" height="18"/><rect x="1113" y="618" width="39" height="23"/><rect x="1164" y="626" width="39" height="15"/><rect x="1215" y="613" width="39" height="28"/></g>
+<text x="1058" y="663" text-anchor="middle" class="small">K=4 / H=8（论文消融的最佳配置）</text>
+<text x="730" y="791" text-anchor="middle" class="small">频域截断发生在潜在引导信号，而非直接低通机器人可执行动作。</text>
+</svg>
