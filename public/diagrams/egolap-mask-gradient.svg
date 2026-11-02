@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="770" viewBox="0 0 1360 770" role="img" aria-label="EgoLAP block attention mask and gradient boundary">
+<rect width="1360" height="770" fill="#10192b"/>
+<g font-family="Noto Sans CJK SC,Arial,sans-serif">
+<text x="680" y="58" font-size="34" fill="#f4f9ff" font-weight="bold" text-anchor="middle">EgoLAP：三段 Attention Mask 与梯度隔离</text>
+<text x="680" y="90" font-size="18" fill="#c2d4e8" text-anchor="middle">行是 Query，列是 Key。P=前缀；T=理由+语言动作（训练期）；A=30 个动作 Token</text>
+<text x="376" y="152" font-size="26" fill="#ecf4ff" text-anchor="middle">可见性矩阵</text>
+<g font-size="24" fill="#e9f2ff" text-anchor="middle"><text x="272" y="204">Key: P</text><text x="415" y="204">Key: T</text><text x="558" y="204">Key: A</text></g>
+<g font-size="23" fill="#e9f2ff"><text x="60" y="283">Query P</text><text x="60" y="424">Query T</text><text x="60" y="565">Query A</text></g>
+<g stroke="#526783" stroke-width="2"><rect x="215" y="226" width="117" height="117" rx="10" fill="#26714d"/><rect x="358" y="226" width="117" height="117" rx="10" fill="#343d4e"/><rect x="501" y="226" width="117" height="117" rx="10" fill="#343d4e"/><rect x="215" y="367" width="117" height="117" rx="10" fill="#26714d"/><rect x="358" y="367" width="117" height="117" rx="10" fill="#bb822b"/><rect x="501" y="367" width="117" height="117" rx="10" fill="#343d4e"/><rect x="215" y="508" width="117" height="117" rx="10" fill="#26714d"/><rect x="358" y="508" width="117" height="117" rx="10" fill="#343d4e"/><rect x="501" y="508" width="117" height="117" rx="10" fill="#26714d"/></g>
+<g font-size="30" font-weight="bold" fill="#fff" text-anchor="middle"><text x="274" y="295">✓</text><text x="417" y="295">×</text><text x="560" y="295">×</text><text x="274" y="436">✓</text><text x="417" y="436">△</text><text x="560" y="436">×</text><text x="274" y="577">✓</text><text x="417" y="577">×</text><text x="560" y="577">✓</text></g>
+<text x="340" y="668" fill="#f3ca80" font-size="18" text-anchor="middle">△：T 内严格因果，不能读取未来文字</text>
+<rect x="715" y="169" width="596" height="191" rx="17" fill="#182f45" stroke="#65b7e9" stroke-width="3"/>
+<text x="1013" y="210" font-size="27" fill="#b7e8ff" font-weight="bold" text-anchor="middle">训练：双损失，梯度各走各路</text>
+<text x="750" y="258" font-size="22" fill="#ffe3ac">文字 CE → VLM θ（知识对齐）</text>
+<text x="750" y="302" font-size="22" fill="#bff6d5">FM loss → Action Expert φ</text>
+<rect x="715" y="384" width="596" height="210" rx="17" fill="#1c3b34" stroke="#69d0a1" stroke-width="3"/>
+<text x="1013" y="429" font-size="27" fill="#bdffdc" font-weight="bold" text-anchor="middle">推理：不解码 T，不读未来答案</text>
+<text x="750" y="479" font-size="21" fill="#ecfff6">当前图像 / 任务 / state → Prefix</text>
+<text x="750" y="521" font-size="21" fill="#ecfff6">噪声动作 30×14 → 10次反向流积分</text>
+<text x="750" y="563" font-size="21" fill="#bdffdc">→ 当前机器人可执行动作块</text>
+<rect x="715" y="625" width="596" height="96" rx="13" fill="#4d2a2e" stroke="#ee8795" stroke-width="2"/>
+<text x="1013" y="663" fill="#ffdadf" font-size="20" text-anchor="middle">禁止：P 偷看 T 后，A 跨层读取被污染的 P</text>
+<text x="1013" y="695" fill="#ffdadf" font-size="19" text-anchor="middle">Stop-gradient 不能替代 Attention Mask</text>
+<g font-size="17" fill="#b5cde5" text-anchor="middle"><text x="360" y="715">绿色：允许 · 黄色：因果 · 灰色：禁止</text></g>
+</g></svg>
