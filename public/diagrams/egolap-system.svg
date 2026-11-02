@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="860" viewBox="0 0 1440 860" role="img" aria-label="EgoLAP system diagram showing human and robot inputs, language action and reasoning auxiliary targets, flow matching expert, train and inference">
+<rect width="1440" height="860" fill="#111a2d"/>
+<g font-family="Noto Sans CJK SC,Arial,sans-serif">
+<text x="720" y="59" font-size="36" font-weight="700" fill="#f8faff" text-anchor="middle">EgoLAP：双域数据 → 共享运动语言 → 连续动作</text>
+<text x="720" y="94" font-size="18" fill="#a9bed7" text-anchor="middle">论文 Fig. 3 / Appendix A.1 教学重绘 · 黄色：文本监督仅训练期 · 绿色：流匹配训练与推理</text>
+<rect x="35" y="139" width="322" height="158" rx="18" fill="#1b3150" stroke="#56b1ec" stroke-width="3"/>
+<text x="196" y="176" font-size="27" font-weight="bold" fill="#bfe9ff" text-anchor="middle">Human EGO</text>
+<text x="196" y="218" font-size="20" fill="#fff" text-anchor="middle">RGB + head-camera 3D 手姿</text>
+<text x="196" y="251" font-size="18" fill="#c2d9ee" text-anchor="middle">指令 / 当前手状态 / 一秒轨迹</text>
+<rect x="35" y="343" width="322" height="158" rx="18" fill="#1b3150" stroke="#56b1ec" stroke-width="3"/>
+<text x="196" y="380" font-size="27" font-weight="bold" fill="#bfe9ff" text-anchor="middle">Robot demos</text>
+<text x="196" y="422" font-size="20" fill="#fff" text-anchor="middle">RGB + EE 状态 + Action</text>
+<text x="196" y="455" font-size="18" fill="#c2d9ee" text-anchor="middle">单臂 / 双臂 / 不同平台</text>
+<rect x="425" y="175" width="282" height="172" rx="18" fill="#1e3953" stroke="#73c9fa" stroke-width="2"/>
+<text x="566" y="211" font-size="26" font-weight="bold" fill="#b9e9ff" text-anchor="middle">前处理</text>
+<text x="566" y="255" font-size="20" fill="#eff7ff" text-anchor="middle">坐标规范化 + 量化</text>
+<text x="566" y="286" font-size="19" fill="#e8f2ff" text-anchor="middle">动作 30 × 14</text>
+<text x="566" y="316" font-size="19" fill="#e8f2ff" text-anchor="middle">状态 20 维 → 256 bins</text>
+<rect x="765" y="135" width="325" height="172" rx="18" fill="#3d3526" stroke="#f0c269" stroke-width="3"/>
+<text x="928" y="173" font-size="27" font-weight="bold" fill="#ffe5ad" text-anchor="middle">语言动作 (What)</text>
+<text x="928" y="214" font-size="20" fill="#fff" text-anchor="middle">一秒增量：cm / 5°</text>
+<text x="928" y="249" font-size="19" fill="#ffe6b5" text-anchor="middle">可解析的左/右手动作句</text>
+<text x="928" y="284" font-size="17" fill="#f8d6a7" text-anchor="middle">全部人/机轨迹均可生成</text>
+<rect x="765" y="347" width="325" height="166" rx="18" fill="#3d3526" stroke="#f0c269" stroke-width="3"/>
+<text x="928" y="387" font-size="27" font-weight="bold" fill="#ffe5ad" text-anchor="middle">局部物理理由 (Why)</text>
+<text x="928" y="427" font-size="20" fill="#fff" text-anchor="middle">接触 / 空间关系 / 可供性</text>
+<text x="928" y="465" font-size="18" fill="#f8d6a7" text-anchor="middle">32% batch 有标注，训练期</text>
+<rect x="1150" y="160" width="255" height="311" rx="18" fill="#244038" stroke="#65d59c" stroke-width="3"/>
+<text x="1278" y="205" font-size="26" fill="#b8ffdb" font-weight="bold" text-anchor="middle">MoT Backbone</text>
+<text x="1278" y="241" font-size="19" fill="#e6fdf2" text-anchor="middle">SigLIP + VLM</text>
+<text x="1278" y="274" font-size="18" fill="#e6fdf2" text-anchor="middle">18 层 · width 2048</text>
+<text x="1278" y="314" font-size="18" fill="#ffdfa8" text-anchor="middle">文本 CE = 0.8</text>
+<text x="1278" y="353" font-size="18" fill="#ffdfa8" text-anchor="middle">只更新 VLM</text>
+<text x="1278" y="405" font-size="18" fill="#b6fbd8" text-anchor="middle">输出条件 Prefix</text>
+<rect x="445" y="590" width="405" height="179" rx="18" fill="#1c3c33" stroke="#67d39b" stroke-width="3"/>
+<text x="648" y="629" font-size="27" font-weight="bold" fill="#bdffe0" text-anchor="middle">Action Expert · 300M</text>
+<text x="648" y="665" font-size="19" fill="#e2f8ed" text-anchor="middle">30×14 噪声动作 + τ + Prefix</text>
+<text x="648" y="701" font-size="19" fill="#e2f8ed" text-anchor="middle">18 层 · width 1024 · AdaRMS</text>
+<text x="648" y="737" font-size="19" fill="#e2f8ed" text-anchor="middle">Flow Matching · 10 次 Euler</text>
+<rect x="1004" y="607" width="367" height="137" rx="18" fill="#194337" stroke="#6ce2ad" stroke-width="3"/>
+<text x="1188" y="649" font-size="25" fill="#d0ffed" font-weight="bold" text-anchor="middle">连续机器人控制</text>
+<text x="1188" y="688" font-size="19" fill="#e0fff2" text-anchor="middle">30 × 14 动作块</text>
+<text x="1188" y="719" font-size="18" fill="#abebce" text-anchor="middle">推理不输出任何文字</text>
+<g fill="none" stroke-width="4" stroke-linecap="round">
+<path d="M357 214 H425" stroke="#6dbbe9"/>
+<path d="M357 423 H394 V284 H425" stroke="#6dbbe9"/>
+<path d="M707 220 H765" stroke="#f6c779"/>
+<path d="M707 300 H735 V421 H765" stroke="#f6c779"/>
+<path d="M1090 223 H1150" stroke="#e3b96b"/>
+<path d="M1090 415 H1150" stroke="#e3b96b"/>
+<path d="M1150 440 H1110 V559 H648 V590" stroke="#6dd3a5" stroke-dasharray="11 7"/>
+<path d="M565 347 V546 H573 V590" stroke="#6dd3a5"/>
+<path d="M850 673 H1004" stroke="#6dd3a5"/>
+</g>
+<g fill="#fff" font-size="18" font-weight="bold">
+<text x="921" y="550" fill="#9beccb">Stop-gradient</text>
+<text x="891" y="579" fill="#9beccb">VLM 不接收 FM 梯度</text>
+</g>
+<rect x="38" y="799" width="1364" height="37" rx="9" fill="#20334c"/>
+<text x="720" y="824" font-size="18" fill="#d0e1f7" text-anchor="middle">训练：人类 + 机器人均监督语言动作与 FM；推理：图像/状态 → 连续 Action Expert，文字 Target 完全缺席</text>
+</g></svg>
