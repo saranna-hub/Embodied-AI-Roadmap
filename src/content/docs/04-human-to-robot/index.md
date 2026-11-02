@@ -23,3 +23,8 @@ sidebar:
 ## 新增：WING——RGB-only EGO 的交互潜动作与频谱迁移
 
 **[WING 深度教程：相机运动解耦、WING-LAM、DCT 与门控 VLA 训练](./wing-ego-spectral-transfer/)** —— 衔接上面的 RGB-only EGO 路线，讲清为什么“头动引起的光流”不能当机器人的动作、如何蒸馏 RGB-only latent、为何只用低频作动作引导；附两张机制图和独立 CPU 合成契约验证（作者原版代码尚未公开）。
+
+
+## 2026-11-02 新增：EgoLAP——用运动语言让人类数据真正监督 VLA
+
+**[EgoLAP 全流程深度教程：Language Action、Motion-level Reasoning、MoT 三段 Mask、梯度隔离、GRPO 和 CPU 契约验证](./egolap-language-action-reasoning/)**。与 Ego-Pi/人机迁移涌现、WING、EgoEngine 的区别是：它用**共享的运动语言**与**物理 why 理由**监督 VLM，同时让人类与机器人连续动作都监督 Flow Matching 动作专家，且推理**不生成理由文本**。已有两张图和独立标准库 Python 验证脚本；作者代码/权重仍未公开，不可声称原版训练已复现。
