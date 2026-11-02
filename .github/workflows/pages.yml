@@ -24,7 +24,7 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Check and build
         run: npm run build
-      - name: Audit rendered pages (diagnostic)
+      - name: Audit rendered pages (blocking, site-wide)
         run: npm run validate:render
       - name: Validate executable EGO UMI synthetic pose benchmark
         run: |
@@ -68,6 +68,16 @@ jobs:
           grep -q 'PASS DCT and spectral bandwidth:' /tmp/wing-spectral-contract.log
           grep -q 'PASS no-future inference contract:' /tmp/wing-spectral-contract.log
           grep -q 'PASS ALL:' /tmp/wing-spectral-contract.log
+      - name: Validate EgoLAP language action / attention / flow / GRPO CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/egolap_contract_cpu_demo.py | tee /tmp/egolap-contract.log
+          grep -q 'PASS canonical coordinates and language action quantization:' /tmp/egolap-contract.log
+          grep -q 'PASS three-block causal mask prevents cross-layer target leakage:' /tmp/egolap-contract.log
+          grep -q 'PASS flow orientation and 10-step inverse Euler oracle:' /tmp/egolap-contract.log
+          grep -q 'PASS stochastic reason context/loss masks:' /tmp/egolap-contract.log
+          grep -q 'PASS deterministic demonstration-matching reward and group advantage:' /tmp/egolap-contract.log
+          grep -q 'PASS ALL:' /tmp/egolap-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -233,5 +243,15 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: WING HTML, math, two SVGs, CPU contract, and all original gates."
+          check_html "/04-human-to-robot/egolap-language-action-reasoning/" 12
+          for name in egolap-system egolap-mask-gradient; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/egolap-verified.svg
+            grep -q '<svg' /tmp/egolap-verified.svg
+            grep -q '</svg>' /tmp/egolap-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: EgoLAP HTML, math, two SVGs, CPU contract and original baseline gates."
 
 
