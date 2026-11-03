@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 670" role="img" aria-label="HuRo 人类 EGO 到机器人 VLA 完整系统">
+<rect width="1180" height="670" fill="#07182d"/>
+<text x="38" y="49" font-family="sans-serif" font-size="30" font-weight="700" fill="#eaf5ff">HuRo: Human EGO → Robotized Data → VLA</text>
+<text x="39" y="81" font-family="sans-serif" font-size="16" fill="#b0bed3">Pipeline stages 1-10 and downstream research · author method redrawn</text>
+<g font-family="sans-serif" stroke-width="2">
+<rect x="32" y="138" width="226" height="128" rx="16" fill="#163652" stroke="#60a5fa"/>
+<text x="49" y="180" font-size="21" font-weight="700" fill="#e0f2fe">Human EGO video</text>
+<text x="49" y="212" font-size="15" fill="#b9dcf8">raw RGB / 30 fps</text>
+<text x="49" y="239" font-size="15" fill="#b9dcf8">camera / hand unknown</text>
+<rect x="291" y="138" width="316" height="128" rx="16" fill="#163652" stroke="#60a5fa"/>
+<text x="307" y="177" font-size="21" font-weight="700" fill="#e0f2fe">Stages 1–7: Human</text>
+<text x="307" y="210" font-size="16" fill="#b9dcf8">Calib → Hand 21 → SE(3)</text>
+<text x="307" y="238" font-size="16" fill="#b9dcf8">Segment / caption / inpaint</text>
+<rect x="652" y="105" width="224" height="112" rx="16" fill="#493020" stroke="#f6ad55"/>
+<text x="668" y="144" font-size="20" font-weight="700" fill="#ffe1b7">Stage 8: Action</text>
+<text x="668" y="177" font-size="16" fill="#ffcc9c">PyRoKi IK → q(t)</text>
+<rect x="652" y="245" width="224" height="112" rx="16" fill="#34234e" stroke="#c4b5fd"/>
+<text x="668" y="284" font-size="20" font-weight="700" fill="#e8dcff">Stage 9: Visual</text>
+<text x="668" y="317" font-size="16" fill="#d2c2f0">Isaac RTX overlay</text>
+<rect x="923" y="153" width="222" height="146" rx="16" fill="#173c32" stroke="#4ade80"/>
+<text x="939" y="191" font-size="19" font-weight="700" fill="#dcfce7">Stage 10: LeRobot</text>
+<text x="939" y="226" font-size="17" fill="#b3f1d4">V2.0 / 48D state</text>
+<text x="939" y="253" font-size="16" fill="#b3f1d4">action[t] = q[t+1]</text>
+<rect x="651" y="444" width="492" height="151" rx="16" fill="#1b3f35" stroke="#4ade80"/>
+<text x="673" y="485" font-size="22" font-weight="700" fill="#dcfce7">Research downstream (NOT stage 11)</text>
+<text x="673" y="522" font-size="17" fill="#b3f1d4">Robotized pretrain → real robot finetune</text>
+<text x="673" y="556" font-size="17" fill="#b3f1d4">ID/OOD benchmark · HITL feedback</text>
+</g>
+<g fill="none" stroke="#93c5fd" stroke-width="3"><path d="M259 197H288"/><path d="M607 190H631V159H649"/><path d="M607 220H631V301H649"/></g>
+<g fill="none" stroke="#fbbf24" stroke-width="3"><path d="M877 161H899V198H920"/></g>
+<g fill="none" stroke="#c4b5fd" stroke-width="3"><path d="M877 302H899V253H920"/></g>
+<g fill="none" stroke="#4ade80" stroke-width="3"><path d="M1032 302V441"/></g>
+<g font-family="sans-serif" fill="#cad7e8" font-size="17">
+<text x="42" y="392" font-weight="700">Data risks / QA gates</text>
+<text x="42" y="426">• camera optical axis / MANO wrist frame</text>
+<text x="42" y="460">• retarget residual &amp; joint limits</text>
+<text x="42" y="494">• overlay_valid / timestamp alignment</text>
+<text x="42" y="528">• q[t+1] is absolute (NOT delta)</text>
+<text x="42" y="562">• train-only stats &amp; episode isolation</text>
+<text x="42" y="596">• code released, dataset marked coming soon</text>
+</g>
+<text x="40" y="648" font-family="sans-serif" font-size="13" fill="#7589a2">Source: 3587jjh/HuRo pipeline/README.md · instructional SVG 2026-11-03</text>
+</svg>

@@ -28,3 +28,7 @@ sidebar:
 ## 2026-11-02 新增：EgoLAP——用运动语言让人类数据真正监督 VLA
 
 **[EgoLAP 全流程深度教程：Language Action、Motion-level Reasoning、MoT 三段 Mask、梯度隔离、GRPO 和 CPU 契约验证](./egolap-language-action-reasoning/)**。与 Ego-Pi/人机迁移涌现、WING、EgoEngine 的区别是：它用**共享的运动语言**与**物理 why 理由**监督 VLM，同时让人类与机器人连续动作都监督 Flow Matching 动作专家，且推理**不生成理由文本**。已有两张图和独立标准库 Python 验证脚本；作者代码/权重仍未公开，不可声称原版训练已复现。
+
+## 2026-11-03 新增：HuRo——EGO 人类视频规模化机器人化与 VLA 预训练
+
+**[HuRo 十阶段源码级深度教程：人手追踪/SLAM、机器人 IK、Isaac Sim 视觉叠加、LeRobot V2 与 π₀.₅ 动作空间接入](./huro-robotization-to-vla/)**。配有两张独立流程图、关键几何和 Flow Matching 数学、代码可执行入口、训练消融与 CPU 数据契约脚本。重点纠错：官方 Stage 10 的 48D `action[t]=q[t+1]` 是**下一帧绝对关节位置**；`stats.json` 不会自动生成；全量 630K 数据在官方 README 仍标明 Coming soon。附非商用依赖及 RT Core 硬件限制，不假称已复现 GPU/真机训练。

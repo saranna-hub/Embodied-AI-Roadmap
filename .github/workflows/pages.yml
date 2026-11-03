@@ -78,6 +78,16 @@ jobs:
           grep -q 'PASS stochastic reason context/loss masks:' /tmp/egolap-contract.log
           grep -q 'PASS deterministic demonstration-matching reward and group advantage:' /tmp/egolap-contract.log
           grep -q 'PASS ALL:' /tmp/egolap-contract.log
+      - name: Validate HuRo robotization action and coordinate CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/huro_contract_cpu_demo.py | tee /tmp/huro-contract.log
+          grep -q 'PASS SE3 camera-to-world-to-base and inverse:' /tmp/huro-contract.log
+          grep -q 'PASS next absolute state and per-episode isolation:' /tmp/huro-contract.log
+          grep -q 'PASS absolute-delta roundtrip and terminal repeat:' /tmp/huro-contract.log
+          grep -q 'PASS invalid overlay/IK/time rejection:' /tmp/huro-contract.log
+          grep -q 'PASS source-clip split leakage detector:' /tmp/huro-contract.log
+          grep -q 'PASS ALL: HuRo CPU contracts' /tmp/huro-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -255,3 +265,14 @@ jobs:
           echo "PASS: EgoLAP HTML, math, two SVGs, CPU contract and original baseline gates."
 
 
+
+          check_html "/04-human-to-robot/huro-robotization-to-vla/" 8
+          for name in huro-system huro-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/huro-verified.svg
+            grep -q '<svg' /tmp/huro-verified.svg
+            grep -q '</svg>' /tmp/huro-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: HuRo tutorial HTML, KaTeX, 2 SVGs, CPU source-contract and all baseline gates."

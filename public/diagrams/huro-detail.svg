@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1170 710" role="img" aria-label="HuRo 数据契约 SE3 变换、下一帧动作及 QC">
+<rect width="1170" height="710" fill="#081426"/>
+<g font-family="sans-serif">
+<text x="38" y="52" font-size="28" fill="#e2e8f0" font-weight="700">HuRo Contract: Frames × Next-state Targets × QC</text>
+<text x="46" y="111" font-size="22" fill="#93c5fd" font-weight="700">1 · Frames (column vector, left multiplication)</text>
+<rect x="40" y="134" width="268" height="118" rx="13" fill="#173551" stroke="#60a5fa" stroke-width="2"/>
+<text x="59" y="178" font-size="21" fill="#e0f2fe">Camera / OpenCV</text>
+<text x="59" y="212" font-size="16" fill="#d2e7fa">x right, y down, z forward</text>
+<rect x="376" y="134" width="268" height="118" rx="13" fill="#173551" stroke="#60a5fa" stroke-width="2"/>
+<text x="393" y="178" font-size="21" fill="#e0f2fe">Gravity-aligned world</text>
+<text x="393" y="212" font-size="16" fill="#d2e7fa">T(world ← camera)</text>
+<rect x="716" y="134" width="414" height="118" rx="13" fill="#173551" stroke="#60a5fa" stroke-width="2"/>
+<text x="733" y="178" font-size="21" fill="#e0f2fe">Robot base</text>
+<text x="733" y="212" font-size="16" fill="#d2e7fa">x forward, y left, z up</text>
+<path d="M309 189H371 M645 189H710" stroke="#60a5fa" stroke-width="3"/><path d="M360 182l13 7-13 7z M699 182l13 7-13 7z" fill="#60a5fa"/>
+<text x="46" y="319" font-size="22" fill="#fbbf24" font-weight="700">2 · Action[t] = Absolute joint state[t+1], not delta</text>
+<rect x="40" y="342" width="1090" height="177" rx="15" fill="#2e281c" stroke="#eab308" stroke-width="2"/>
+<text x="72" y="383" font-size="17" fill="#fcd34d" font-weight="700">Episode A</text>
+<text x="705" y="383" font-size="17" fill="#fcd34d" font-weight="700">Episode B (independent)</text>
+<g stroke="#eab308" fill="none" stroke-width="2">
+<rect x="75" y="404" width="124" height="51" rx="8"/><rect x="247" y="404" width="124" height="51" rx="8"/><rect x="420" y="404" width="124" height="51" rx="8"/>
+<rect x="706" y="404" width="124" height="51" rx="8"/><rect x="885" y="404" width="124" height="51" rx="8"/>
+<path d="M199 430H243 M371 430H416 M830 430H881"/></g>
+<g font-size="18" fill="#f1f5f9"><text x="120" y="435">q0</text><text x="291" y="435">q1</text><text x="464" y="435">q2</text><text x="754" y="435">q0′</text><text x="933" y="435">q1′</text></g>
+<g font-size="16" fill="#fde68a"><text x="78" y="486">A targets: q1, q2, q2 (repeat terminal)</text><text x="702" y="486">B targets: q1′, q1′</text></g>
+<text x="46" y="576" font-size="22" fill="#86efac" font-weight="700">3 · Block unsafe / corrupt supervision before training</text>
+<rect x="40" y="593" width="1090" height="82" rx="14" fill="#183b32" stroke="#4ade80" stroke-width="2"/>
+<text x="61" y="626" font-size="16" fill="#dcfce7">monotonic timestamps · per-episode sampling · valid overlay · IK joint-limit &amp; collision</text>
+<text x="61" y="653" font-size="16" fill="#dcfce7">source-clip train/test separation · train-only stats · controller action semantics</text>
+<text x="44" y="701" font-size="13" fill="#70839e">Source: HuRo examples/README.md &amp; independent industrial QC proposals · 2026-11-03</text>
+</g></svg>
