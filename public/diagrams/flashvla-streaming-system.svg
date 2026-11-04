@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="690" viewBox="0 0 1240 690" role="img" aria-label="FlashVLA 流式去噪的四槽流程">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#47a2f7"/></marker><style>text{font-family:system-ui,'Noto Sans CJK SC',sans-serif;fill:#ecf3ff}.h{font-size:29px;font-weight:700}.m{font-size:19px}.s{font-size:15px}.card{fill:#14283f;stroke:#385571;stroke-width:2}.tip{fill:#071a29;stroke:#1e577f}.mono{font-family:monospace}</style></defs>
+<rect width="1240" height="690" rx="22" fill="#07131f"/>
+<text x="44" y="60" class="h">FlashVLA：4 槽流式动作解码（教学示意）</text>
+<text x="44" y="94" class="m">N=4 次去噪 / 每槽 C=10 个动作 / 一个 forward 更新全部槽</text>
+<rect x="42" y="130" width="1156" height="90" rx="16" class="tip"/>
+<text x="65" y="162" class="m">共享视觉语言前缀 Prefix：多路图像 + 指令 + 当前状态</text>
+<text x="65" y="197" class="s">当前观测每次重新编码；一轮前向内部的 KV prefill 可复用，不能跨图像盲目复用。</text>
+<path d="M620 220V270" stroke="#47a2f7" stroke-width="3" marker-end="url(#a)"/>
+<g>
+<rect x="42" y="280" width="274" height="133" rx="12" class="card"/><rect x="335" y="280" width="274" height="133" rx="12" class="card"/><rect x="628" y="280" width="274" height="133" rx="12" class="card"/><rect x="921" y="280" width="277" height="133" rx="12" class="card"/>
+<text x="69" y="316" class="m">Slot 0 · 临近执行</text><text x="69" y="348" class="m" fill="#9fc3fd">t = 0.25</text><text x="69" y="383" class="s">10 action tokens</text>
+<text x="362" y="316" class="m">Slot 1</text><text x="362" y="348" class="m">t = 0.50</text><text x="362" y="383" class="s">10 action tokens</text>
+<text x="655" y="316" class="m">Slot 2</text><text x="655" y="348" class="m">t = 0.75</text><text x="655" y="383" class="s">10 action tokens</text>
+<text x="948" y="316" class="m">Slot 3 · 最远期</text><text x="948" y="348" class="m">t = 1.00</text><text x="948" y="383" class="s">10 noisy tokens</text>
+</g>
+<text x="43" y="460" class="m">同一次 forward：一次 Flow 更新 + 块级因果 Attention（右边能读左边，左边不能读右边）</text>
+<path d="M120 487H1110" stroke="#47a2f7" stroke-width="3" marker-end="url(#a)"/>
+<rect x="41" y="518" width="335" height="99" rx="12" fill="#18443a" stroke="#40bc90"/><text x="62" y="555" class="m">输出：Slot 0 完成 t=0</text><text x="62" y="586" class="s">送 K 步进入机器人控制队列</text>
+<rect x="401" y="518" width="397" height="99" rx="12" class="card"/><text x="424" y="555" class="m">移位：1 → 0，2 → 1，3 → 2</text><text x="424" y="586" class="s">在途动作已部分去噪，继续保留</text>
+<rect x="823" y="518" width="375" height="99" rx="12" fill="#3c2d4a" stroke="#9a73c7"/><text x="844" y="555" class="m">补入：新高斯噪声 → Slot 3</text><text x="844" y="586" class="s">新的候选从 t=1 开始</text>
+<text x="44" y="657" class="s">概念图：完整动作块仍需 4 次积分；只有稳态吞吐变成每次前向可交付一个 chunk。</text>
+</svg>

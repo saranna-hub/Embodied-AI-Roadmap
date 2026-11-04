@@ -88,6 +88,15 @@ jobs:
           grep -q 'PASS invalid overlay/IK/time rejection:' /tmp/huro-contract.log
           grep -q 'PASS source-clip split leakage detector:' /tmp/huro-contract.log
           grep -q 'PASS ALL: HuRo CPU contracts' /tmp/huro-contract.log
+      - name: Validate FlashVLA streaming Flow/Mask/async CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/flashvla_streaming_contract_cpu_demo.py | tee /tmp/flashvla-contract.log
+          grep -q 'PASS packed training tensor:' /tmp/flashvla-contract.log
+          grep -q 'PASS chunk-causal and cross-configuration attention masks' /tmp/flashvla-contract.log
+          grep -q 'PASS inverse Euler oracle:' /tmp/flashvla-contract.log
+          grep -q 'PASS async windows:' /tmp/flashvla-contract.log
+          grep -q 'PASS ALL: FlashVLA CPU contracts' /tmp/flashvla-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -276,3 +285,12 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: HuRo tutorial HTML, KaTeX, 2 SVGs, CPU source-contract and all baseline gates."
+          check_html "/05-control/flashvla-streaming-flow-action-decoding/" 15
+          for name in flashvla-streaming-system flashvla-mask-timeline; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/flashvla-diagram.svg
+            grep -q '<svg' /tmp/flashvla-diagram.svg
+            grep -q '</svg>' /tmp/flashvla-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: FlashVLA HTML, KaTeX >= 15, 2 new SVGs, CPU and all previous baseline gates."

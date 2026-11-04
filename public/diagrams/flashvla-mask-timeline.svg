@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="700" viewBox="0 0 1250 700" role="img" aria-label="FlashVLA 注意力掩码与异步控制时序">
+<defs><style>text{font-family:system-ui,'Noto Sans CJK SC',sans-serif;fill:#edf5ff}.h{font-size:28px;font-weight:700}.m{font-size:18px}.s{font-size:14px}.yes{fill:#217b66;stroke:#58d1ab}.no{fill:#4c293e;stroke:#89566a}.line{stroke:#49647e;stroke-width:2}</style></defs>
+<rect width="1250" height="700" rx="22" fill="#091827"/>
+<text x="43" y="54" class="h">Chunk-wise Causal Mask + 训练打包隔离 + 异步切换</text>
+<text x="42" y="95" class="m">左：query 行可读取的 key 列（示意 1 个 Prefix 和 4 个 chunk）</text>
+<g transform="translate(30,115)">
+<text x="178" y="26" class="s">Prefix</text><text x="277" y="26" class="s">Slot0</text><text x="378" y="26" class="s">Slot1</text><text x="478" y="26" class="s">Slot2</text><text x="577" y="26" class="s">Slot3</text>
+<text x="8" y="77" class="s">Prefix</text><text x="8" y="177" class="s">Slot1</text><text x="8" y="127" class="s">Slot0</text><text x="8" y="227" class="s">Slot2</text><text x="8" y="277" class="s">Slot3</text>
+<g id="grid"><rect x="170" y="45" width="80" height="38" rx="6" class="yes"/><rect x="270" y="45" width="80" height="38" rx="6" class="no"/><rect x="370" y="45" width="80" height="38" rx="6" class="no"/><rect x="470" y="45" width="80" height="38" rx="6" class="no"/><rect x="570" y="45" width="80" height="38" rx="6" class="no"/>
+<rect x="170" y="95" width="80" height="38" rx="6" class="yes"/><rect x="270" y="95" width="80" height="38" rx="6" class="yes"/><rect x="370" y="95" width="80" height="38" rx="6" class="no"/><rect x="470" y="95" width="80" height="38" rx="6" class="no"/><rect x="570" y="95" width="80" height="38" rx="6" class="no"/>
+<rect x="170" y="145" width="80" height="38" rx="6" class="yes"/><rect x="270" y="145" width="80" height="38" rx="6" class="yes"/><rect x="370" y="145" width="80" height="38" rx="6" class="yes"/><rect x="470" y="145" width="80" height="38" rx="6" class="no"/><rect x="570" y="145" width="80" height="38" rx="6" class="no"/>
+<rect x="170" y="195" width="80" height="38" rx="6" class="yes"/><rect x="270" y="195" width="80" height="38" rx="6" class="yes"/><rect x="370" y="195" width="80" height="38" rx="6" class="yes"/><rect x="470" y="195" width="80" height="38" rx="6" class="yes"/><rect x="570" y="195" width="80" height="38" rx="6" class="no"/>
+<rect x="170" y="245" width="80" height="38" rx="6" class="yes"/><rect x="270" y="245" width="80" height="38" rx="6" class="yes"/><rect x="370" y="245" width="80" height="38" rx="6" class="yes"/><rect x="470" y="245" width="80" height="38" rx="6" class="yes"/><rect x="570" y="245" width="80" height="38" rx="6" class="yes"/></g>
+<text x="170" y="313" class="s">绿色：允许读；紫色：被 Mask 屏蔽</text>
+</g>
+<rect x="756" y="121" width="452" height="322" rx="15" fill="#14283b" stroke="#426284"/>
+<text x="779" y="155" class="m">同一观察打包 N 个训练配置</text>
+<text x="779" y="193" class="s">Config 1：真实10 + Padding30</text>
+<text x="779" y="231" class="s">Config 2：真实20 + Padding20</text>
+<text x="779" y="269" class="s">Config 3：真实30 + Padding10</text>
+<text x="779" y="307" class="s">Config 4：真实40 + Padding0</text>
+<text x="779" y="345" class="s">配置各自能读共享 Prefix</text>
+<text x="779" y="383" class="s">但 Config1 的动作不能读 Config4 动作</text>
+<text x="779" y="416" class="s">训练 [B,4×4×10,D]，推理 [B,4×10,D]</text>
+<path d="M40 488H1208" class="line"/>
+<text x="42" y="533" class="m">真实时间线：一个策略 forward ≠ 一个机器人控制 tick</text>
+<rect x="43" y="556" width="350" height="73" rx="9" fill="#1f465a"/><text x="60" y="588" class="s">控制器：执行当前 chunk 的动作</text><text x="60" y="612" class="s">按 30Hz 持续下发，不等模型每 tick 产出</text>
+<rect x="427" y="556" width="350" height="73" rx="9" fill="#214e45"/><text x="444" y="588" class="s">异步线程：提前 d 步开始预测</text><text x="444" y="612" class="s">观察过时风险仍需测试与防护</text>
+<rect x="811" y="556" width="394" height="73" rx="9" fill="#443c61"/><text x="828" y="588" class="s">切换时：消费 K 步，按需跳过 d 步</text><text x="828" y="612" class="s">约束：d + K ≤ C；冷启动保持动作</text>
+<text x="43" y="666" class="s">基于官方源码的教学重绘，不等于模型已在本项目工业机械臂上验证。</text>
+</svg>
