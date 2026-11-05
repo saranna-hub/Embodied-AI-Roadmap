@@ -13,3 +13,7 @@ sidebar:
 ## 专题：EGO/UMI 工位定位与训练数据质量
 
 从设备对比继续读 [双目鱼眼＋IMU＋桌面 AprilTag：时空标定、TCP 世界系位姿、训练标签质检](./ego-umi-spatiotemporal-calibration/)。本篇从 Kalibr、鱼眼 IPPE/PnP、工具外参、时间偏差到 VLA Action Chunk，附两张流程图与可执行合成反例；与 [HiFi-UMI](./hifi-umi-deep/) 和 [MonoEgo](./monoego-deep/) 配合学习。
+
+## 专题：双 Vive Tracker 的工具外参与 TCP 标定
+
+继续阅读 [UMI Tracker 手眼 AX=XB、Pivot TCP 标定与双手 Replay 坐标链](./umi-tracker-handeye-pivot-calibration/)：解释 OpenVR 坐标与时钟、rigid eye-in-hand 的使用边界、Pivot 的可观测性、双手工具独立外参，并用 CPU 合成契约验证接口方向。与上文的相机/IMU 时空标定互补。

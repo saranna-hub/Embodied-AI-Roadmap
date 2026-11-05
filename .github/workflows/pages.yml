@@ -97,6 +97,16 @@ jobs:
           grep -q 'PASS inverse Euler oracle:' /tmp/flashvla-contract.log
           grep -q 'PASS async windows:' /tmp/flashvla-contract.log
           grep -q 'PASS ALL: FlashVLA CPU contracts' /tmp/flashvla-contract.log
+      - name: Validate UMI Tracker Hand-Eye and pivot CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/umi_tracker_handeye_pivot_contract.py | tee /tmp/umi-tracker-handeye.log
+          grep -q 'PASS handeye:' /tmp/umi-tracker-handeye.log
+          grep -q 'PASS inversion-negative-control:' /tmp/umi-tracker-handeye.log
+          grep -q 'PASS pivot:' /tmp/umi-tracker-handeye.log
+          grep -q 'PASS degeneracy:' /tmp/umi-tracker-handeye.log
+          grep -q 'PASS timestamp-budget:' /tmp/umi-tracker-handeye.log
+          grep -q 'PASS ALL: UMI Tracker' /tmp/umi-tracker-handeye.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -294,3 +304,12 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: FlashVLA HTML, KaTeX >= 15, 2 new SVGs, CPU and all previous baseline gates."
+          check_html "/02-data-engineering/umi-tracker-handeye-pivot-calibration/" 20
+          for name in umi-tracker-system umi-tracker-solver-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/umi-tracker-diagram.svg
+            grep -q '<svg' /tmp/umi-tracker-diagram.svg
+            grep -q '</svg>' /tmp/umi-tracker-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: UMI Tracker hand-eye/pivot tutorial, KaTeX >= 20, 2 diagrams, CPU contract and baseline gates."
