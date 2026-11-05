@@ -198,6 +198,17 @@ python3 examples/umi_tracker_handeye_pivot_contract.py
 
 必须看三种输出：`PASS handeye`、`PASS pivot`、`PASS degeneracy`。该脚本**没有**合成鱼眼像素、相机畸变、软结构变形、真实 SteamVR 噪声或人体动作；通过只证明数学接口契约和标定方向写对，**不报告真实设备毫米级精度**。
 
+### 6.0.1 OpenCV 5.0.0.93 的已知 Python 接口缺失（2026-11-05 CI 实际踩坑）
+
+第一次提交的 [Actions #41950439033](https://github.com/saranna-hub/Embodied-AI-Roadmap/actions/runs/41950439033) **构建和全站 HTML 审核都成功，但 CPU 测试失败**：当前默认安装的 OpenCV 5.0.0.93 Python 包没有 `cv2.calibrateHandEye`。这不是数学问题。官方 [opencv/opencv #29565](https://github.com/opencv/opencv/issues/29565) 在 2026-07-20 报告同一问题，2026-08-11 记录修复并纳入 5.1 里程碑。本站 CI 暂时明确固定 OpenCV 4.x（>=4.13,<5），并验证 `hasattr(cv2,"calibrateHandEye")`；以后切换 5.1 需另跑回归验证。
+
+~~~bash
+python -m pip install 'numpy' 'opencv-python-headless>=4.13,<5'
+python -c 'import cv2; print(cv2.__version__, hasattr(cv2,"calibrateHandEye"))'
+~~~
+
+**这个失败与修正会保留作为真实工程复现记录；不能把初次失败的构建描述成部署通过。**
+
 ## 6.1 数据和张量字段：怎样落到 MCAP/LeRobot？
 
 ~~~text
