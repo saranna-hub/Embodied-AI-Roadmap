@@ -108,6 +108,17 @@ jobs:
           grep -q 'PASS degeneracy:' /tmp/umi-tracker-handeye.log
           grep -q 'PASS timestamp-budget:' /tmp/umi-tracker-handeye.log
           grep -q 'PASS ALL: UMI Tracker' /tmp/umi-tracker-handeye.log
+      - name: Validate MCAP to LeRobot v3 timestamp/episode/action CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/mcap_lerobot_v3_contract_cpu.py | tee /tmp/mcap-lerobot-v3-contract.log
+          grep -q 'PASS affine-clock:' /tmp/mcap-lerobot-v3-contract.log
+          grep -q 'PASS causal-observation:' /tmp/mcap-lerobot-v3-contract.log
+          grep -q 'PASS SE3-action:' /tmp/mcap-lerobot-v3-contract.log
+          grep -q 'PASS episode-mask:' /tmp/mcap-lerobot-v3-contract.log
+          grep -q 'PASS source-clip-leakage:' /tmp/mcap-lerobot-v3-contract.log
+          grep -q 'PASS normalization-roundtrip:' /tmp/mcap-lerobot-v3-contract.log
+          grep -q 'PASS ALL: MCAP -> LeRobot v3 -> openpi synthetic data contracts' /tmp/mcap-lerobot-v3-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -314,3 +325,13 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: UMI Tracker hand-eye/pivot tutorial, KaTeX >= 20, 2 diagrams, CPU contract and baseline gates."
+
+          check_html "/02-data-engineering/mcap-lerobot-v3-temporal-action-contract/" 12
+          for name in mcap-lerobot-v3-system mcap-lerobot-v3-timing-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/mcap-lerobot-v3-audit.svg
+            grep -q '<svg' /tmp/mcap-lerobot-v3-audit.svg
+            grep -q '</svg>' /tmp/mcap-lerobot-v3-audit.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: MCAP → LeRobot v3 → π₀.₅ HTML/KaTeX, 2 new SVGs, CPU data-contract and all baseline gates."

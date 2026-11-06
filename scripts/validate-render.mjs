@@ -19,6 +19,7 @@ const pages=[
   ['04-human-to-robot/wing-ego-spectral-transfer',12],
   ['04-human-to-robot/egolap-language-action-reasoning',12],
   ['04-human-to-robot/huro-robotization-to-vla',8],
+  ['02-data-engineering/mcap-lerobot-v3-temporal-action-contract',12],
 ];
 const diagrams=[
   ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),
@@ -29,7 +30,8 @@ const diagrams=[
   'minerva-libero-system.svg', 'minerva-libero-protocol.svg',
   'wing-spectral-system.svg', 'wing-spectral-detail.svg',
   'egolap-system.svg', 'egolap-mask-gradient.svg',
-  'huro-system.svg', 'huro-detail.svg'
+  'huro-system.svg', 'huro-detail.svg',
+  'mcap-lerobot-v3-system.svg', 'mcap-lerobot-v3-timing-detail.svg'
 ];
 let issues=[];
 for(const [slug,minMath] of pages){

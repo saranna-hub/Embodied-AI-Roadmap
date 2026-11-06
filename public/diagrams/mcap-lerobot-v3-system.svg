@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="665" viewBox="0 0 1280 665" role="img" aria-label="MCAP 到 LeRobot v3 再到 π0.5 的工业具身时序和动作契约全链路">
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#111c32"/><stop offset="1" stop-color="#0a1020"/></linearGradient>
+  <marker id="arr" markerWidth="10" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9z" fill="#73b5ff"/></marker>
+  <style>
+    text {font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;fill:#f2f5fd;}
+    .sub {fill:#a9bbd5;font-size:17px;} .cap {fill:#8cd7ea;font-size:16px;}
+    .title {font-size:28px;font-weight:700;} .boxname {font-size:22px;font-weight:650;}
+    .small {font-size:15px;fill:#aebfd5;} .line {stroke:#73b5ff;stroke-width:2.5;fill:none;marker-end:url(#arr);}
+    .panel {fill:#182b45;stroke:#375274;stroke-width:1.6;} .green {fill:#18372f;stroke:#3ab69e;stroke-width:2;}
+    .orange {fill:#3c3025;stroke:#efaf69;stroke-width:2;} .dot {fill:#75c3ff;} .good {fill:#5ce2b6;}
+  </style>
+</defs>
+<rect x="0" y="0" width="1280" height="665" rx="22" fill="url(#bg)"/>
+<text x="46" y="55" class="title">从原始采集事件 → 可追溯机器人动作监督</text>
+<text x="46" y="91" class="sub">数据不会因装入 MCAP / Parquet 就自动同步；Action 必须先具备可执行语义</text>
+<rect x="44" y="128" rx="13" width="262" height="312" class="panel"/>
+<text x="64" y="163" class="boxname">① 多源采集 / MCAP</text>
+<text x="65" y="210" class="sub">EGO 双目 / 腕部相机</text>
+<text x="65" y="247" class="sub">UMI / Tracker / 夹爪</text>
+<text x="65" y="284" class="sub">Robot state / command</text>
+<path d="M65 305 H285" stroke="#375274"/>
+<text x="65" y="343" class="cap">原始曝光与设备 tick</text>
+<text x="65" y="375" class="cap">log_time / publish_time</text>
+<text x="65" y="409" class="small">保留全部消息与异常事件</text>
+<path d="M306 284 H343" class="line"/>
+<rect x="348" y="128" rx="13" width="277" height="312" class="orange"/>
+<text x="368" y="163" class="boxname">② 时空对齐 / QC</text>
+<text x="370" y="210" class="sub">每时钟域拟合 t'=at+b</text>
+<text x="370" y="247" class="sub">外参版本 / SE(3) 插值</text>
+<text x="370" y="284" class="sub">曝光帧龄 / 延迟估计</text>
+<path d="M370 305 H600" stroke="#785d42"/>
+<text x="370" y="344" class="cap">episode / validity mask</text>
+<text x="370" y="376" class="cap">动作含义 + source clip</text>
+<text x="370" y="411" class="small">本文建议的工程适配层</text>
+<path d="M625 284 H664" class="line"/>
+<rect x="672" y="128" rx="13" width="254" height="312" class="green"/>
+<text x="692" y="163" class="boxname">③ LeRobot v3</text>
+<text x="692" y="210" class="sub">data/*.parquet</text>
+<text x="692" y="247" class="sub">videos/*.mp4</text>
+<text x="692" y="284" class="sub">meta/episodes + stats</text>
+<path d="M692 305 H905" stroke="#3a7d6c"/>
+<text x="692" y="344" class="cap">多 episode 聚合储存</text>
+<text x="692" y="376" class="cap">delta_timestamps 查询</text>
+<text x="692" y="411" class="small">格式不是动作语义</text>
+<path d="M926 284 H970" class="line"/>
+<rect x="981" y="128" rx="13" width="255" height="312" class="panel"/>
+<text x="1000" y="163" class="boxname">④ openpi / π₀.₅</text>
+<text x="1000" y="210" class="sub">版本适配 Reader</text>
+<text x="1000" y="247" class="sub">repack / normalizer</text>
+<text x="1000" y="284" class="sub">[H, D] Action chunk</text>
+<path d="M1000 305 H1214" stroke="#375274"/>
+<text x="1000" y="343" class="cap">监督 Loss + 闭环回放</text>
+<text x="1000" y="376" class="cap">部署反变换一致</text>
+<text x="1000" y="411" class="small">v3 ≠ 旧版即插即用</text>
+<rect x="44" y="468" width="1192" height="148" rx="15" fill="#111f34" stroke="#3c5776"/>
+<text x="65" y="505" class="boxname">必须通过的四道关</text>
+<circle cx="83" cy="544" r="6" class="good"/><text x="103" y="550" class="sub">仅过去观测</text>
+<circle cx="361" cy="544" r="6" class="good"/><text x="381" y="550" class="sub">不跨 episode</text>
+<circle cx="654" cy="544" r="6" class="good"/><text x="674" y="550" class="sub">机器人动作定义明确</text>
+<circle cx="1048" cy="544" r="6" class="good"/><text x="1068" y="550" class="sub">逆变换一致</text>
+<text x="65" y="587" class="small">原始数据不可变；每批导出附版本、外参/时钟/归一化统计与源片段 ID</text>
+<text x="46" y="644" class="small">示意教学架构 · 2026-11-06 · 来源：MCAP / LeRobot v3 / openpi 官方接口，QC 为本站提出</text>
+</svg>

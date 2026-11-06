@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="685" viewBox="0 0 1250 685" role="img" aria-label="采集时钟、曝光时间、动作命令和未来标签在策略时间 t 的因果对齐示意">
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#111c32"/><stop offset="1" stop-color="#0a1020"/></linearGradient>
+  <marker id="arr" markerWidth="10" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9z" fill="#73b5ff"/></marker>
+  <style>
+    text {font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;fill:#f2f5fd;}
+    .sub {fill:#a9bbd5;font-size:17px;} .cap {fill:#8cd7ea;font-size:16px;}
+    .title {font-size:28px;font-weight:700;} .boxname {font-size:22px;font-weight:650;}
+    .small {font-size:15px;fill:#aebfd5;} .line {stroke:#73b5ff;stroke-width:2.5;fill:none;marker-end:url(#arr);}
+    .panel {fill:#182b45;stroke:#375274;stroke-width:1.6;} .green {fill:#18372f;stroke:#3ab69e;stroke-width:2;}
+    .orange {fill:#3c3025;stroke:#efaf69;stroke-width:2;} .dot {fill:#75c3ff;} .good {fill:#5ce2b6;}
+  </style>
+</defs>
+<rect width="1250" height="685" rx="22" fill="url(#bg)"/>
+<text x="40" y="54" class="title">同一锚点 t：观测只能来自过去，动作监督来自未来</text>
+<text x="40" y="88" class="sub">举例：视频 30 Hz / Tracker 100 Hz / 动作 10 Hz；时轴已统一并分 episode</text>
+<rect x="40" y="114" rx="12" width="1170" height="400" fill="#14243b" stroke="#375274"/>
+<line x1="220" y1="444" x2="1160" y2="444" stroke="#809abf" stroke-width="2"/>
+<text x="212" y="469" class="small">过去</text><text x="1110" y="469" class="small">未来</text>
+<line x1="756" y1="129" x2="756" y2="470" stroke="#60e0b2" stroke-width="3" stroke-dasharray="7 7"/>
+<text x="770" y="145" class="cap">策略锚点 t</text>
+<text x="57" y="199" class="boxname">相机曝光</text>
+<line x1="222" y1="192" x2="1158" y2="192" stroke="#465c76" stroke-width="2"/>
+<rect x="350" y="180" width="42" height="25" rx="5" fill="#3c7fbd"/><rect x="501" y="180" width="42" height="25" rx="5" fill="#3c7fbd"/>
+<rect x="663" y="180" width="42" height="25" rx="5" fill="#4ac8c1"/>
+<rect x="820" y="180" width="42" height="25" rx="5" fill="#bd794c"/>
+<text x="565" y="178" class="small">最近可用帧 →</text>
+<text x="876" y="190" class="small">未来帧 ✗</text>
+<text x="57" y="288" class="boxname">Tracker / 状态</text>
+<line x1="222" y1="277" x2="1158" y2="277" stroke="#465c76" stroke-width="2"/>
+<g fill="#8db5ff"><circle cx="270" cy="277" r="6"/><circle cx="323" cy="277" r="6"/><circle cx="376" cy="277" r="6"/><circle cx="429" cy="277" r="6"/><circle cx="482" cy="277" r="6"/><circle cx="535" cy="277" r="6"/><circle cx="588" cy="277" r="6"/><circle cx="641" cy="277" r="6"/><circle cx="694" cy="277" r="6"/></g>
+<circle cx="790" cy="277" r="6" fill="#bc8054"/><circle cx="843" cy="277" r="6" fill="#bc8054"/><circle cx="896" cy="277" r="6" fill="#bc8054"/>
+<text x="922" y="269" class="small">离线插值可用于标签</text>
+<text x="922" y="290" class="small">但不能冒充在线状态</text>
+<text x="57" y="367" class="boxname">动作目标</text>
+<line x1="222" y1="357" x2="1158" y2="357" stroke="#465c76" stroke-width="2"/>
+<rect x="756" y="341" width="78" height="31" rx="5" fill="#41a788"/>
+<rect x="845" y="341" width="78" height="31" rx="5" fill="#41a788"/>
+<rect x="934" y="341" width="78" height="31" rx="5" fill="#41a788"/>
+<rect x="1023" y="341" width="78" height="31" rx="5" fill="#41a788"/>
+<text x="777" y="361" font-size="15" font-weight="600">a₀</text><text x="866" y="361" font-size="15" font-weight="600">a₁</text>
+<text x="956" y="361" font-size="15" font-weight="600">a₂</text><text x="1045" y="361" font-size="15" font-weight="600">a₃</text>
+<text x="55" y="426" class="sub">绿色动作块是监督，不是观测；须注明 command time 还是实际生效时刻</text>
+<rect x="40" y="535" rx="12" width="564" height="104" class="green"/>
+<text x="60" y="572" class="boxname">通过：只读 t 之前可获得的图像与 state</text>
+<text x="60" y="605" class="sub">按统一时钟取值，失效 mask，episode 守卫</text>
+<rect x="622" y="535" rx="12" width="588" height="104" class="orange"/>
+<text x="642" y="572" class="boxname">拒绝：未来最近邻 / 错位延迟 / 跨段拼接</text>
+<text x="642" y="605" class="sub">相同数组长度 ≠ 时空对齐；不存在的帧不能伪造</text>
+<text x="40" y="669" class="small">图为示意时间轴（非真实数据）；右侧状态观测使用了未来信息则仅可作为离线标签</text>
+</svg>
