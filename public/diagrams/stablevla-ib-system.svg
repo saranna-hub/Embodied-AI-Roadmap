@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="660" viewBox="0 0 1280 660" role="img" aria-label="StableVLA 双视觉编码器经IB Adapter传入动作头的机制">
+<defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0c1328"/><stop offset="1" stop-color="#142642"/></linearGradient><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#95bbff"/></marker></defs>
+<rect width="1280" height="660" fill="url(#bg)" rx="24"/>
+<text x="55" y="58" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#eef5ff">StableVLA｜视觉编码器强 ≠ 模态对齐层抗噪</text>
+<text x="55" y="90" font-family="Arial,sans-serif" font-size="16" fill="#a9c6df">作者代码架构抽象 · DINOv2 / SigLIP → Fused IB-Adapter → Qwen2.5-0.5B → L1 连续动作</text>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<rect x="50" y="185" width="170" height="150" rx="15" fill="#294468" stroke="#6686b8"/><text x="135" y="227" font-size="22" fill="#fff">RGB × 2</text><text x="135" y="258" font-size="15" fill="#d4e3ff">Base + Wrist</text><text x="135" y="290" font-size="14" fill="#bdd3f5">当前观测</text>
+<rect x="285" y="135" width="215" height="86" rx="14" fill="#33567c" stroke="#78a9cc"/><text x="392" y="174" font-size="23" fill="#fff">DINOv2</text><text x="392" y="197" font-size="14" fill="#d5ebff">密集语义 patch</text>
+<rect x="285" y="254" width="215" height="86" rx="14" fill="#33567c" stroke="#78a9cc"/><text x="392" y="293" font-size="23" fill="#fff">SigLIP</text><text x="392" y="317" font-size="14" fill="#d5ebff">语义对齐 patch</text>
+<rect x="556" y="173" width="252" height="151" rx="17" fill="#15555d" stroke="#52c9ad" stroke-width="2"/><text x="680" y="207" font-size="23" fill="#e9fffb">Fused IB-Adapter</text><text x="680" y="238" font-size="16" fill="#c5fff2">MLP 细节流</text><text x="680" y="263" font-size="16" fill="#c5fff2">Channel Gram + Sigmoid</text><text x="680" y="290" font-size="15" fill="#b5e3dc">[B,N,Cv] → [B,N,Cl]</text>
+<rect x="856" y="155" width="180" height="170" rx="17" fill="#413f77" stroke="#a9a3ff"/><text x="947" y="210" font-size="21" fill="#fff">Qwen2.5</text><text x="947" y="238" font-size="21" fill="#fff">0.5B</text><text x="947" y="272" font-size="15" fill="#e3e0ff">视觉+文本+状态</text>
+<rect x="1075" y="185" width="160" height="141" rx="16" fill="#624720" stroke="#efbb61"/><text x="1154" y="229" font-size="21" fill="#fff">L1 Action</text><text x="1154" y="261" font-size="18" fill="#fff">[B,8,7]</text><text x="1154" y="290" font-size="15" fill="#ffebc5">LIBERO</text>
+</g>
+<g stroke="#95bbff" stroke-width="3" fill="none" marker-end="url(#arrow)">
+<path d="M220 243 L278 177"/><path d="M220 266 L278 295"/><path d="M500 179 L549 213"/><path d="M500 298 L549 270"/><path d="M808 245 L849 245"/><path d="M1036 244 L1068 244"/>
+</g>
+<g font-family="Arial,sans-serif"><rect x="55" y="389" width="1170" height="180" rx="18" fill="#162943" stroke="#355b7f"/><text x="80" y="432" font-size="20" font-weight="700" fill="#b4dcff">关键核查点</text><text x="80" y="465" font-size="16" fill="#e1edff">① DINOv2 与 SigLIP 沿通道拼接；不是 DINOv3，也不是 π₀.₅ 原生视觉骨干。</text><text x="80" y="496" font-size="16" fill="#e1edff">② Sigmoid 门控发生在 Adapter 的通道维：跨 patch 汇聚 D×D，而不是普通 N×N patch self-attention。</text><text x="80" y="527" font-size="16" fill="#e1edff">③ StableVLA 的默认连续动作训练使用 L1；不能称其为 π₀.₅ Flow Matching 复现。</text></g>
+<text x="61" y="617" font-family="Arial,sans-serif" font-size="15" fill="#a1bad1">原创教学重绘 · 来源：StableVLA / HumanNet 锁定源码 · 非作者原图</text></svg>

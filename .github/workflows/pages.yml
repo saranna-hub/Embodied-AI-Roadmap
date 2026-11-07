@@ -119,6 +119,16 @@ jobs:
           grep -q 'PASS source-clip-leakage:' /tmp/mcap-lerobot-v3-contract.log
           grep -q 'PASS normalization-roundtrip:' /tmp/mcap-lerobot-v3-contract.log
           grep -q 'PASS ALL: MCAP -> LeRobot v3 -> openpi synthetic data contracts' /tmp/mcap-lerobot-v3-contract.log
+      - name: Validate StableVLA IB-Adapter channel mathematics without GPU
+        run: |
+          set -euo pipefail
+          python3 examples/stablevla_ib_contract_cpu.py | tee /tmp/stablevla-ib-contract.log
+          grep -q 'PASS B/H/D/N channel Gram shape:' /tmp/stablevla-ib-contract.log
+          grep -q 'PASS patch permutation:' /tmp/stablevla-ib-contract.log
+          grep -q 'PASS sigmoid-vs-softmax:' /tmp/stablevla-ib-contract.log
+          grep -q 'PASS fixed buffer fusion gate:' /tmp/stablevla-ib-contract.log
+          grep -q 'PASS metrics:' /tmp/stablevla-ib-contract.log
+          grep -q 'PASS ALL: StableVLA' /tmp/stablevla-ib-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -335,3 +345,14 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: MCAP → LeRobot v3 → π₀.₅ HTML/KaTeX, 2 new SVGs, CPU data-contract and all baseline gates."
+
+          check_html "/01-foundations/vla/stablevla-ib-adapter-robustness/" 16
+          for name in stablevla-ib-system stablevla-ib-channel-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/stablevla-ib-verified.svg
+            grep -q '<svg' /tmp/stablevla-ib-verified.svg
+            grep -q '</svg>' /tmp/stablevla-ib-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: StableVLA IB-Adapter HTML, math, 2 SVGs, CPU channel contracts, and all prior baseline gates."
