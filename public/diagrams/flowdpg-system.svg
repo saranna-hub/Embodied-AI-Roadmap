@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="690" viewBox="0 0 1280 690" role="img" aria-label="FlowDPG 离线至在线训练结构">
+<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#99bffe"/></marker><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#071321"/><stop offset="1" stop-color="#172b42"/></linearGradient><style>text{font-family:Arial,'Noto Sans CJK SC',sans-serif;fill:#eff5ff}.head{font-weight:700;font-size:29px}.title{font-weight:bold;font-size:20px}.body{font-size:16px}.note{font-size:14px;fill:#accde8}.box{fill:#16334c;stroke:#4a6f99;stroke-width:2}.good{fill:#153b35;stroke:#43bba1;stroke-width:2}.amber{fill:#44341e;stroke:#dfa85a;stroke-width:2}</style></defs>
+<rect width="1280" height="690" rx="22" fill="url(#bg)"/>
+<text x="48" y="58" class="head">FlowDPG：训练时蒸馏价值梯度，部署时只运行 Flow ODE</text>
+<text x="48" y="90" class="note">依据 CoRL 2026 FlowDPG 原论文重绘 · 不是作者系统原图</text>
+<rect x="45" y="133" width="225" height="125" rx="15" class="box"/><text x="65" y="167" class="title">示教 D_off</text><text x="65" y="199" class="body">图像 + 状态 + Action</text><text x="65" y="230" class="note">GELLO / 真实机器人</text>
+<rect x="305" y="133" width="258" height="125" rx="15" class="box"/><text x="324" y="167" class="title">视觉状态表征</text><text x="324" y="199" class="body">多相机 + proprio</text><text x="324" y="231" class="note">s = backbone(observation)</text>
+<rect x="603" y="125" width="270" height="143" rx="15" class="good"/><text x="624" y="159" class="title">Flow Actor vθ</text><text x="624" y="191" class="body">x_t , t , s → velocity</text><text x="624" y="222" class="note">BC + 梯度蒸馏 + 一致性</text>
+<rect x="921" y="126" width="307" height="145" rx="15" class="amber"/><text x="941" y="161" class="title">Value: V / Q₁ / Q₂</text><text x="941" y="194" class="body">IQL + 双 Critic + EMA</text><text x="941" y="229" class="note">g = grad_action min Q</text>
+<path d="M270 196H299 M563 197H597 M875 198H913" stroke="#99bffe" stroke-width="3" marker-end="url(#arr)" fill="none"/>
+<rect x="80" y="307" width="480" height="126" rx="16" class="box"/><text x="106" y="345" class="title">阶段奖励：SARM / 失败反馈</text><text x="106" y="377" class="body">progress Δφ + stage jump + terminal</text><text x="106" y="407" class="note">需要阶段标注；输出给 Critic 而非直接真机</text>
+<rect x="614" y="312" width="580" height="125" rx="16" class="good"/><text x="636" y="345" class="title">训练目标：â → g → Δ → u*</text><text x="636" y="380" class="body">one-step clean projection + adaptive shift</text><text x="636" y="408" class="note">仅在训练阶段生成 target；不反传整条 ODE</text>
+<path d="M1048 271V303H897V307" stroke="#99bffe" stroke-width="3" marker-end="url(#arr)" fill="none"/><path d="M560 373H606" stroke="#99bffe" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="46" y="484" width="556" height="137" rx="16" class="amber"/><text x="73" y="522" class="title">在线回流 · D_on</text><text x="73" y="556" class="body">真机动作 / 失败 / 重抓 / 人工接管</text><text x="73" y="588" class="note">D_off:D_on 约 1:1 采样，周期性更新 Critic 与 Actor</text>
+<rect x="652" y="484" width="576" height="137" rx="16" class="good"/><text x="678" y="522" class="title">推理端：无 Critic、无 SARM</text><text x="678" y="557" class="body">当前观测 → vθ → 多步 Flow ODE → Action Chunk</text><text x="678" y="590" class="note">异步更新权重，部署安全控制器另行保护</text>
+<path d="M922 437V478" stroke="#99bffe" stroke-width="3" marker-end="url(#arr)"/><path d="M602 554H645" stroke="#99bffe" stroke-width="3" marker-end="url(#arr)"/>
+<text x="50" y="659" class="note">边界：该方法不是任务规划器；长程成功仍依赖基础技能、奖励质量与执行恢复数据。</text>
+</svg>

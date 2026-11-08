@@ -12,6 +12,6 @@ sidebar:
 
 - [FlashVLA：流式 Flow Matching 动作解码、分块因果注意力和异步执行](/Embodied-AI-Roadmap/05-control/flashvla-streaming-flow-action-decoding/)（2026-11-04）：官方源码逐函数、N=4/C=10 训练张量、Cold-start、动作队列、CPU 数学契约和 LIBERO/RoboTwin 复现入口。建议先读 π₀.₅ 再与 PACT-VLA 对照。
 
-建议先读 [π₀.₅ LIBERO 数据/损失源码核验](/Embodied-AI-Roadmap/01-foundations/vla/pi05-libero-data-loss-lora-source-guide/)，再理解训练完成后如何让动作块在真实物理时间内可靠执行。
+- [FlowDPG：无需 ODE BPTT 的 Flow Policy Critic 梯度蒸馏与双臂长程任务后训练](/Embodied-AI-Roadmap/01-foundations/vla/flowdpg-bptt-free-critic-gradient-posttraining/)（2026-11-08）：CoRL 2026 公式与原表核查、IQL 双 Critic、SARM 阶段奖励、离线到在线回流、两图和 CPU 数学契约。适合在掌握 Flow Matching 后研读。\n\n建议先读 [π₀.₅ LIBERO 数据/损失源码核验](/Embodied-AI-Roadmap/01-foundations/vla/pi05-libero-data-loss-lora-source-guide/)，再理解训练完成后如何让动作块在真实物理时间内可靠执行。
 
 其余运动学、力控和多臂协作章节待逐项补充。

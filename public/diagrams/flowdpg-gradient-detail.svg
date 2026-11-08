@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="730" viewBox="0 0 1280 730" role="img" aria-label="FlowDPG 一步投影与 Critic 梯度公式链路">
+<defs><style>text{font-family:Arial,'Noto Sans CJK SC',sans-serif;fill:#f3f7ff}.head{font-size:30px;font-weight:bold}.t{font-size:21px;font-weight:bold}.b{font-size:17px}.s{font-size:15px;fill:#b4cce5}.card{fill:#19324b;stroke:#5683ae;stroke-width:2}.good{fill:#124238;stroke:#42c8a9;stroke-width:2}</style><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#9cbfff"/></marker></defs>
+<rect width="1280" height="730" rx="24" fill="#091827"/>
+<text x="46" y="61" class="head">FlowDPG 速度监督：从示教 u 到价值改进 u*</text>
+<text x="46" y="94" class="s">同一个动作块的 flow 时间 t，不等于机器人时间步；以下仅是训练计算图</text>
+<g>
+<rect x="48" y="144" width="352" height="104" rx="14" class="card"/><text x="67" y="179" class="t">① 线性配对</text><text x="67" y="211" class="b">x_t = (1−t)x₀ + t x₁</text><text x="67" y="237" class="s">u = x₁ − x₀</text>
+<rect x="463" y="144" width="352" height="104" rx="14" class="card"/><text x="482" y="179" class="t">② 一步干净动作估计</text><text x="482" y="211" class="b">â = x_t + (1−t)vθ</text><text x="482" y="237" class="s">不需要跑完整 ODE</text>
+<rect x="877" y="144" width="352" height="104" rx="14" class="good"/><text x="898" y="179" class="t">③ 双 Critic 求方向</text><text x="898" y="211" class="b">g = ∇â min(Q₁,Q₂)</text><text x="898" y="237" class="s">只对动作求梯度</text>
+<path d="M400 196H454 M815 196H870" fill="none" stroke="#9cbfff" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="877" y="312" width="352" height="110" rx="14" class="good"/><text x="898" y="349" class="t">④ 自适应梯度位移</text><text x="898" y="382" class="b">Δ = α · ||u|| / (||g||+ε) · g</text><text x="898" y="408" class="s">g=0 时步长回零</text>
+<rect x="463" y="312" width="352" height="110" rx="14" class="good"/><text x="485" y="349" class="t">⑤ 蒸馏速度目标</text><text x="485" y="382" class="b">a* = â + Δ ; u* = a* − x₀</text><text x="485" y="408" class="s">u* stop-gradient</text>
+<rect x="48" y="312" width="352" height="110" rx="14" class="card"/><text x="69" y="349" class="t">⑥ 混合监督 + 锚</text><text x="69" y="381" class="b">L = λ||v−u*||² + (1−λ)||v−u||²</text><text x="69" y="408" class="s">λ 从 0 warm up</text>
+<path d="M1052 248V304 M877 365H824 M463 365H407" stroke="#9cbfff" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+</g>
+<rect x="48" y="486" width="1180" height="146" rx="16" fill="#122b3f" stroke="#517b9c" stroke-width="2"/>
+<text x="72" y="523" class="t">一致性约束为什么必不可少？</text>
+<text x="72" y="563" class="b">L_cons = ||â − x₁||² = (1−t)² ||vθ − u||²</text>
+<text x="72" y="599" class="b">让 Critic 在较贴近真实演示动作的位置给出可用梯度，避免 OOD 投影误导策略</text>
+<text x="48" y="680" class="s">图中 α/λ 为超参数，不等于动作物理限幅；安全性仍需机器人端单独校验。原创教学图 · FlowDPG CoRL 2026</text>
+</svg>

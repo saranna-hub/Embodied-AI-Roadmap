@@ -129,6 +129,16 @@ jobs:
           grep -q 'PASS fixed buffer fusion gate:' /tmp/stablevla-ib-contract.log
           grep -q 'PASS metrics:' /tmp/stablevla-ib-contract.log
           grep -q 'PASS ALL: StableVLA' /tmp/stablevla-ib-contract.log
+      - name: Validate FlowDPG BPTT-free critic gradient CPU contract
+        run: |
+          set -euo pipefail
+          python3 examples/flowdpg_cpu_contract.py | tee /tmp/flowdpg-contract.log
+          grep -q 'PASS projection and consistency identity:' /tmp/flowdpg-contract.log
+          grep -q 'PASS critic gradient improves local quadratic Q;' /tmp/flowdpg-contract.log
+          grep -q 'PASS zero gradient safety and upper expectile asymmetry' /tmp/flowdpg-contract.log
+          grep -q 'PASS progress + transition + terminal reward;' /tmp/flowdpg-contract.log
+          grep -q 'PASS BC anchor and distillation interpolation' /tmp/flowdpg-contract.log
+          grep -q 'PASS ALL: FlowDPG CPU' /tmp/flowdpg-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -356,3 +366,14 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: StableVLA IB-Adapter HTML, math, 2 SVGs, CPU channel contracts, and all prior baseline gates."
+
+          check_html "/01-foundations/vla/flowdpg-bptt-free-critic-gradient-posttraining/" 15
+          for name in flowdpg-system flowdpg-gradient-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/flowdpg-diagram.svg
+            grep -q '<svg' /tmp/flowdpg-diagram.svg
+            grep -q '</svg>' /tmp/flowdpg-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: FlowDPG HTML math, 2 SVG and CPU contracts; all baseline gates."
