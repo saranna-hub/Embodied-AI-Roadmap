@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="650" viewBox="0 0 1280 650" role="img" aria-label="Flow Matching 和教师蒸馏共享梯度负夹角时的单向投影几何">
+<defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#10172a"/><stop offset="1" stop-color="#20314d"/></linearGradient>
+<marker id="blue" markerWidth="11" markerHeight="11" refX="9" refY="4" orient="auto"><path d="M0 0L9 4L0 8Z" fill="#86b8ff"/></marker><marker id="red" markerWidth="11" markerHeight="11" refX="9" refY="4" orient="auto"><path d="M0 0L9 4L0 8Z" fill="#fa8b8f"/></marker><marker id="mint" markerWidth="11" markerHeight="11" refX="9" refY="4" orient="auto"><path d="M0 0L9 4L0 8Z" fill="#6cf0c3"/></marker>
+</defs>
+<rect width="1280" height="650" rx="23" fill="url(#bg)"/>
+<g font-family="Arial,'Noto Sans CJK SC',sans-serif">
+<text x="53" y="54" font-size="30" fill="#f2f7ff" font-weight="bold">梯度负夹角才投影：动作目标优先的几何解释</text>
+<text x="53" y="85" font-size="16" fill="#b9c7e0">示例 gF=(1,0)，gT=(-1,2)；仅在真正共享的 Adapter 参数子空间计算</text>
+<rect x="47" y="130" width="665" height="452" rx="20" fill="#182b46" stroke="#44638b"/>
+<g stroke="#476987" stroke-width="2"><line x1="96" y1="440" x2="673" y2="440"/><line x1="360" y1="550" x2="360" y2="160"/></g>
+<g stroke="#86b8ff" stroke-width="5" marker-end="url(#blue)"><line x1="360" y1="440" x2="595" y2="440"/></g>
+<g stroke="#fa8b8f" stroke-width="5" marker-end="url(#red)"><line x1="360" y1="440" x2="235" y2="216"/></g>
+<g stroke="#6cf0c3" stroke-width="5" marker-end="url(#mint)"><line x1="360" y1="440" x2="360" y2="205"/></g>
+<path d="M235 216H360" stroke="#d2ddec" stroke-dasharray="8 6" stroke-width="2"/>
+<text x="574" y="423" font-size="22" fill="#9bc6ff">gF</text>
+<text x="145" y="213" font-size="22" fill="#ffb4b6">gT</text>
+<text x="378" y="186" font-size="20" fill="#8ef4d2">gT 投影</text>
+<text x="138" y="481" font-size="14" fill="#b2c1d6">反方向分量被移除</text>
+<rect x="755" y="139" width="472" height="422" rx="18" fill="#1f304b" stroke="#456c98"/>
+<text x="790" y="188" font-size="24" font-weight="bold" fill="#fff">1. 计算真实共享梯度</text>
+<text x="790" y="225" font-size="18" fill="#c8dff8">c = dot(gF,gT) / (||gF|| ||gT||)</text>
+<text x="790" y="273" font-size="23" font-weight="bold" fill="#fff">2. 判断是否投影</text>
+<text x="790" y="311" font-size="18" fill="#ffd0d2">dot &lt; 0：存在一阶反向分量</text>
+<text x="790" y="346" font-size="18" fill="#b9cbe1">dot ≥ 0：保留教师原梯度</text>
+<text x="790" y="395" font-size="23" font-weight="bold" fill="#fff">3. 教师朝法向量投影</text>
+<text x="790" y="432" font-size="18" fill="#a8ffe4">gT' = gT - dot(gT,gF)/||gF||² gF</text>
+<text x="790" y="480" font-size="18" fill="#c8dff8">总更新方向：gF + λ gT'</text>
+<text x="790" y="517" font-size="15" fill="#acbcd5">一阶局部性质，不保证真实 rollout 改善</text>
+<text x="53" y="615" font-size="16" fill="#b8c8df">设计参考：PCGrad (Yu et al., 2020)；图中为动作优先的单向变体，不是官方 openpi 实现。</text>
+</g>
+</svg>

@@ -19,3 +19,8 @@ sidebar:
 ### 2026-11-07 新增：StableVLA 信息瓶颈视觉 Adapter 与鲁棒性
 
 [StableVLA 源码级精读：DINOv2/SigLIP、通道 Gram + Sigmoid、双流融合、L1 Action 与真实污染评测](./vla/stablevla-ib-adapter-robustness/)；对照 ICML 2026 正式论文、作者源码与权重，附两张原创图和 CPU 数学契约。特别说明 StableVLA 不是 π₀.₅ 的 Flow Matching 实现，向 openpi 移植属于研究方案而非官方已验证模块。
+
+
+### 2026-11-09 新增：π₀.₅ 视觉蒸馏、DINOv3 教师与梯度几何
+
+[π₀.₅ 视觉蒸馏与梯度几何深度教程](./vla/pi05-vision-distill-gradient-geometry/)：以官方 openpi 源码为参照，设计**训练期单教师、推理期无教师**的视觉残差 Adapter；推导 Flow Matching + Feature Loss、共享梯度角度和动作优先的单向投影，对照基线 LoRA、Adapter、教师、梯度投影四组控制变量；附两张原创机制图和标准库 CPU 合成契约脚本。该路线为**研究性方案**，不能误认为 Physical Intelligence 官方已经支持或本站已完成 GPU/真机复现。

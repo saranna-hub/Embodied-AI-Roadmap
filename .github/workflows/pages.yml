@@ -139,6 +139,17 @@ jobs:
           grep -q 'PASS progress + transition + terminal reward;' /tmp/flowdpg-contract.log
           grep -q 'PASS BC anchor and distillation interpolation' /tmp/flowdpg-contract.log
           grep -q 'PASS ALL: FlowDPG CPU' /tmp/flowdpg-contract.log
+      - name: Validate Pi05 visual teacher / shared-gradient CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/pi05_vision_gradient_contract_cpu.py | tee /tmp/pi05-vision-gradient.log
+          grep -q 'PASS negative-angle projection:' /tmp/pi05-vision-gradient.log
+          grep -q 'PASS orthogonal / positive / zero-gradient:' /tmp/pi05-vision-gradient.log
+          grep -q 'PASS first-order action-loss protection' /tmp/pi05-vision-gradient.log
+          grep -q 'PASS valid-camera and patch masks:' /tmp/pi05-vision-gradient.log
+          grep -q 'PASS train/inference causality:' /tmp/pi05-vision-gradient.log
+          grep -q 'PASS reverse-time Flow Euler:' /tmp/pi05-vision-gradient.log
+          grep -q 'PASS ALL: pi05 visual distillation gradient geometry CPU contracts' /tmp/pi05-vision-gradient.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -377,3 +388,14 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: FlowDPG HTML math, 2 SVG and CPU contracts; all baseline gates."
+          check_html "/01-foundations/vla/pi05-vision-distill-gradient-geometry/" 10
+          for name in pi05-vision-distill-system pi05-vision-distill-gradient; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/pi05-visual-distill.svg
+            grep -q '<svg' /tmp/pi05-visual-distill.svg
+            grep -q '</svg>' /tmp/pi05-visual-distill.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: pi05 visual teacher tutorial HTML/KaTeX, two SVGs, CPU and prior site gates."
+
