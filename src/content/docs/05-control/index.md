@@ -8,6 +8,8 @@ sidebar:
 
 ## 已发布的深度教程
 
+- [RTC：π₀.₅ 异步动作块、软掩码 VJP 与训练期前缀条件化](/Embodied-AI-Roadmap/05-control/rtc-inference-training-time-action-conditioning/)（2026-11-10）：NeurIPS 2025 RTC + 后续 Training-Time RTC、LeRobot 固定源码核验、两图、CPU 时序与 loss 契约。讲清模型推理延迟如何映射到真实机器人动作。
+
 - [PACT-VLA：提交前新观测、FlowRes 自一致性与异步动作块](/Embodied-AI-Roadmap/05-control/pact-vla-precommit-flowres/)（2026-10-30）：论文公式、π₀.₅/LIBERO 实验参数、CPU 合成契约测试、真机异步部署边界。
 
 - [FlashVLA：流式 Flow Matching 动作解码、分块因果注意力和异步执行](/Embodied-AI-Roadmap/05-control/flashvla-streaming-flow-action-decoding/)（2026-11-04）：官方源码逐函数、N=4/C=10 训练张量、Cold-start、动作队列、CPU 数学契约和 LIBERO/RoboTwin 复现入口。建议先读 π₀.₅ 再与 PACT-VLA 对照。

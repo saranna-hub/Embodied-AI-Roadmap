@@ -21,6 +21,7 @@ const pages=[
   ['04-human-to-robot/huro-robotization-to-vla',8],
   ['02-data-engineering/mcap-lerobot-v3-temporal-action-contract',12],
   ['01-foundations/vla/flowdpg-bptt-free-critic-gradient-posttraining',15],
+  ['05-control/rtc-inference-training-time-action-conditioning',20],
 ];
 const diagrams=[
   ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),
@@ -33,7 +34,8 @@ const diagrams=[
   'egolap-system.svg', 'egolap-mask-gradient.svg',
   'huro-system.svg', 'huro-detail.svg',
   'mcap-lerobot-v3-system.svg', 'mcap-lerobot-v3-timing-detail.svg',
-  'flowdpg-system.svg', 'flowdpg-gradient-detail.svg'
+  'flowdpg-system.svg', 'flowdpg-gradient-detail.svg',
+  'rtc-asynchronous-system.svg', 'rtc-prefix-mask-detail.svg'
 ];
 let issues=[];
 for(const [slug,minMath] of pages){

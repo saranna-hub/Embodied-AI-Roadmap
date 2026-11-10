@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+<title id="title">RTC引导窗口与训练掩码</title><desc id="desc">软掩码三段权重以及训练期干净动作前缀、噪声后缀和Loss作用区域</desc>
+<defs><style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#183956}.title{font-size:32px;font-weight:700}.head{font-size:22px;font-weight:700}.sub{font-size:17px;fill:#4a667e}.body{font-size:16px}.small{font-size:14px;fill:#4a667e}</style></defs>
+<rect width="1200" height="650" fill="#f5f9fc"/>
+<text x="50" y="56" class="title">RTC 两种条件化：推理期软引导 vs 训练期硬前缀</text>
+<text x="52" y="92" class="head">A  推理期 soft mask：H=12，s=4，d=3</text>
+<line x1="95" y1="300" x2="1125" y2="300" stroke="#95aec1" stroke-width="2"/>
+<g fill="#c5def1" stroke="#fff"><rect x="95" y="165" width="80" height="135"/><rect x="179" y="165" width="80" height="135"/><rect x="263" y="165" width="80" height="135"/></g>
+<g fill="#edc997" stroke="#fff"><rect x="347" y="185" width="80" height="115"/><rect x="431" y="212" width="80" height="88"/><rect x="515" y="237" width="80" height="63"/><rect x="599" y="263" width="80" height="37"/><rect x="683" y="288" width="80" height="12"/></g>
+<g fill="#bfe6d8" stroke="#fff"><rect x="767" y="297" width="80" height="3"/><rect x="851" y="297" width="80" height="3"/><rect x="935" y="297" width="80" height="3"/><rect x="1019" y="297" width="80" height="3"/></g>
+<g class="body" text-anchor="middle"><text x="135" y="322">0</text><text x="219" y="322">1</text><text x="303" y="322">2</text><text x="387" y="322">3</text><text x="471" y="322">4</text><text x="555" y="322">5</text><text x="639" y="322">6</text><text x="723" y="322">7</text><text x="807" y="322">8</text><text x="891" y="322">9</text><text x="975" y="322">10</text><text x="1059" y="322">11</text></g>
+<text x="110" y="146" class="head">W = 1</text><text x="395" y="146" class="head">W 逐步衰减</text><text x="885" y="146" class="head">W = 0</text>
+<text x="102" y="356" class="sub">已承诺动作</text><text x="425" y="356" class="sub">旧计划与新观测协商</text><text x="867" y="356" class="sub">自由生成</text>
+<path d="M50 382 H1150" stroke="#b4c9da" stroke-width="2"/>
+<text x="52" y="421" class="head">B  训练期：前缀只做条件输入，后缀负责 Flow loss</text>
+<text x="51" y="457" class="sub">样本 b 的前缀长度 dᵦ=3，训练时随机采样；不能给推理期输入未来 GT</text>
+<g stroke="#fff" stroke-width="3"><rect x="70" y="480" width="250" height="62" rx="8" fill="#c5def1"/><rect x="322" y="480" width="780" height="62" rx="8" fill="#bfe6d8"/></g>
+<text x="92" y="507" class="body">0…dᵦ−1  干净 A</text><text x="92" y="530" class="small">Loss mask = 0</text>
+<text x="365" y="507" class="body">dᵦ…H−1  带噪动作 xτ → 速度预测</text><text x="365" y="530" class="small">Loss mask = 1，逐有效 token 归一化</text>
+<text x="68" y="584" class="sub">逆时间实现：干净前缀 τ=0；原论文的正时间实现：干净前缀 τ=1</text>
+<text x="52" y="628" class="small">原创重绘 · 两种 RTC 均需控制器独立保证时间对齐、动作边界与安全约束</text>
+</svg>

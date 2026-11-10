@@ -150,6 +150,20 @@ jobs:
           grep -q 'PASS train/inference causality:' /tmp/pi05-vision-gradient.log
           grep -q 'PASS reverse-time Flow Euler:' /tmp/pi05-vision-gradient.log
           grep -q 'PASS ALL: pi05 visual distillation gradient geometry CPU contracts' /tmp/pi05-vision-gradient.log
+
+
+      - name: Validate RTC soft-mask, delay, postfix-loss and queue contracts without GPU
+        run: |
+          set -euo pipefail
+          python3 examples/rtc_prefix_contract_cpu.py | tee /tmp/rtc-contract.log
+          grep -q 'PASS delay-budget:' /tmp/rtc-contract.log
+          grep -q 'PASS soft-mask:' /tmp/rtc-contract.log
+          grep -q 'PASS postfix-loss:' /tmp/rtc-contract.log
+          grep -q 'PASS stale-queue:' /tmp/rtc-contract.log
+          grep -q 'PASS flow-time:' /tmp/rtc-contract.log
+          grep -q 'PASS causality:' /tmp/rtc-contract.log
+          grep -q 'PASS ALL: RTC inference/training CPU contracts' /tmp/rtc-contract.log
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -399,3 +413,13 @@ jobs:
           done
           echo "PASS: pi05 visual teacher tutorial HTML/KaTeX, two SVGs, CPU and prior site gates."
 
+          check_html "/05-control/rtc-inference-training-time-action-conditioning/" 20
+          for name in rtc-asynchronous-system rtc-prefix-mask-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/rtc-verified.svg
+            grep -q '<svg' /tmp/rtc-verified.svg
+            grep -q '</svg>' /tmp/rtc-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: RTC HTML/KaTeX, 2 SVGs, CPU constraints and all prior baseline checks."
