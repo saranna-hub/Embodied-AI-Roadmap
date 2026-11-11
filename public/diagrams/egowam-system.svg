@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="680" viewBox="0 0 1180 680" role="img" aria-label="EgoWAM HPT 世界动作双监督架构">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101c32"/><stop offset="1" stop-color="#101f2d"/></linearGradient><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5 0 10" fill="#a9bfd4"/></marker></defs>
+<rect width="1180" height="680" rx="22" fill="url(#bg)"/><text x="40" y="53" fill="#f6f9fb" font-family="Arial,sans-serif" font-size="28" font-weight="700">EgoWAM / HPT   人机共训 · 双监督 · 动作推理</text>
+<text x="40" y="82" fill="#9ab2c8" font-family="Arial,sans-serif" font-size="15">TRAIN: action + future world   /   INFERENCE: action only</text>
+<g font-family="Arial,sans-serif">
+<rect x="36" y="136" width="252" height="149" rx="18" fill="#19324c" stroke="#4c8ebd" stroke-width="2"/>
+<text x="55" y="173" fill="#e4f2fc" font-size="21" font-weight="bold">Human EGO</text><text x="55" y="208" fill="#b9d0e4" font-size="16">Aria RGB + hand pose</text><text x="55" y="239" fill="#8fb8dd" font-size="14">Head motion / interaction</text>
+<rect x="36" y="317" width="252" height="159" rx="18" fill="#193b39" stroke="#43c3ab" stroke-width="2"/>
+<text x="55" y="354" fill="#e7fff8" font-size="21" font-weight="bold">Robot demos</text><text x="55" y="387" fill="#b8f1e1" font-size="16">Ego + 2 wrist views</text><text x="55" y="418" fill="#96cfbf" font-size="14">14D EE command + state</text>
+<rect x="332" y="185" width="221" height="243" rx="18" fill="#222d4c" stroke="#819adf" stroke-width="2"/>
+<text x="348" y="226" fill="#e8eaff" font-size="22" font-weight="bold">Per-domain Stems</text>
+<text x="348" y="264" fill="#c5c9ff" font-size="15">Ego / wrist image</text><text x="348" y="297" fill="#c5c9ff" font-size="15">Proprio MLP</text><text x="348" y="330" fill="#c5c9ff" font-size="15">16 learned queries</text><text x="348" y="370" fill="#91a3d2" font-size="15">Shared token width 256</text>
+<rect x="601" y="195" width="226" height="225" rx="18" fill="#34304c" stroke="#bb9eff" stroke-width="2"/>
+<text x="623" y="231" fill="#f2eaff" font-size="22" font-weight="bold">Shared HPT Trunk</text><text x="623" y="270" fill="#dfceff" font-size="16">16 blocks / 8 heads</text><text x="623" y="309" fill="#dfceff" font-size="15">64 action queries</text><text x="623" y="338" fill="#dfceff" font-size="15">16 future queries</text><text x="623" y="374" fill="#bca7de" font-size="15">Gradients meet here</text>
+<rect x="884" y="132" width="262" height="154" rx="17" fill="#163d46" stroke="#51dfd5" stroke-width="2"/>
+<text x="901" y="167" fill="#dbfffd" font-size="21" font-weight="bold">Action Head</text><text x="901" y="198" fill="#b2ede6" font-size="16">Flow Matching (100×14)</text><text x="901" y="229" fill="#98d6d3" font-size="15">L_action · deploy ✅</text>
+<rect x="884" y="323" width="262" height="190" rx="17" fill="#493041" stroke="#faac7c" stroke-width="2"/>
+<text x="901" y="360" fill="#ffe9db" font-size="21" font-weight="bold">World Head</text><text x="901" y="396" fill="#ffdec4" font-size="15">Pixel / DINO / 3D Flow</text><text x="901" y="427" fill="#ffdec4" font-size="15">L_world · train only</text><text x="901" y="460" fill="#ffbd9b" font-size="15">Removed at inference ✕</text>
+<g stroke="#a9bfd4" stroke-width="3" fill="none" marker-end="url(#a)"><path d="M288 211H306V255H332"/><path d="M288 394H306V357H332"/><path d="M553 307H601"/><path d="M827 263H855V209H884"/><path d="M827 351H855V418H884"/></g>
+<rect x="36" y="544" width="1110" height="94" rx="16" fill="#152639" stroke="#3a5369"/>
+<text x="55" y="580" fill="#f0f6fb" font-size="18" font-weight="bold">训练： L_action(robot) + L_action(human) + λ [ L_world(robot) + L_world(human) ]</text>
+<text x="55" y="611" fill="#9cb9cc" font-size="16">更换世界目标，不改变主干与动作监督；人类动作不可靠时可做 human-world-only 消融</text>
+</g></svg>

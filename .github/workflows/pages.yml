@@ -164,6 +164,19 @@ jobs:
           grep -q 'PASS causality:' /tmp/rtc-contract.log
           grep -q 'PASS ALL: RTC inference/training CPU contracts' /tmp/rtc-contract.log
 
+      - name: Validate EgoWAM ego-motion and world-target CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/egowam_world_target_contract_cpu.py | tee /tmp/egowam-contract.log
+          grep -q 'PASS ego-motion static-zero:' /tmp/egowam-contract.log
+          grep -q 'PASS moving-object preserved:' /tmp/egowam-contract.log
+          grep -q 'PASS frame-inversion negative control:' /tmp/egowam-contract.log
+          grep -q 'PASS flow-matching linear-path' /tmp/egowam-contract.log
+          grep -q 'PASS invalid-point mask' /tmp/egowam-contract.log
+          grep -q 'PASS q01/q99 reversible normalization' /tmp/egowam-contract.log
+          grep -q 'PASS future target absent' /tmp/egowam-contract.log
+          grep -q 'PASS ALL: EgoWAM' /tmp/egowam-contract.log
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -423,3 +436,15 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: RTC HTML/KaTeX, 2 SVGs, CPU constraints and all prior baseline checks."
+
+          check_html "/01-foundations/world-models/egowam-world-targets-hpt-cotraining/" 20
+          for name in egowam-system egowam-3dflow-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/egowam-verified.svg
+            grep -q '<svg' /tmp/egowam-verified.svg
+            grep -q '</svg>' /tmp/egowam-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: EgoWAM HTML/KaTeX, two SVGs, CPU contracts and all prior baseline checks."
+

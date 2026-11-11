@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="670" viewBox="0 0 1180 670" role="img" aria-label="EgoWAM 三维运动去相机自运动与点条件 Flow Matching">
+<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5 0 10" fill="#b8d4e9"/></marker></defs>
+<rect width="1180" height="670" rx="22" fill="#0e1b2d"/>
+<g font-family="Arial,sans-serif">
+<text x="40" y="55" font-size="28" font-weight="700" fill="#edf6fe">3D Flow target   相机自运动补偿 → 物体真实位移</text>
+<text x="40" y="82" font-size="16" fill="#96b1c5">Two timestamps, one reference frame C(t) · 1120 anchor points · valid masks</text>
+<rect x="38" y="129" width="535" height="381" rx="20" fill="#182b45" stroke="#518fba" stroke-width="2"/>
+<text x="57" y="168" font-size="22" font-weight="bold" fill="#d7eeff">错误：直接跨相机坐标减法</text>
+<rect x="65" y="195" width="200" height="117" rx="12" fill="#1e3d5e"/><text x="85" y="230" fill="#d9ecfe" font-size="18">Camera C(t)</text><text x="85" y="264" fill="#98bfdc" font-size="16">observed X_t</text>
+<rect x="340" y="195" width="200" height="117" rx="12" fill="#1e3d5e"/><text x="357" y="230" fill="#d9ecfe" font-size="18">Camera C(t+T)</text><text x="357" y="264" fill="#98bfdc" font-size="16">observed X_t+T</text>
+<path d="M265 254H340" stroke="#b7d7ef" stroke-width="3" marker-end="url(#arr)"/>
+<text x="64" y="359" fill="#ffbba2" font-size="18">X_t+T − X_t</text><text x="64" y="391" fill="#ffcfbc" font-size="15">Static object ≠ zero (false motion)</text>
+<text x="64" y="436" fill="#a1bfd6" font-size="15">Head turn and translation</text><text x="64" y="465" fill="#a1bfd6" font-size="15">contaminate apparent 3D motion</text>
+<rect x="605" y="129" width="536" height="381" rx="20" fill="#17353a" stroke="#54c8ad" stroke-width="2"/>
+<text x="626" y="168" font-size="22" font-weight="bold" fill="#d9fff3">正确：统一到 C(t) 参考系</text>
+<rect x="628" y="194" width="490" height="100" rx="12" fill="#20474a"/>
+<text x="652" y="231" fill="#e4fff8" font-size="18">X_future@C(t) = inv(T_WC(t))</text>
+<text x="687" y="265" fill="#b7e9de" font-size="18">· T_WC(t+T) · X_future@C(t+T)</text>
+<path d="M879 294V331" stroke="#b6e2db" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="629" y="343" width="489" height="140" rx="12" fill="#20474a"/>
+<text x="653" y="379" fill="#e5fff8" font-size="19">F = X_future@C(t) − X_t</text>
+<text x="653" y="414" fill="#a0eedb" font-size="16">Static background → ~0 m</text>
+<text x="653" y="449" fill="#a0eedb" font-size="16">Moved object → real displacement</text>
+<rect x="38" y="536" width="1103" height="91" rx="16" fill="#202b45" stroke="#5c75a8"/>
+<text x="60" y="573" font-size="18" fill="#e6eafe" font-weight="bold">PointFMPolicy:  query q[N,3] + noisy 3D flow[B,H,N,3] + trunk context</text>
+<text x="60" y="603" font-size="16" fill="#c0cce7">Masked CFM loss → velocity[B,H,N,3]    •   invalid/NaN points excluded    •   no future input at inference</text>
+</g></svg>

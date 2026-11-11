@@ -24,3 +24,7 @@ sidebar:
 ### 2026-11-09 新增：π₀.₅ 视觉蒸馏、DINOv3 教师与梯度几何
 
 [π₀.₅ 视觉蒸馏与梯度几何深度教程](./vla/pi05-vision-distill-gradient-geometry/)：以官方 openpi 源码为参照，设计**训练期单教师、推理期无教师**的视觉残差 Adapter；推导 Flow Matching + Feature Loss、共享梯度角度和动作优先的单向投影，对照基线 LoRA、Adapter、教师、梯度投影四组控制变量；附两张原创机制图和标准库 CPU 合成契约脚本。该路线为**研究性方案**，不能误认为 Physical Intelligence 官方已经支持或本站已完成 GPU/真机复现。
+
+### 2026-11-11 新增：EgoWAM 世界动作模型的三种未来监督
+
+[EgoWAM 深度教程：HPT 双头架构、未来 DINO 特征、相机补偿 3D Flow、Flow Matching 与实际开源训练配置](./world-models/egowam-world-targets-hpt-cotraining/)：以 2026-10-13 论文 v2 和 Georgia Tech 官方仓库为一手依据，区分 DINO 未来目标与 DINO 输入 stem，提供两张原创系统/算法图及纯 CPU 数学合同验证；GPU 训练、真机和 π₀.₅ 移植尚未复现。
