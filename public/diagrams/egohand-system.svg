@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 610" role="img" aria-labelledby="title desc">
+<title id="title">EgoHand 双手单目三维重建：模型、相机、SLAM 和数据回流架构</title>
+<desc id="desc">原始EGO视频及相机内参与双手框进入DINOv3及双任务解码器，输出SOMA-25与2D关节，后经相机系位置校正、SLAM世界转换和质量控制，形成可追溯手部标签而非直接机器人动作。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0 0L9 4L0 8Z" fill="#557aaf"/></marker><style>
+text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#20324f}
+.h{font-size:29px;font-weight:700}.t{font-size:17px;font-weight:700}.s{font-size:14px}.micro{font-size:12px;fill:#5c6980}
+.box{fill:#fff;stroke:#b9c8da;stroke-width:1.5}.strong{fill:#eef6ff;stroke:#6c9fcc;stroke-width:1.7}.cyan{fill:#e8f9fa;stroke:#71bfc0}.amber{fill:#fff5e7;stroke:#dfb474}.gray{fill:#f5f7fa;stroke:#c8d1db}
+.line{stroke:#557aaf;stroke-width:2.3;fill:none;marker-end:url(#arrow)}
+.dash{stroke:#6b879f;stroke-width:2;fill:none;stroke-dasharray:6 5;marker-end:url(#arrow)}
+</style></defs>
+<rect width="1200" height="610" rx="16" fill="#f9fbfe"/>
+<text x="42" y="46" class="h">EgoHand：单目视觉 → 相机系手部 → 世界系数据资产</text>
+<text x="42" y="74" class="s" fill="#62758f">论文/源码核查版 · 训练期可使用 3D + 2D 分支；SLAM 是外部依赖；输出仍需 QC 与动作适配</text>
+
+<rect x="32" y="118" width="214" height="304" rx="13" class="box"/>
+<text x="48" y="146" class="t">① 视频与几何输入</text>
+<rect x="48" y="166" width="181" height="73" rx="9" class="gray"/>
+<rect x="63" y="177" width="57" height="46" rx="4" fill="#d1e5f1"/>
+<path d="M72 213 Q88 190 99 203 Q105 195 113 199" fill="none" stroke="#6294b3" stroke-width="4"/>
+<text x="133" y="193" class="s">EGO RGB</text>
+<text x="133" y="211" class="micro">逐帧解码</text>
+<rect x="48" y="250" width="181" height="65" rx="8" class="gray"/>
+<text x="61" y="275" class="s">双手 2D Box</text>
+<text x="61" y="295" class="micro">cx / cy / side</text>
+<rect x="48" y="326" width="181" height="77" rx="8" class="gray"/>
+<text x="61" y="350" class="s">相机内参 + 畸变</text>
+<text x="61" y="372" class="micro">fx, fy, 主点, FOV</text>
+<text x="61" y="391" class="micro">虚拟针孔透视 Crop</text>
+
+<rect x="279" y="118" width="250" height="304" rx="13" class="strong"/>
+<text x="295" y="146" class="t">② 视觉与相机条件</text>
+<rect x="297" y="172" width="212" height="80" rx="8" fill="#d7e9fb"/>
+<text x="314" y="200" class="t">DINOv3 ViT-H/16+</text>
+<text x="314" y="221" class="s">256 × 256 手部 Crop</text>
+<text x="314" y="240" class="micro">视觉 Patch 特征</text>
+<rect x="297" y="268" width="212" height="58" rx="7" fill="#fff" stroke="#8fb5d6"/>
+<text x="314" y="292" class="s">CLIFF：框中心 / 尺度</text>
+<text x="314" y="310" class="micro">把全图位置信息还给手查询</text>
+<rect x="297" y="340" width="212" height="59" rx="7" fill="#fff" stroke="#8fb5d6"/>
+<text x="314" y="363" class="s">RayPE：内参 + 射线</text>
+<text x="314" y="382" class="micro">给 Patch 补上相机视线方向</text>
+
+<rect x="561" y="118" width="274" height="304" rx="13" class="box"/>
+<text x="577" y="146" class="t">③ 双分支 Transformer</text>
+<rect x="579" y="174" width="238" height="101" rx="9" class="cyan"/>
+<text x="597" y="198" class="t">3D Hand Query</text>
+<text x="597" y="223" class="s">SOMA-Hand 姿态 + 形状</text>
+<text x="597" y="245" class="s">Camera Head → 深度 Z</text>
+<text x="597" y="264" class="micro">25×3×3 旋转，尺度，平移</text>
+<rect x="579" y="292" width="238" height="109" rx="9" class="amber"/>
+<text x="597" y="316" class="t">2D Joint Queries</text>
+<text x="597" y="341" class="s">25 关节二维位置</text>
+<text x="597" y="361" class="s">Presence / Uncertainty</text>
+<text x="597" y="382" class="micro">用于侧向平移的对应约束</text>
+
+<rect x="868" y="118" width="299" height="304" rx="13" class="strong"/>
+<text x="885" y="146" class="t">④ 相机系输出与校正</text>
+<rect x="887" y="176" width="261" height="89" rx="9" fill="#fff" stroke="#9ebddd"/>
+<text x="904" y="199" class="s">SOMA → wrist-relative J / V</text>
+<text x="904" y="223" class="s">Camera Head → cam_t</text>
+<text x="904" y="247" class="micro">相机系关节 = J + cam_t</text>
+<rect x="887" y="282" width="261" height="100" rx="9" fill="#e7f6fb" stroke="#92bdca"/>
+<text x="903" y="307" class="t">2D↔3D 重投影求解</text>
+<text x="903" y="331" class="s">校正 Tx / Ty，不改深度 Z</text>
+<text x="903" y="355" class="micro">无有效点 → 回退直接回归</text>
+<text x="903" y="373" class="micro">按源 frame ID 导出 NPZ</text>
+
+<path d="M246 248 H279" class="line"/><path d="M529 248 H561" class="line"/><path d="M835 248 H868" class="line"/>
+<rect x="56" y="474" width="266" height="103" rx="11" class="gray"/>
+<text x="74" y="504" class="t">外部 SLAM / ViPE</text>
+<text x="74" y="528" class="s">T_WC(t)、时钟、米制尺度</text>
+<text x="74" y="552" class="micro">非 EgoHand 网络本体输出</text>
+
+<rect x="379" y="474" width="321" height="103" rx="11" class="amber"/>
+<text x="397" y="504" class="t">世界系变换 + 质量治理</text>
+<text x="397" y="528" class="s">Frame-ID 内连接 / SO(3) 平滑</text>
+<text x="397" y="551" class="micro">重投影、手型、速度、左右手身份 QC</text>
+<rect x="754" y="474" width="413" height="103" rx="11" class="cyan"/>
+<text x="772" y="504" class="t">数据工程与下游学习</text>
+<text x="772" y="528" class="s">可追溯手部 / 手物交互伪标签</text>
+<text x="772" y="551" class="micro">动作映射、物体跟踪、π₀.₅ 训练另行验证</text>
+<path d="M322 526H379" class="dash"/>
+<path d="M1015 422 V451 H537 V474" class="line"/>
+<path d="M700 526H754" class="line"/>
+</svg>

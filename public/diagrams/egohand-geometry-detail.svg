@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+<title id="title">EgoHand相机几何与二维关节引导的侧向平移校正</title>
+<desc id="desc">从手部检测框和相机主点出发，使用Crop尺度与焦距恢复深度，并由二维关节对应点在固定深度条件下计算Tx Ty；错误焦距导致系统性深度偏差，帧ID匹配用于世界轨迹。</desc>
+<defs><marker id="a" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0 0L9 4L0 8Z" fill="#56799e"/></marker><style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#24334d}.h{font-size:28px;font-weight:700}.th{font-size:19px;font-weight:700}.t{font-size:15px}.sm{font-size:13px;fill:#586e89}.eq{font-size:19px;font-family:Inter,Arial,sans-serif;fill:#234f75}.line{fill:none;stroke:#56799e;stroke-width:2.2;marker-end:url(#a)}.dash{fill:none;stroke:#d48d43;stroke-width:2.2;stroke-dasharray:6 6}.box{fill:white;stroke:#bed1e0;stroke-width:1.8}</style></defs>
+<rect width="1200" height="650" rx="16" fill="#f8fbff"/>
+<text x="42" y="45" class="h">几何细节：为何需要 K、Crop 和 2D 关节一起校准手腕</text>
+<text x="42" y="72" class="sm">教学示意（零 skew 针孔相机） · 固定深度 Z 后，重投影误差对侧向 Tx / Ty 为可解的最小二乘</text>
+
+<rect x="32" y="111" width="357" height="326" rx="12" class="box"/>
+<text x="50" y="142" class="th">① 全图中的手框位置</text>
+<rect x="63" y="164" width="284" height="193" rx="5" fill="#eaf2f9" stroke="#8aaac7" stroke-width="2"/>
+<path d="M205 164V357M63 260H347" stroke="#c1d3e1" stroke-dasharray="5 5"/>
+<circle cx="205" cy="260" r="6" fill="#315e92"/>
+<text x="217" y="280" class="sm">主点 (px, py)</text>
+<rect x="249" y="182" width="75" height="79" fill="#fff2dc" stroke="#dd9a46" stroke-width="3" stroke-dasharray="6 3"/>
+<circle cx="286" cy="221" r="6" fill="#e18e31"/>
+<path d="M286 221L296 192 M286 221L271 193 M286 221L267 242 M286 221L307 244" stroke="#cd7f39" stroke-width="5" stroke-linecap="round"/>
+<text x="246" y="176" class="sm">Box (cx,cy,b)</text>
+<path d="M205 260L286 221" stroke="#376d9e" stroke-width="2.3" stroke-dasharray="5 5"/>
+<text x="50" y="386" class="t">Crop 统一缩放后，框偏移与</text>
+<text x="50" y="410" class="t">原图像素尺度并未自动保留</text>
+
+<rect x="414" y="111" width="358" height="326" rx="12" class="box"/>
+<text x="432" y="142" class="th">② 相机条件化网络</text>
+<rect x="432" y="169" width="321" height="59" rx="8" fill="#e7f0fa"/>
+<text x="448" y="191" class="t">DINOv3：256×256 特征</text>
+<text x="448" y="213" class="sm">RayPE：K⁻¹·[u,v,1] 视线方向</text>
+<rect x="432" y="244" width="151" height="113" rx="9" fill="#e1f5f6" stroke="#6bb9bc"/>
+<text x="445" y="266" class="t">3D Head</text>
+<text x="445" y="291" class="sm">SOMA 25 Joints</text>
+<text x="445" y="313" class="sm">log-depth l</text>
+<text x="445" y="336" class="sm">Tx / Ty 先验</text>
+<rect x="601" y="244" width="152" height="113" rx="9" fill="#fff4e4" stroke="#d8ac70"/>
+<text x="614" y="266" class="t">2D Head</text>
+<text x="614" y="291" class="sm">25 个 (u,v)</text>
+<text x="614" y="313" class="sm">Presence / σ</text>
+<text x="614" y="336" class="sm">可靠对应筛选</text>
+<path d="M506 228V244 M680 228V244" stroke="#56799e" stroke-width="2"/>
+<text x="434" y="385" class="eq">Z = (fx / b) · exp(l)</text>
+<text x="434" y="408" class="sm">深度与内参耦合：错误 fx → 错误米制尺度</text>
+<path d="M389 280H414" class="line"/>
+
+<rect x="796" y="111" width="371" height="326" rx="12" class="box"/>
+<text x="813" y="142" class="th">③ 2D / 3D 重投影校正</text>
+<rect x="821" y="176" width="314" height="177" rx="8" fill="#eaf3f8"/>
+<path d="M850 323V195 M850 323H1111" stroke="#6e91ad" stroke-width="2"/>
+<circle cx="906" cy="294" r="7" fill="#d9863b"/>
+<circle cx="986" cy="244" r="7" fill="#d9863b"/>
+<circle cx="1067" cy="288" r="7" fill="#d9863b"/>
+<circle cx="921" cy="284" r="5" fill="#307ca2"/>
+<circle cx="998" cy="231" r="5" fill="#307ca2"/>
+<circle cx="1055" cy="274" r="5" fill="#307ca2"/>
+<path d="M906 294L921 284 M986 244L998 231 M1067 288L1055 274" stroke="#4f9aa9" stroke-width="2.3"/>
+<text x="835" y="374" class="sm">橙：投影 3D 关节　蓝：2D Head 关节</text>
+<text x="835" y="394" class="sm">最小化差异，修正 Tx / Ty</text>
+<text x="835" y="415" class="sm">Z 固定；退化或无效时回退原值</text>
+<path d="M772 280H796" class="line"/>
+
+<rect x="32" y="466" width="1135" height="152" rx="12" fill="#eaf4fb" stroke="#c0d4e4"/>
+<text x="53" y="499" class="th">推导与校验建议</text>
+<text x="55" y="532" class="eq">u = fx (Jx + Tx) / (Jz + Z) + px</text>
+<text x="607" y="532" class="eq">v = fy (Jy + Ty) / (Jz + Z) + py</text>
+<text x="55" y="566" class="t">固定 Z → 每个有效对应点提供一个侧向 Tx 或 Ty 约束；加权正规方程 + 正则获得稳定解</text>
+<text x="55" y="595" class="sm">负例：焦距填错，Overlay 仍可能对齐；左右手帧数组同长度但 frame_names 不同，世界轨迹仍会错位</text>
+</svg>

@@ -177,6 +177,17 @@ jobs:
           grep -q 'PASS future target absent' /tmp/egowam-contract.log
           grep -q 'PASS ALL: EgoWAM' /tmp/egowam-contract.log
 
+      - name: Validate EgoHand camera, fixed-depth 2D solve and frame alignment CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/egohand_camera_frame_contract_cpu.py | tee /tmp/egohand-contract.log
+          grep -q 'PASS 2D-to-3D fixed-depth weighted lateral solve' /tmp/egohand-contract.log
+          grep -q 'PASS focal-depth ratio' /tmp/egohand-contract.log
+          grep -q 'PASS T_WC world coordinates' /tmp/egohand-contract.log
+          grep -q 'PASS same-length unequal-frame arrays' /tmp/egohand-contract.log
+          grep -q 'PASS temporal-gap segmentation' /tmp/egohand-contract.log
+          grep -q 'PASS ALL: EgoHand camera/frame/pose CPU synthetic contracts' /tmp/egohand-contract.log
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -448,3 +459,13 @@ jobs:
           done
           echo "PASS: EgoWAM HTML/KaTeX, two SVGs, CPU contracts and all prior baseline checks."
 
+          check_html "/03-perception/egohand-dinov3-soma-camera-qc/" 18
+          for name in egohand-system egohand-geometry-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/egohand-verified.svg
+            grep -q '<svg' /tmp/egohand-verified.svg
+            grep -q '</svg>' /tmp/egohand-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: EgoHand HTML KaTeX >= 18, 2 new SVGs, CPU contracts, baseline 8 HTML/8 SVG + favicon."
