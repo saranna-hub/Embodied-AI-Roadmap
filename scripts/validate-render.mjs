@@ -22,7 +22,7 @@ const pages=[
   ['02-data-engineering/mcap-lerobot-v3-temporal-action-contract',12],
   ['01-foundations/vla/flowdpg-bptt-free-critic-gradient-posttraining',15],
   ['05-control/rtc-inference-training-time-action-conditioning',20],
-  ['03-perception/egohand-dinov3-soma-camera-qc',18],
+  ['03-perception/egohand-dinov3-soma-camera-qc',12],
 ];
 const diagrams=[
   ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),

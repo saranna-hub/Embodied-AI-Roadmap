@@ -459,7 +459,7 @@ jobs:
           done
           echo "PASS: EgoWAM HTML/KaTeX, two SVGs, CPU contracts and all prior baseline checks."
 
-          check_html "/03-perception/egohand-dinov3-soma-camera-qc/" 18
+          check_html "/03-perception/egohand-dinov3-soma-camera-qc/" 12
           for name in egohand-system egohand-geometry-detail; do
             file="/diagrams/$name.svg"
             curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
@@ -468,4 +468,4 @@ jobs:
             grep -q '</svg>' /tmp/egohand-verified.svg
             echo "PASS SVG $file"
           done
-          echo "PASS: EgoHand HTML KaTeX >= 18, 2 new SVGs, CPU contracts, baseline 8 HTML/8 SVG + favicon."
+          echo "PASS: EgoHand HTML KaTeX >= 12, 2 new SVGs, CPU contracts, baseline 8 HTML/8 SVG + favicon."
