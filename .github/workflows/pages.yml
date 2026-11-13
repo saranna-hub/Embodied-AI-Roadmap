@@ -188,6 +188,15 @@ jobs:
           grep -q 'PASS temporal-gap segmentation' /tmp/egohand-contract.log
           grep -q 'PASS ALL: EgoHand camera/frame/pose CPU synthetic contracts' /tmp/egohand-contract.log
 
+      - name: Validate EgoGuidance SPAR temporal, quality gates and flow CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/egoguidance_spar_contract_cpu.py | tee /tmp/egoguidance-spar.log
+          grep -q 'PASS temporal physical horizon' /tmp/egoguidance-spar.log
+          grep -q 'PASS Gate1 flow and Gate2 hand' /tmp/egoguidance-spar.log
+          grep -q 'PASS linear Flow Matching' /tmp/egoguidance-spar.log
+          grep -q 'PASS source-bound action/gen loss' /tmp/egoguidance-spar.log
+          grep -q 'PASS ALL: EgoGuidance SPAR CPU synthetic contracts' /tmp/egoguidance-spar.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -469,3 +478,13 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: EgoHand HTML KaTeX >= 12, 2 new SVGs, CPU contracts, baseline 8 HTML/8 SVG + favicon."
+
+          check_html "/01-foundations/world-models/ego-guidance-spar-actionfree-source-guide/" 12
+          for name in egoguidance-spar-system egoguidance-spar-timing-qc; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/egoguidance-spar-verified.svg
+            grep -q '<svg' /tmp/egoguidance-spar-verified.svg
+            grep -q '</svg>' /tmp/egoguidance-spar-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: EgoGuidance SPAR HTML/KaTeX, 2 SVGs, CPU contract and baseline 8 HTML/8 SVG/favicon."

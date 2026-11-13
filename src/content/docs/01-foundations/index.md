@@ -28,3 +28,8 @@ sidebar:
 ### 2026-11-11 新增：EgoWAM 世界动作模型的三种未来监督
 
 [EgoWAM 深度教程：HPT 双头架构、未来 DINO 特征、相机补偿 3D Flow、Flow Matching 与实际开源训练配置](./world-models/egowam-world-targets-hpt-cotraining/)：以 2026-10-13 论文 v2 和 Georgia Tech 官方仓库为一手依据，区分 DINO 未来目标与 DINO 输入 stem，提供两张原创系统/算法图及纯 CPU 数学合同验证；GPU 训练、真机和 π₀.₅ 移植尚未复现。
+
+
+### 2026-11-13 新增：Ego Guidance / SPAR（无动作 EGO 训练 VLA）
+
+[SPAR 论文与开源源码级教程：双 Expert、Flow/Regression、Ego4D 双质量门、时间对齐、LIBERO-Plus OOD 评估](./world-models/ego-guidance-spar-actionfree-source-guide/)：核对 2026-11-10 新论文和 llong-cs/EgoGuidance 官方训练实现，新增两张原创图和标准库 CPU 合同测试。真实双臂测试 SPAR 20/50、π₀.₅ 22/50；本站尚未独立 GPU 复现。
