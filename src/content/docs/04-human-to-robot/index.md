@@ -32,3 +32,8 @@ sidebar:
 ## 2026-11-03 新增：HuRo——EGO 人类视频规模化机器人化与 VLA 预训练
 
 **[HuRo 十阶段源码级深度教程：人手追踪/SLAM、机器人 IK、Isaac Sim 视觉叠加、LeRobot V2 与 π₀.₅ 动作空间接入](./huro-robotization-to-vla/)**。配有两张独立流程图、关键几何和 Flow Matching 数学、代码可执行入口、训练消融与 CPU 数据契约脚本。重点纠错：官方 Stage 10 的 48D `action[t]=q[t+1]` 是**下一帧绝对关节位置**；`stats.json` 不会自动生成；全量 630K 数据在官方 README 仍标明 Coming soon。附非商用依赖及 RT Core 硬件限制，不假称已复现 GPU/真机训练。
+
+
+## 2026-11-14 新增：ACE-Ego-0 人机联合预训练的数据可信性
+
+[ACE-Ego-0 源码级教程：相机系 EEF、URDF 形态、物理时间动作块、可靠性加权 Huber、22D 论文与 23D Common23 差异](./ace-ego0-camera-morphology-reliability/)——依据原论文与官方 SFT/main 源码，提供两张原创 SVG、CPU 数学/动作接口合同、工业 EGO/UMI 五组消融建议。**当前作者公开范围不包括完整 449-mixture 预训练和人类 EGO 辅助损失实现，不声称完整复现。**

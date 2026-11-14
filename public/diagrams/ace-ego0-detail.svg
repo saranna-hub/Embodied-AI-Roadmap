@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" width="1200" height="650" role="img" aria-label="ACE-Ego-0 time alignment and reliability weights">
+<rect width="1200" height="650" rx="25" fill="#0c172b"/>
+<text x="46" y="56" fill="#eef5ff" font-family="sans-serif" font-size="29" font-weight="bold">ACE-Ego-0 | Action ABI, Time and Reliability</text>
+<text x="46" y="85" fill="#9fb8d9" font-family="sans-serif" font-size="17">Same physical time is not the same frame count · Paper 22D is not public Common23</text>
+<rect x="44" y="120" width="1110" height="182" rx="16" fill="#172d47" stroke="#395f89"/>
+<text x="70" y="155" fill="#b6f4f9" font-family="sans-serif" font-size="23">Paper: target physical duration = 2s</text>
+<g font-family="sans-serif" font-size="18" fill="#d3e4fb"><text x="75" y="199">10Hz</text><text x="75" y="238">20Hz</text><text x="75" y="278">30Hz</text></g>
+<g fill="#4dc2cf"><rect x="145" y="181" width="285" height="23" rx="5"/><rect x="145" y="221" width="570" height="23" rx="5"/><rect x="145" y="260" width="855" height="23" rx="5"/></g>
+<g font-family="sans-serif" font-size="18" fill="#e1faff"><text x="444" y="200">20 steps</text><text x="729" y="240">40 steps</text><text x="1015" y="279">60 steps</text></g>
+<rect x="44" y="332" width="530" height="252" rx="15" fill="#202d45" stroke="#7093c4"/>
+<text x="69" y="373" fill="#d2e4ff" font-family="sans-serif" font-size="23">Action layout mismatch</text>
+<text x="69" y="410" fill="#aad3fc" font-family="sans-serif" font-size="20">Paper 22D = [xyz, rot6d, grip, activity] x2</text>
+<text x="69" y="462" fill="#dcc4fb" font-family="sans-serif" font-size="20">Public SFT Common23</text>
+<text x="69" y="492" fill="#ebf2ff" font-family="sans-serif" font-size="18">Left EEF9 + Right EEF9 + grip2 + waist3</text>
+<text x="69" y="541" fill="#ffb8b8" font-family="sans-serif" font-size="17">Do not pad zeros or silently reindex.</text>
+<rect x="605" y="332" width="549" height="252" rx="15" fill="#30263f" stroke="#b087e1"/>
+<text x="628" y="373" fill="#e8d5ff" font-family="sans-serif" font-size="23">Reliability-weighted human loss</text>
+<text x="628" y="415" fill="#f0e4fd" font-family="sans-serif" font-size="20">W = channel x source x local_quality</text>
+<text x="628" y="450" fill="#dbfadd" font-family="sans-serif" font-size="18">xyz weight = 1.0</text>
+<text x="628" y="481" fill="#e9c7fb" font-family="sans-serif" font-size="18">rot / gripper weight = 0.001</text>
+<text x="628" y="518" fill="#f1e4ff" font-family="sans-serif" font-size="17">local_quality = max(0.2, exp[-1.5(q-1)])</text>
+<text x="628" y="548" fill="#ffc5dc" font-family="sans-serif" font-size="17">All invalid masks -> zero loss</text>
+<text x="49" y="624" fill="#a7bcd8" font-family="sans-serif" font-size="16">Contact transitions can be fast; do not delete real events solely due to high acceleration.</text></svg>

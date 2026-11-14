@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-label="ACE-Ego-0 unified VLA system architecture">
+<defs><linearGradient id="b" x2="1" y2="1"><stop stop-color="#0a152a"/><stop offset="1" stop-color="#172d4a"/></linearGradient><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#a5b5ce"/></marker></defs><rect width="1200" height="640" rx="23" fill="url(#b)"/>
+<text x="42" y="54" fill="#eaf2ff" font-family="sans-serif" font-size="28" font-weight="bold">ACE-Ego-0 | EGO / Robot Unified Pretraining</text>
+<text x="42" y="84" fill="#adbfdb" font-family="sans-serif" font-size="16">Research architecture; released Common23 SFT is narrower than the paper</text>
+<rect x="41" y="130" width="328" height="144" rx="15" fill="#163a44" stroke="#3fd3c5" stroke-width="2"/>
+<text x="65" y="168" fill="#8af8e7" font-family="sans-serif" font-size="23">Robot + Simulation</text>
+<text x="65" y="209" fill="#ecf5fa" font-family="sans-serif" font-size="18">RGB / text / state / true EEF</text>
+<text x="65" y="243" fill="#bad5d6" font-family="sans-serif" font-size="17">URDF morphology token</text>
+<rect x="41" y="335" width="328" height="166" rx="15" fill="#342643" stroke="#c69af7" stroke-width="2"/>
+<text x="65" y="375" fill="#e4cbff" font-family="sans-serif" font-size="23">Human EGO</text>
+<text x="65" y="411" fill="#f0e3fa" font-family="sans-serif" font-size="18">RGB / MANO / camera SLAM</text>
+<text x="65" y="442" fill="#f0e3fa" font-family="sans-serif" font-size="18">Reconstructed pseudo-actions</text>
+<text x="65" y="474" fill="#cfb5ea" font-family="sans-serif" font-size="17">Learned human-source token</text>
+<rect x="448" y="175" width="304" height="282" rx="16" fill="#203552" stroke="#6e96c9" stroke-width="2"/>
+<text x="471" y="218" fill="#f0f5ff" font-family="sans-serif" font-size="23">Four shared contracts</text>
+<text x="472" y="268" fill="#d9e8ff" font-family="sans-serif" font-size="18">1 Camera-frame pose</text>
+<text x="472" y="318" fill="#d9e8ff" font-family="sans-serif" font-size="18">2 Morphology / URDF</text>
+<text x="472" y="368" fill="#d9e8ff" font-family="sans-serif" font-size="18">3 Physical-time chunks</text>
+<text x="472" y="418" fill="#d9e8ff" font-family="sans-serif" font-size="18">4 Validity / reliability</text>
+<rect x="840" y="154" width="318" height="143" rx="16" fill="#3d2d20" stroke="#f1b061" stroke-width="2"/>
+<text x="863" y="196" fill="#ffd18f" font-family="sans-serif" font-size="23">Robot Primary Loss</text>
+<text x="863" y="240" fill="#faeee3" font-family="sans-serif" font-size="19">Masked Flow MSE</text>
+<text x="863" y="267" fill="#e5be99" font-family="sans-serif" font-size="16">Reliable sensor actions</text>
+<rect x="840" y="354" width="318" height="150" rx="16" fill="#3b2548" stroke="#bf93ef" stroke-width="2"/>
+<text x="863" y="397" fill="#e9ceff" font-family="sans-serif" font-size="23">Human Auxiliary Loss</text>
+<text x="863" y="438" fill="#f2e9ff" font-family="sans-serif" font-size="19">Weighted Huber, lambda=0.1</text>
+<text x="863" y="470" fill="#d6b4e7" font-family="sans-serif" font-size="16">xyz high; rotation low</text>
+<g fill="none" stroke="#a5b5ce" stroke-width="3" marker-end="url(#arr)"><path d="M369 202 H413 V263 H448"/><path d="M369 412 H413 V375 H448"/><path d="M752 281 H798 V223 H840"/><path d="M752 379 H798 V423 H840"/></g>
+<rect x="448" y="540" width="709" height="64" rx="12" fill="#14233c" stroke="#506989"/>
+<text x="470" y="564" fill="#d1e4fe" font-family="sans-serif" font-size="17">VLM + Flow Matching DiT jointly learn; source-specific losses are different</text>
+<text x="470" y="589" fill="#a2bcd9" font-family="sans-serif" font-size="16">Deployment still needs inverse camera transform, IK and safety control</text>
+<text x="44" y="594" fill="#9db5d0" font-family="sans-serif" font-size="16">Original teaching diagram</text></svg>
