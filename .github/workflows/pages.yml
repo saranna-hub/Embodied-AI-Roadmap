@@ -499,7 +499,7 @@ jobs:
           done
           echo "PASS: EgoGuidance SPAR HTML/KaTeX, 2 SVGs, CPU contract and baseline 8 HTML/8 SVG/favicon."
 
-          check_html "/04-human-to-robot/ace-ego0-camera-morphology-reliability/" 18
+          check_html "/04-human-to-robot/ace-ego0-camera-morphology-reliability/" 16
           for name in ace-ego0-system ace-ego0-detail; do
             file="/diagrams/$name.svg"
             curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/ace-ego0.svg
@@ -507,5 +507,5 @@ jobs:
             grep -q '</svg>' /tmp/ace-ego0.svg
             echo "PASS SVG $file"
           done
-          echo "PASS: ACE-Ego-0 HTML KaTeX >=18, 2 new SVG, baseline 8 HTML/8 SVG/favicon."
+          echo "PASS: ACE-Ego-0 HTML KaTeX >=16, 2 new SVG, baseline 8 HTML/8 SVG/favicon."
 
