@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 740" role="img" aria-labelledby="ttl desc">
+<title id="ttl">HiFi-UMI-2K 数据合约：三层分片、多路视频与动作训练</title>
+<desc id="desc">展示顶层chunk和part、part内元数据与帧表、六路视频、Episode offset关联，以及掩码、旋转和机器人Action Adapter。</desc>
+<defs>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101d35"/><stop offset="1" stop-color="#142b42"/></linearGradient>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#8da9d9"/></marker>
+<style>.h{font:700 29px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#f0f6ff}.sub{font:16px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#bcd1eb}.b{font:700 20px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#f0f6ff}.m{font:16px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#d6e4f4}.s{font:14px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#a8c3df}.cap{font:700 15px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#73d6c8}</style>
+</defs>
+<rect width="1320" height="740" rx="22" fill="url(#bg)"/>
+<text x="46" y="55" class="h">HiFi-UMI-2K：从 2000h 文件资源到可信训练样本</text>
+<text x="47" y="87" class="sub">原创教学架构图 · 数据卡中的目录与字段 + 本站建议的校验门控（非官方训练系统图）</text>
+<rect x="40" y="126" width="255" height="455" rx="15" fill="#203755" stroke="#4676a0"/>
+<text x="59" y="165" class="b">① 外层分片</text>
+<text x="59" y="195" class="s">HiFi-UMI-2K/</text>
+<rect x="56" y="214" width="224" height="84" rx="9" fill="#2c4768"/>
+<text x="69" y="244" class="m">chunk-0000/</text><text x="88" y="270" class="m">part-0000/</text>
+<rect x="56" y="313" width="224" height="73" rx="9" fill="#2c4768"/>
+<text x="69" y="341" class="m">chunk-0001/ ...</text><text x="69" y="367" class="s">每个 part 独立 info / fps</text>
+<text x="58" y="423" class="cap">复合主键</text>
+<text x="58" y="450" class="m">(outer_chunk, part,</text><text x="58" y="474" class="m">episode_index)</text>
+<text x="58" y="528" class="s">禁止只靠 episode_index</text><text x="58" y="549" class="s">跨 part 合并（可能撞号）</text>
+<path d="M295 340 H332" stroke="#8da9d9" stroke-width="3" marker-end="url(#ar)"/>
+<rect x="340" y="126" width="458" height="455" rx="15" fill="#1e3553" stroke="#4676a0"/>
+<text x="360" y="165" class="b">② part 内多表与六路流</text>
+<rect x="359" y="193" width="420" height="100" rx="11" fill="#284566"/>
+<text x="377" y="222" class="cap">meta/info.json + meta/episodes/*.parquet</text>
+<text x="377" y="248" class="m">FPS / schema / 每集行区间 / 视频时间偏移</text>
+<text x="377" y="270" class="s">data_from / data_to · video from/to</text>
+<rect x="359" y="307" width="420" height="101" rx="11" fill="#284566"/>
+<text x="377" y="338" class="cap">data/chunk-*/file-*.parquet</text>
+<text x="377" y="365" class="m">20D state / 20D action / time / episode</text>
+<text x="377" y="389" class="s">state_valid[20] / action_valid[20] / valid.frame</text>
+<rect x="359" y="422" width="420" height="134" rx="11" fill="#284566"/>
+<text x="377" y="453" class="cap">videos / 6 camera keys</text>
+<text x="377" y="479" class="m">头戴主视角 + 头戴立体右相机</text>
+<text x="377" y="505" class="m">左手 up/down · 右手 up/down</text>
+<text x="377" y="530" class="s">MP4 可能包含多个串接的 episode</text>
+<path d="M799 340 H838" stroke="#8da9d9" stroke-width="3" marker-end="url(#ar)"/>
+<rect x="845" y="126" width="434" height="455" rx="15" fill="#203755" stroke="#4676a0"/>
+<text x="865" y="165" class="b">③ 安全 Join 与训练 Adapter</text>
+<rect x="863" y="192" width="397" height="82" rx="9" fill="#284566"/>
+<text x="881" y="222" class="cap">Video PTS 查找</text><text x="881" y="250" class="m">video_from + episode_relative_time</text>
+<path d="M1060 275 V298" stroke="#8da9d9" stroke-width="2.5" marker-end="url(#ar)"/>
+<rect x="863" y="308" width="397" height="100" rx="9" fill="#284566"/>
+<text x="881" y="339" class="cap">训练前阻断式质检</text><text x="881" y="366" class="m">episode 边界 · 逐维 mask · Rot6D 行</text>
+<text x="881" y="391" class="s">不能删帧后用新行号索引视频</text>
+<path d="M1060 409 V430" stroke="#8da9d9" stroke-width="2.5" marker-end="url(#ar)"/>
+<rect x="863" y="442" width="397" height="114" rx="9" fill="#284566"/>
+<text x="881" y="473" class="cap">π₀.₅ / 其他 Policy 的动作适配</text>
+<text x="881" y="501" class="m">绝对 next-state → 机器人动作协议</text>
+<text x="881" y="529" class="m">normalize · H × D mask · 推理逆变换</text>
+<rect x="41" y="610" width="1237" height="86" rx="15" fill="#263e5c" stroke="#3a647f"/>
+<text x="64" y="643" class="b">四个必须能复测的不变量</text>
+<text x="65" y="672" class="m">A  同集定位不会跨界</text><text x="343" y="672" class="m">B  视频和帧行不因过滤错位</text>
+<text x="714" y="672" class="m">C  Rot6D 非恒等方向正确</text><text x="1037" y="672" class="m">D  Action 可逆</text>
+</svg>

@@ -207,6 +207,17 @@ jobs:
           grep -q 'PASS linear Flow Matching' /tmp/egoguidance-spar.log
           grep -q 'PASS source-bound action/gen loss' /tmp/egoguidance-spar.log
           grep -q 'PASS ALL: EgoGuidance SPAR CPU synthetic contracts' /tmp/egoguidance-spar.log
+      - name: Validate HiFi-UMI-2K video, rotation and action CPU synthetic contracts
+        run: |
+          set -euo pipefail
+          python3 examples/hifi2k_action_video_contract_cpu.py | tee /tmp/hifi2k-data-contract.log
+          grep -q 'PASS rot6d row-vs-column negative-control' /tmp/hifi2k-data-contract.log
+          grep -q 'PASS video-offset:' /tmp/hifi2k-data-contract.log
+          grep -q 'PASS keep-invalid-frames:' /tmp/hifi2k-data-contract.log
+          grep -q 'PASS per-dimension masks' /tmp/hifi2k-data-contract.log
+          grep -q 'PASS absolute-next-state' /tmp/hifi2k-data-contract.log
+          grep -q 'PASS filtered training-only normalization' /tmp/hifi2k-data-contract.log
+          grep -q 'PASS ALL: HiFi-UMI-2K' /tmp/hifi2k-data-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -509,3 +520,13 @@ jobs:
           done
           echo "PASS: ACE-Ego-0 HTML KaTeX >=16, 2 new SVG, baseline 8 HTML/8 SVG/favicon."
 
+
+          check_html "/02-data-engineering/hifi-umi2k-action-video-contract/" 12
+          for name in hifi2k-data-system hifi2k-data-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/hifi2k-data.svg
+            grep -q '<svg' /tmp/hifi2k-data.svg
+            grep -q '</svg>' /tmp/hifi2k-data.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: HiFi-UMI-2K page KaTeX >=12 and two original SVGs plus all baseline HTML/SVG/favicon checks."

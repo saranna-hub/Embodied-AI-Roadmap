@@ -22,3 +22,7 @@ sidebar:
 ## 2026-11-06 新增：MCAP → LeRobot v3 → π₀.₅ 的工业数据契约
 
 **[工业 EGO/UMI 多模态数据工程：设备时钟、曝光时刻、SE(3) 动作语义、v3 Episode、openpi 适配与训练质检](./mcap-lerobot-v3-temporal-action-contract/)**。承接上述 EGO/UMI 外参与时间校准，重点区分 MCAP log/publish time 与真实采样时间、避免未来视觉泄漏、处理不同频率的状态和机器人命令；附两张技术图、独立 CPU 负例验证脚本和从 10 段采集到真机评估的实验路线。**v3 容器不等于旧版 openpi 直接兼容，也不自动从人类视频产生机器人监督。**
+
+## 2026-11-15 新增：HiFi-UMI-2K 真数据到 π₀.₅ 的动作合约
+
+**[HiFi-UMI-2K：六视角视频分片检索、Rot6D 行约定、20D 绝对动作、逐维 Mask 与 π₀.₅ Action Adapter](./hifi-umi2k-action-video-contract/)**。作为 [HiFi-UMI 采集技术深读](./hifi-umi-deep/) 的工程续篇，依据官方数据卡、LeRobot v3 与 openpi 实现明确：如何在多 part 下安全定位一条 episode；为何不能删除无效行再索引 MP4；如何检验 Rot6D“前两行”与常见“前两列”的方向误差；如何避免绝对 next-state 被误作 delta。附两张自绘技术图与 CPU 负例测试，**不把合成验证冒充真实 2000h 数据训练**。

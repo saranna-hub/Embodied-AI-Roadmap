@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 790" role="img" aria-labelledby="ttl desc">
+<title id="ttl">HiFi-UMI-2K 逐帧与动作负例：视频offset、三种有效性和Rot6D两行约定</title>
+<desc id="desc">视频时间轴关联，失效帧保留不删，监督mask，旋转前两行与前两列的反例，以及next state与delta关系。</desc>
+<defs><style>.h{font:700 27px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#f0f8ff}.b{font:700 19px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#e7f4ff}.t{font:16px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#d9e8f5}.s{font:14px 'Noto Sans SC','Microsoft YaHei',sans-serif;fill:#adc7dc}.g{fill:#47c7b1}.bad{fill:#ef8b84}</style></defs>
+<rect width="1300" height="790" rx="24" fill="#11243c"/>
+<text x="44" y="55" class="h">训练负例实验：不报错 ≠ Action / Video 合同正确</text>
+<text x="46" y="84" class="s">原创示意 · 仅说明张量和时间的对齐规则，不代表真实 episode 帧数</text>
+<rect x="38" y="119" width="1224" height="255" rx="16" fill="#1c3651" stroke="#547ca0"/>
+<text x="61" y="156" class="b">A  视频文件包含多个 Episode：必须加本集在文件内的起始偏移</text>
+<text x="63" y="190" class="s">拼接 MP4 文件内部时间（秒）</text>
+<line x1="88" y1="238" x2="1200" y2="238" stroke="#b0cde7" stroke-width="3"/>
+<rect x="88" y="208" width="410" height="61" rx="5" fill="#2b688c"/><text x="116" y="245" class="t">Episode A：0 ～ 8 s</text>
+<rect x="500" y="208" width="482" height="61" rx="5" fill="#3c7c87"/><text x="533" y="245" class="t">Episode B：8 ～ 18 s</text>
+<rect x="983" y="208" width="218" height="61" rx="5" fill="#5d608c"/><text x="1004" y="245" class="t">Episode C</text>
+<line x1="500" y1="201" x2="500" y2="280" stroke="#e4f4ff" stroke-width="2"/>
+<line x1="631" y1="201" x2="631" y2="285" stroke="#83f0d2" stroke-width="3"/>
+<text x="488" y="302" class="s">8 s</text><text x="581" y="302" class="s">B 内 3 s</text>
+<text x="63" y="344" class="t">Episode B 帧时间 3s → 文件中 seek 11s；不能直接 seek 3s，更不能删掉无效帧后重排索引。</text>
+<rect x="38" y="393" width="590" height="355" rx="16" fill="#1b354f" stroke="#547ca0"/>
+<text x="61" y="432" class="b">B  无效帧保留原位；只屏蔽训练</text>
+<text x="61" y="467" class="s">frame_index</text>
+<g font-size="16" font-family="monospace" fill="#dae9ff"><text x="219" y="469">0</text><text x="280" y="469">1</text><text x="341" y="469">2</text><text x="402" y="469">3</text><text x="463" y="469">4</text><text x="524" y="469">5</text></g>
+<text x="61" y="517" class="s">帧存在</text>
+<g fill="#4abfa9"><rect x="209" y="493" width="33" height="28" rx="5"/><rect x="270" y="493" width="33" height="28" rx="5"/><rect x="331" y="493" width="33" height="28" rx="5"/><rect x="392" y="493" width="33" height="28" rx="5"/><rect x="453" y="493" width="33" height="28" rx="5"/><rect x="514" y="493" width="33" height="28" rx="5"/></g>
+<text x="61" y="567" class="s">训练 valid</text>
+<g fill="#4abfa9"><rect x="209" y="541" width="33" height="28" rx="5"/><rect x="270" y="541" width="33" height="28" rx="5"/><rect x="392" y="541" width="33" height="28" rx="5"/><rect x="453" y="541" width="33" height="28" rx="5"/><rect x="514" y="541" width="33" height="28" rx="5"/></g>
+<rect x="331" y="541" width="33" height="28" rx="5" fill="#d47879"/>
+<text x="61" y="617" class="t">第 2 帧未通过质控，但仍保留视频/Parquet 原始索引</text>
+<text x="61" y="649" class="t">下一状态必须同时校验 action_valid[20]</text>
+<text x="61" y="678" class="t">未来 chunk 禁止跨 episode；终帧 repeat 不是新运动</text>
+<rect x="648" y="393" width="614" height="355" rx="16" fill="#1b354f" stroke="#547ca0"/>
+<text x="669" y="432" class="b">C  旋转两“行” vs 两“列”不可混用</text>
+<text x="672" y="468" class="t">20D = [right xyz, rot6d_rows, grip, left ...]</text>
+<text x="671" y="508" class="s">用 90° 绕 Z 轴的示例矩阵</text>
+<g font-family="monospace" font-size="19" fill="#d8e9fa"><text x="699" y="543">R = [ 0 -1  0 ]</text><text x="738" y="569">[ 1  0  0 ]</text><text x="738" y="595">[ 0  0  1 ]</text></g>
+<text x="968" y="542" class="t">前两行：</text><text x="968" y="569" class="t">(0,-1,0)</text><text x="968" y="596" class="t">(1,0,0)</text>
+<rect x="673" y="625" width="550" height="92" rx="11" fill="#294764"/>
+<text x="691" y="658" class="t">正确：按行重建 R，旋转方向保持 +90°</text>
+<text x="691" y="688" class="t">错误：按列重建，相当于转置，方向变 -90°</text>
+</svg>

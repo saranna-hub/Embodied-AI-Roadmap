@@ -7,6 +7,9 @@ sidebar:
 
 论文：[arXiv:2607.25895](https://arxiv.org/abs/2607.25895)；公开数据：[HiFi-UMI-2K](https://huggingface.co/datasets/simple-world-lab/HiFi-UMI-2K)。
 
+> **训练数据 ABI 续篇（2026-11-15）**：[HiFi-UMI-2K 真数据结构、Episode 视频 offset、20D Rot6D 行约定与 π₀.₅ 动作适配](./hifi-umi2k-action-video-contract/)；附独立 CPU 反例测试。本页聚焦采集与几何原理，新增专题聚焦实际数据消费。
+
+
 > **证据边界**：公开论文/数据可核查；若作者未发布完整采集固件、标定、训练脚本和逐件 BOM，下面的自建硬件只能称为**工程等效复现方案**。BOM 是人民币预算假设，不是作者报价或实时报价。
 
 ![HiFi-UMI 六路同步到机器人动作的全链路](/Embodied-AI-Roadmap/diagrams/hifi-umi-system.svg)
