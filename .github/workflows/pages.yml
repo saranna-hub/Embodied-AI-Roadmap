@@ -34,6 +34,16 @@ jobs:
           grep -q 'PASS channel-source-time reliability' /tmp/ace-ego0.log
           grep -q 'PASS Huber masked normalization' /tmp/ace-ego0.log
           grep -q 'PASS ALL: ACE-Ego-0' /tmp/ace-ego0.log
+      - name: Validate Tau0 TTC memory search and 40D action contracts without GPU
+        run: |
+          set -euo pipefail
+          python3 examples/tau0_ttc_contract_cpu.py | tee /tmp/tau0-ttc.log
+          grep -q 'PASS confidence router all/memory OR' /tmp/tau0-ttc.log
+          grep -q 'PASS beam cumulative score' /tmp/tau0-ttc.log
+          grep -q 'PASS branch-local imaginary memory' /tmp/tau0-ttc.log
+          grep -q 'PASS 40D slot map' /tmp/tau0-ttc.log
+          grep -q 'PASS reverse-time flow Euler' /tmp/tau0-ttc.log
+          grep -q 'PASS ALL: tau0 TTC' /tmp/tau0-ttc.log
       - name: Audit rendered pages (blocking, site-wide)
         run: npm run validate:render
       - name: Validate executable EGO UMI synthetic pose benchmark
@@ -530,3 +540,13 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: HiFi-UMI-2K page KaTeX >=12 and two original SVGs plus all baseline HTML/SVG/favicon checks."
+          check_html "/01-foundations/world-models/tau0-vla-ttc-memory-search-source-audit/" 16
+          for name in tau0-vla-system tau0-vla-search-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/tau0-ttc-diagram.svg
+            grep -q '<svg' /tmp/tau0-ttc-diagram.svg
+            grep -q '</svg>' /tmp/tau0-ttc-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: Tau0 TTC tutorial HTML KaTeX >=16, 2 original SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
+

@@ -19,3 +19,5 @@ sidebar:
 建议先读 [π₀.₅ LIBERO 数据/损失源码核验](/Embodied-AI-Roadmap/01-foundations/vla/pi05-libero-data-loss-lora-source-guide/)，再理解训练完成后如何让动作块在真实物理时间内可靠执行。
 
 其余运动学、力控和多臂协作章节待逐项补充。
+
+- [τ₀-VLA：高层子任务决策、失败记忆纠错、预演搜索与低层40D动作契约](/Embodied-AI-Roadmap/01-foundations/world-models/tau0-vla-ttc-memory-search-source-audit/)（2026-11-16）：与RTC不同，专门解决长流程子任务选择及执行结果回写；基于官方论文与开源文件逐项审计，标识尚未完整开放的TTC编排。

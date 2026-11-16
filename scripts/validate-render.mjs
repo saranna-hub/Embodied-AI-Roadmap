@@ -23,6 +23,7 @@ const pages=[
   ['01-foundations/vla/flowdpg-bptt-free-critic-gradient-posttraining',15],
   ['05-control/rtc-inference-training-time-action-conditioning',20],
   ['03-perception/egohand-dinov3-soma-camera-qc',12],
+  ['01-foundations/world-models/tau0-vla-ttc-memory-search-source-audit',16],
 ];
 const diagrams=[
   ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),
@@ -37,7 +38,8 @@ const diagrams=[
   'mcap-lerobot-v3-system.svg', 'mcap-lerobot-v3-timing-detail.svg',
   'flowdpg-system.svg', 'flowdpg-gradient-detail.svg',
   'rtc-asynchronous-system.svg', 'rtc-prefix-mask-detail.svg',
-  'egohand-system.svg', 'egohand-geometry-detail.svg'
+  'egohand-system.svg', 'egohand-geometry-detail.svg',
+  'tau0-vla-system.svg', 'tau0-vla-search-detail.svg'
 ];
 let issues=[];
 for(const [slug,minMath] of pages){

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 670" role="img" aria-label="tau0 VLA hierarchical architecture with source availability">
+<rect width="1160" height="670" rx="22" fill="#f7fafd"/>
+<text x="50" y="60" font-size="31" font-weight="700" fill="#102b46" font-family="sans-serif">τ₀-VLA：两层时间尺度 / 一条真实反馈回路</text>
+<text x="50" y="90" font-size="17" fill="#4b6680" font-family="sans-serif">深蓝：已核实公开组件　橙色：论文搜索机制，未定位完整可运行编排</text>
+<g font-family="sans-serif">
+<rect x="50" y="145" width="245" height="120" rx="15" fill="#d9ecff" stroke="#3977ad" stroke-width="2"/>
+<text x="73" y="182" font-size="22" font-weight="700" fill="#173d68">多视角观察 + 任务</text>
+<text x="73" y="211" font-size="17" fill="#36546d">head / left / right</text><text x="73" y="238" font-size="16" fill="#36546d">上一子任务、真实记忆</text>
+<rect x="350" y="145" width="255" height="120" rx="15" fill="#d9ecff" stroke="#3977ad" stroke-width="2"/>
+<text x="374" y="182" font-size="23" font-weight="700" fill="#173d68">Proposal (9B)</text>
+<text x="374" y="210" font-size="17" fill="#36546d">think / memory / subtask</text><text x="374" y="238" font-size="16" fill="#36546d">官方推理与LoRA已公开</text>
+<rect x="680" y="145" width="420" height="120" rx="15" fill="#fff0dd" stroke="#d68a32" stroke-width="2"/>
+<text x="707" y="182" font-size="22" font-weight="700" fill="#8b5010">不确定时：TTC搜索与反思</text>
+<text x="707" y="212" font-size="16" fill="#875b30">生成N候选 → 预测终态 → Value评分</text><text x="707" y="239" font-size="16" fill="#875b30">Beam Top-B / Depth-D → Reflection</text>
+<path d="M295 205 H350 M605 205 H680" stroke="#547c99" stroke-width="3" fill="none"/><path d="M341 198 L350 205 L341 212 M671 198 L680 205 L671 212" stroke="#547c99" stroke-width="2" fill="none"/>
+<rect x="310" y="342" width="515" height="120" rx="16" fill="#d9ecff" stroke="#3977ad" stroke-width="2"/>
+<text x="337" y="382" font-size="25" font-weight="700" fill="#173d68">低层 VLA：Qwen3.5 + MoT Action Expert</text>
+<text x="337" y="411" font-size="17" fill="#36546d">子任务 + 多视角 + 本体状态 + 控制模式</text><text x="337" y="438" font-size="17" fill="#36546d">40D有掩码的Flow Matching动作块</text>
+<path d="M478 265 V342 M880 265 V302 H750 V342" stroke="#5784a8" stroke-width="3" fill="none"/><path d="M471 332 L478 342 L485 332 M743 332 L750 342 L757 332" stroke="#5784a8" stroke-width="2" fill="none"/>
+<text x="500" y="311" font-size="16" fill="#52718a">高置信：直接执行</text>
+<rect x="390" y="520" width="370" height="95" rx="14" fill="#e7f6ec" stroke="#40956a" stroke-width="2"/>
+<text x="414" y="561" font-size="22" font-weight="700" fill="#246344">执行 + 真实观察验证</text><text x="414" y="589" font-size="17" fill="#3b6a53">仅真实结果可更正持久记忆</text>
+<path d="M568 462 V520" stroke="#40956a" stroke-width="3"/><path d="M561 510 L568 520 L575 510" stroke="#40956a" stroke-width="2" fill="none"/>
+<path d="M390 565 H120 V285 H165 V265" stroke="#40956a" stroke-width="3" fill="none"/><path d="M158 275 L165 265 L172 275" stroke="#40956a" stroke-width="2" fill="none"/>
+<text x="131" y="535" font-size="17" fill="#246344" transform="rotate(-90 131 535)">下一决策：真实进度回流</text>
+<text x="840" y="435" font-size="17" fill="#875b30">World Model单独开放：</text><text x="840" y="461" font-size="16" fill="#875b30">Head图像 → 预测目标图像</text><text x="840" y="488" font-size="15" fill="#875b30">≠ 完整TTC可运行项目</text>
+</g></svg>

@@ -33,3 +33,8 @@ sidebar:
 ### 2026-11-13 新增：Ego Guidance / SPAR（无动作 EGO 训练 VLA）
 
 [SPAR 论文与开源源码级教程：双 Expert、Flow/Regression、Ego4D 双质量门、时间对齐、LIBERO-Plus OOD 评估](./world-models/ego-guidance-spar-actionfree-source-guide/)：核对 2026-11-10 新论文和 llong-cs/EgoGuidance 官方训练实现，新增两张原创图和标准库 CPU 合同测试。真实双臂测试 SPAR 20/50、π₀.₅ 22/50；本站尚未独立 GPU 复现。
+
+
+### 2026-11-16 新增：τ₀-VLA 分层决策、可纠错记忆与世界模型TTC
+
+[τ₀-VLA源码级教学：Proposal三目输入、执行记忆修复、token置信路由、World模型终态、Value/Beam/Reflection以及40D Masked Flow](./world-models/tau0-vla-ttc-memory-search-source-audit/)。特别标注已发布Proposal/World权重与未定位完整TTC可运行编排的区别；含两张原创SVG、标准库CPU合成契约、LIBERO后训练复现命令及因果评测设计。

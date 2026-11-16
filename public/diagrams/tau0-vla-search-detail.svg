@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 690" role="img" aria-label="tau0 TTC beam tree, branch memory isolation and 40D action mask">
+<rect width="1160" height="690" rx="22" fill="#f7fafd"/>
+<g font-family="sans-serif">
+<text x="45" y="58" font-size="30" font-weight="700" fill="#112f4a">TTC：累计评分优于首步贪心，虚拟记忆不写回</text>
+<text x="45" y="88" font-size="17" fill="#4e687e">示意合成分数（非论文实验数字）</text>
+<rect x="420" y="115" width="310" height="64" rx="12" fill="#d9ecff" stroke="#3977ad" stroke-width="2"/>
+<text x="445" y="153" font-size="21" fill="#183d68">真实观察 M=夹持未确认</text>
+<rect x="120" y="230" width="320" height="80" rx="12" fill="#fff0dd" stroke="#d68a32" stroke-width="2"/>
+<text x="144" y="262" font-size="19" fill="#875b30">直接放件：首步 0.8</text><text x="144" y="287" font-size="15" fill="#875b30">分支私有记忆：假设已抓取</text>
+<rect x="700" y="230" width="320" height="80" rx="12" fill="#dff5e6" stroke="#40956a" stroke-width="2"/>
+<text x="724" y="262" font-size="19" fill="#256344">先检查夹持：首步 0.6</text><text x="724" y="287" font-size="15" fill="#256344">分支私有记忆：待确认</text>
+<path d="M500 179 L290 230 M650 179 L860 230" stroke="#597c9b" stroke-width="3" fill="none"/>
+<rect x="120" y="363" width="320" height="78" rx="12" fill="#ffe8e4" stroke="#d57265" stroke-width="2"/><text x="146" y="395" font-size="18" fill="#8f3930">后续打滑 -0.8</text><text x="146" y="422" font-size="17" fill="#8f3930">累计 = 0.0</text>
+<rect x="700" y="363" width="320" height="78" rx="12" fill="#dff5e6" stroke="#40956a" stroke-width="2"/><text x="726" y="395" font-size="18" fill="#256344">复核后稳定放件 +0.7</text><text x="726" y="422" font-size="17" font-weight="700" fill="#256344">累计 = 1.3　→ 保留</text>
+<path d="M280 310 V363 M860 310 V363" stroke="#597c9b" stroke-width="3"/>
+<rect x="45" y="497" width="1070" height="148" rx="15" fill="#e7edf5" stroke="#9db3c7"/>
+<text x="73" y="534" font-size="21" font-weight="700" fill="#163955">低层40D动作掩码：LIBERO示例仅激活10维</text>
+<rect x="73" y="556" width="208" height="48" rx="6" fill="#3979b0"/>
+<text x="93" y="586" font-size="17" fill="white">0:9 EEF　9维</text>
+<rect x="288" y="556" width="69" height="48" rx="6" fill="#a6b5c5"/>
+<text x="296" y="585" font-size="14" fill="#294458">9:18</text>
+<rect x="364" y="556" width="115" height="48" rx="6" fill="#3979b0"/>
+<text x="371" y="585" font-size="16" fill="white">18 夹爪</text>
+<rect x="486" y="556" width="603" height="48" rx="6" fill="#a6b5c5"/>
+<text x="706" y="585" font-size="17" fill="#294458">19:40 非活动，置零并Mask Loss</text>
+<text x="75" y="627" font-size="15" fill="#47627a">搜索预测仅供决策：真实 M 不变；训练时掩码必须同时约束Flow输入和Loss。</text>
+</g></svg>
