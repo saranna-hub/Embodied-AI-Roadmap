@@ -228,6 +228,14 @@ jobs:
           grep -q 'PASS absolute-next-state' /tmp/hifi2k-data-contract.log
           grep -q 'PASS filtered training-only normalization' /tmp/hifi2k-data-contract.log
           grep -q 'PASS ALL: HiFi-UMI-2K' /tmp/hifi2k-data-contract.log
+      - name: Validate EgoActionBench dense action semantic and temporal CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/egoactionbench_semantic_temporal_contract_cpu.py | tee /tmp/egoactionbench-contract.log
+          grep -q 'PASS Omin-vs-tIoU' /tmp/egoactionbench-contract.log
+          grep -q 'PASS one prediction cannot be two F1 true positives' /tmp/egoactionbench-contract.log
+          grep -q 'PASS duplicates and invalid intervals count toward FP' /tmp/egoactionbench-contract.log
+          grep -q 'PASS ALL: EgoActionBench' /tmp/egoactionbench-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -550,3 +558,12 @@ jobs:
           done
           echo "PASS: Tau0 TTC tutorial HTML KaTeX >=16, 2 original SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
 
+          check_html "/02-data-engineering/egoactionbench-dense-atomic-actions-source-audit/" 18
+          for name in egoactionbench-system egoactionbench-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/egoactionbench-diagram.svg
+            grep -q '<svg' /tmp/egoactionbench-diagram.svg
+            grep -q '</svg>' /tmp/egoactionbench-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS: EgoActionBench HTML KaTeX >=18, 2 original SVGs, CPU contracts, baseline 8 HTML/8 SVG/favicon."

@@ -26,3 +26,8 @@ sidebar:
 ## 2026-11-15 新增：HiFi-UMI-2K 真数据到 π₀.₅ 的动作合约
 
 **[HiFi-UMI-2K：六视角视频分片检索、Rot6D 行约定、20D 绝对动作、逐维 Mask 与 π₀.₅ Action Adapter](./hifi-umi2k-action-video-contract/)**。作为 [HiFi-UMI 采集技术深读](./hifi-umi-deep/) 的工程续篇，依据官方数据卡、LeRobot v3 与 openpi 实现明确：如何在多 part 下安全定位一条 episode；为何不能删除无效行再索引 MP4；如何检验 Rot6D“前两行”与常见“前两列”的方向误差；如何避免绝对 next-state 被误作 delta。附两张自绘技术图与 CPU 负例测试，**不把合成验证冒充真实 2000h 数据训练**。
+
+
+## 2026-11-17 新增：EgoActionBench 双手原子动作语义质量基准
+
+**[EgoActionBench：Left/Right/Both 动作时间线、五阶段人审与 Agent QC、Omin/tIoU/一对一 F1、Qwen3-VL SFT→GRPO 及工业 EGO 标注验收](./egoactionbench-dense-atomic-actions-source-audit/)**。补上 EGO/UMI 数据管线中容易被忽视的**语义标注可评估性**：为什么同一段话覆盖两个原子动作也不能得满分，为什么 0.6 秒中位长度让低帧率视频推理不足，以及为何 GRPO 的提升不能冒充动作策略收益。包含系统图、三轨时间线、可执行纯 CPU 负例。**作者目前尚未开源完整 evaluator、模型与训练脚本；本页明确列出可复现边界。**
