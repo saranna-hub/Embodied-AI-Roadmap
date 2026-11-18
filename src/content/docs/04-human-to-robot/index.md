@@ -37,3 +37,8 @@ sidebar:
 ## 2026-11-14 新增：ACE-Ego-0 人机联合预训练的数据可信性
 
 [ACE-Ego-0 源码级教程：相机系 EEF、URDF 形态、物理时间动作块、可靠性加权 Huber、22D 论文与 23D Common23 差异](./ace-ego0-camera-morphology-reliability/)——依据原论文与官方 SFT/main 源码，提供两张原创 SVG、CPU 数学/动作接口合同、工业 EGO/UMI 五组消融建议。**当前作者公开范围不包括完整 449-mixture 预训练和人类 EGO 辅助损失实现，不声称完整复现。**
+
+## 2026-11-18 新增：EgoX 跨本体 Transformer 与 Embodiment Dreaming
+
+**[EgoX 源码级教程：MXT+/MED 共享 Transformer、本体专属动作头、EMA future latent、HDF5 时序 Mask 及完整训练路径](./egox-mxt-embodiment-dreaming-source-audit/)**。核查 2026-11-12 原论文及新开放的 MED 源码；重点纠正其动作头不是 Flow Matching，而是 masked Smooth-L1。附两幅原创技术图、标准库 CPU 合同与作者仿真复现步骤。官方 policy checkpoints 尚未发布。
+

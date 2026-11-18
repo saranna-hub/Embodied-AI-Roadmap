@@ -236,6 +236,17 @@ jobs:
           grep -q 'PASS one prediction cannot be two F1 true positives' /tmp/egoactionbench-contract.log
           grep -q 'PASS duplicates and invalid intervals count toward FP' /tmp/egoactionbench-contract.log
           grep -q 'PASS ALL: EgoActionBench' /tmp/egoactionbench-contract.log
+      - name: Validate EgoX MED action/EMA/dream CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/egox_ema_mask_contract_cpu.py | tee /tmp/egox-med.log
+          grep -q 'PASS masked action and temporal padding' /tmp/egox-med.log
+          grep -q 'PASS episode future offset validity' /tmp/egox-med.log
+          grep -q 'PASS cosine versus latent norm' /tmp/egox-med.log
+          grep -q 'PASS EMA 0.999' /tmp/egox-med.log
+          grep -q 'PASS query count != horizon' /tmp/egox-med.log
+          grep -q 'PASS training-only target causality' /tmp/egox-med.log
+          grep -q 'PASS ALL: EgoX MED EMA/action/dream CPU' /tmp/egox-med.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -567,3 +578,12 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS: EgoActionBench HTML KaTeX >=18, 2 original SVGs, CPU contracts, baseline 8 HTML/8 SVG/favicon."
+          check_html "/04-human-to-robot/egox-mxt-embodiment-dreaming-source-audit/" 12
+          for name in egox-mxt-system egox-mxt-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/egox-diagram.svg
+            grep -q '<svg' /tmp/egox-diagram.svg
+            grep -q '</svg>' /tmp/egox-diagram.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS EgoX page/KaTeX/two SVGs; base 8 HTML / 8 SVG / favicon checks remain active."
