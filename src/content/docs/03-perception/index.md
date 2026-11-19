@@ -11,7 +11,8 @@ sidebar:
 1. [HaMeR：Transformer + MANO 的单目三维手部重建](./hamer/)：理解形状、姿态、弱/透视相机与 2D→3D 不适定性。
 2. [HaWoR：跨时序恢复世界空间手部运动](./hawor/)：理解相机运动、手部运动先验与缺失帧处理边界。
 3. **[EgoHand 2026 源码级教程：DINOv3 + SOMA-25，2D/3D 两分支、相机几何、SLAM 与质检](./egohand-dinov3-soma-camera-qc/)**：从官方 NVIDIA IsaacCapture 推理入口与 NPZ 字段出发，推导焦距与深度关系、2D 关节约束的侧向平移求解，附两张原创技术图和 CPU 几何/帧 ID 负例。
-4. [MINT](./mint/)：补充手部结构与时序技术，重点对照输入和监督条件。
+4. **[EgoForce：FARM 前臂约束、HALO 和多相机 Ray Space Solver](./egoforce-forearm-ray-solver-source-guide/)**：2026-11-19 源码级数学推导、可观测性与工业 EGO 质检，附两张架构图及 CPU 正反例。
+5. [MINT](./mint/)：补充手部结构与时序技术，重点对照输入和监督条件。
 
 **工程延伸**：学习 [EGO/UMI 时空标定](../../02-data-engineering/ego-umi-spatiotemporal-calibration/) 后，再读 [MCAP → LeRobot v3 的时序与动作合同](../../02-data-engineering/mcap-lerobot-v3-temporal-action-contract/)；3D 手重建不等于机器人动作监督，也不自动获得真实接触力。
 

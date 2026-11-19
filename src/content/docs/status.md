@@ -74,3 +74,8 @@ description: 前四大领域的已完成页面、待撰写论文和复现状态
 - **Markdown→网页构建**已提交，但 GitHub Pages 的最终构建结果需检查 GitHub Actions。
 - **KaTeX**已配置并接入数学语法检查，尚需检查线上真实渲染。
 - 按前四大领域增量撰写，未写完的论文明确保留在清单，不自动生成空泛“已完成”文章。
+
+
+### 2026-11-19：EgoForce 前臂引导的单目 3D 定位
+
+新增 [EgoForce 源码级教程](./03-perception/egoforce-forearm-ray-solver-source-guide/)：HALO、FARM、跨相机 RSS 推导、错误内参与退化负例、工业 EGO 数据合同，附两张 SVG 与 CPU 验证。未执行 GPU 模型或真实工业数据精度复测。
