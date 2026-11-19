@@ -45,16 +45,16 @@ sidebar:
 
 【推导】令手 Crop 的某个二维点为 $\mathbf p_i^h$，手框左上角为 $\mathbf b_h$，原图手框尺寸为 $\mathbf s_h$，网络 Crop 规格为 $\mathbf s_{\rm in}$：
 
-$
+$$
 \mathbf p_i^{raw}=\mathbf b_h+\mathbf p_i^h\odot\mathbf s_h/\mathbf s_{\rm in}.
-$
+$$
 
 对于零畸变的针孔相机：
 
-$
+$$
 \widetilde{\mathbf d}_i=K^{-1}[u_i,v_i,1]^\top,\qquad
 \mathbf d_i=\frac{\widetilde{\mathbf d}_i}{\|\widetilde{\mathbf d}_i\|_2}.
-$
+$$
 
 但鱼眼应调用对应相机模型的 $\pi_{\mathcal C}^{-1}$，否则广角边缘产生系统角误差。相机标定版本与 Crop 缩放必须成为数据资产的一部分。
 
@@ -66,9 +66,9 @@ $
 
 【推导】根相对骨架的相机定位可写为：
 
-$
+$$
 \mathbf X_{C,i}=\mathbf J_i(\theta,\beta)+\mathbf t_C.
-$
+$$
 
 即使局部网格像一只自然的手，也不能从此推出 $\mathbf t_C$ 的绝对误差很小。形态尺度、标定和可观测关节共同决定深度是否可信。
 
@@ -76,34 +76,34 @@ $
 
 【源码】[core/rss.py](https://github.com/dfki-av/EgoForce/blob/main/core/rss.py) 明确包含 _proj_from_dirs、_rdls_solve 和 solve_translation_full_ray_robust。对每一个根相对 3D 关节 $\mathbf J_i$、相机单位射线 $\mathbf d_i$ 和可靠性权重 $w_i$，物理上希望：
 
-$
+$$
 \mathbf J_i+\mathbf t\parallel \mathbf d_i.
-$
+$$
 
 定义投影到垂直视线平面的矩阵：
 
-$
+$$
 P_i=I-\mathbf d_i\mathbf d_i^\top,\quad P_i^\top=P_i,\quad P_i^2=P_i.
-$
+$$
 
 因此点到射线的垂距平方为：
 
-$
+$$
 \mathcal L(\mathbf t)=\sum_{i=1}^N w_i\|P_i(\mathbf J_i+\mathbf t)\|_2^2.
-$
+$$
 
 求导令零，得到：
 
-$
+$$
 M\mathbf t=-\mathbf m,\quad
 M=\sum_iw_iP_i,\quad \mathbf m=\sum_iw_iP_i\mathbf J_i.
-$
+$$
 
 再使用数值稳定的线性求解而不是手工矩阵求逆：
 
-$
+$$
 \boxed{\mathbf t^*=\operatorname{solve}(M+\varepsilon I,-\mathbf m).}
-$
+$$
 
 这里是对源码线性系统的【推导】。完整模型还有手与臂两阶段 refinement、可靠性选点、可选 IRLS/PROSAC、二次平移限幅等逻辑，不能把上述公式错误声称为整套最终推理的全部。
 
@@ -115,15 +115,15 @@ $
 
 当所有射线近乎平行时：
 
-$
+$$
 M=\left(\sum_iw_i\right)(I-\mathbf d\mathbf d^\top).
-$
+$$
 
 该矩阵在共同射线方向的特征值为零，$\operatorname{rank}(M)=2$，因此视线深度不可观测。阻尼项 $\varepsilon I$ 可以让求解器吐出数值，却**不能创造信息**。需要记录：
 
-$
+$$
 \kappa(M)=\sigma_{\max}(M)/\sigma_{\min}(M).
-$
+$$
 
 建议对条件数、正深度、离群点比例、有效手/臂点数、相机变更与可见时长建立拒绝规则。每段数据保存实际阈值而非事后只保存成功标签。
 
@@ -131,9 +131,9 @@ $
 
 源码还包含 leverage 加权、Tukey/Huber IRLS、可选 PROSAC 和条件数检查；**函数有开关不意味着默认全部打开**。一个遮挡的指尖如果预测到错误位置，射线可能十分离谱。IRLS 下示例 Huber 权重：
 
-$
+$$
 w_i^{eff}=w_i\min(1,c/\|P_i(J_i+t)\|_2).
-$
+$$
 
 **值得警惕的源码细节**：_rdls_residuals 算的是点到三维射线的长度，_robust_weights_scalar 的注释却出现“pixel units”。移植到自己的数据管线时，务必查单位和阈值，不能把常数 4.685 直接当成 4.685 像素或毫米。应先在有米制参考的采样上做阈值标定。
 
@@ -141,10 +141,10 @@ $
 
 【建议】若有外部同步 SLAM/VIO 的相机世界位姿，才可将相机系结果变换到世界系：
 
-$
+$$
 T_{WC}(t)=\begin{bmatrix}R_{WC}(t)&t_{WC}(t)\\0&1\end{bmatrix},
 \quad X_W(t)=R_{WC}(t)X_C(t)+t_{WC}(t).
-$
+$$
 
 需要额外区分：camera-to-world 还是 world-to-camera、轨迹是否有尺度、SLAM 重定位是否跳变、头戴相机与采集手柄/工件的外参、视频与定位的时钟漂移。世界坐标下的手腕或指尖轨迹也**不能直接当作机器人夹爪控制命令**：要加入本体动作接口、工具接触点、工件位姿、夹爪状态、可达性验证与失效数据过滤。
 
@@ -192,9 +192,9 @@ python3 examples/egoforce_ray_contract_cpu.py
 
 **相机系误差和根相对误差是不同任务。** 若真值为 $X_{C,i}$，则：
 
-$
+$$
 \operatorname{CS\!-\!MPJPE}=\frac1N\sum_i\|\widehat X_{C,i}-X_{C,i}\|_2.
-$
+$$
 
 根相对误差会在求差前将每套骨架各自减去手腕位置，**自动消除了相机平移误差**，因此不能据 RR-MPJPE 优秀来宣称米制世界定位优秀。Procrustes/Sim(3) 对齐还能消除旋转/尺度误差，更不该用来判断工业动作绝对精度。
 
