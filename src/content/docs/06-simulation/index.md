@@ -15,3 +15,8 @@ sidebar:
 **按这个顺序阅读**：[π₀.₅ 数据→Loss→LoRA](../01-foundations/vla/pi05-libero-data-loss-lora-source-guide/) → [MINERVA 评测与泛化](./minerva-libero-capacity-and-generalization/) → [PACT-VLA 推理时序](../05-control/pact-vla-precommit-flowres/)。
 
 后续专题继续建设 MuJoCo / Isaac Sim / Isaac Lab、Sim2Real、工业机器人任务基准与真机评测设计。每篇区分公开论文结论、本站合成测试和实际 GPU/仿真/真机复现状态。
+
+
+## 2026-11-20 新增：EgoSim 的可更新三维世界模型
+
+[EgoSim 深度源码教程：EGO 先验点云、52 通道视频 DiT、动作骨架投影、Sim3/TSDF 与长期状态记忆](./egosim-geometry-action-persistent-3d-state-source-guide/)：依据 ECCV 2026 论文与作者当前公开的推理、数据准备、连续重建代码，明确当前训练代码未公开；新增两张原创技术图及无 GPU 的五组 CPU 合同。重点区分生成视频质量与可执行机器人策略成功率。

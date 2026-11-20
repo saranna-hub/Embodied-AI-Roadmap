@@ -55,6 +55,16 @@ jobs:
           grep -q 'PASS camera world SE3 inverse' /tmp/egoforce-cpu.log
           grep -q 'PASS ALL: EgoForce RSS CPU geometry' /tmp/egoforce-cpu.log
 
+      - name: Validate EgoSim geometry-action and persistent-world CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/egosim_world_state_contract_cpu.py | tee /tmp/egosim-contract.log
+          grep -q 'PASS 52-channel latent and first-frame mask contract' /tmp/egosim-contract.log
+          grep -q 'PASS T_WC projection and camera-motion negative control' /tmp/egosim-contract.log
+          grep -q 'PASS Sim3 scale and degenerate-overlap reject oracle' /tmp/egosim-contract.log
+          grep -q 'PASS untrusted state rollback and accepted-version increment' /tmp/egosim-contract.log
+          grep -q 'PASS 61-frame overlap and source-clip leakage guard' /tmp/egosim-contract.log
+          grep -q 'PASS ALL: EgoSim geometry-action-world-state CPU contracts' /tmp/egosim-contract.log
       - name: Audit rendered pages (blocking, site-wide)
         run: npm run validate:render
       - name: Validate executable EGO UMI synthetic pose benchmark
@@ -608,3 +618,14 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS EgoForce HTML KaTeX >=12, two SVG, CPU and baseline checks."
+
+          check_html "/06-simulation/egosim-geometry-action-persistent-3d-state-source-guide/" 12
+          for name in egosim-system egosim-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/egosim-verified.svg
+            grep -q '<svg' /tmp/egosim-verified.svg
+            grep -q '</svg>' /tmp/egosim-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS EgoSim page KaTeX >= 12, 2 SVGs, CPU contract and original 8 HTML/8 SVG/favicon gates."
