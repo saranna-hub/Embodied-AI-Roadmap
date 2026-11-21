@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 770" role="img" aria-labelledby="t d">
+<title id="t">HubEgo RGB-IMU alignment and causal leakage contracts</title>
+<desc id="d">Capture-time video frames and high-rate inertial samples are resampled on the same episode timeline. Offline linear interpolation can see a future sample and must not be mislabeled as online observation.</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#81e6d9"/></marker></defs>
+<rect width="1440" height="770" fill="#081827" rx="28"/>
+<text x="46" y="55" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="30" font-weight="700" fill="#fff">RGB × IMU | 原生采样、插值、真实帧间隔与推理因果</text>
+<text x="46" y="89" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="17" fill="#9bb3ce">论文离线融合：首帧为时间原点，MCAP 原始单位须先规范；线上策略只能读取已到达传感器样本</text>
+<rect x="48" y="124" width="1343" height="315" rx="22" fill="#122b40"/>
+<text x="70" y="164" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="21" font-weight="700" fill="#e5f8ff">一个 episode 内的相对时间轴（示意，不等于真实采样频率）</text>
+<line x1="214" y1="238" x2="1264" y2="238" stroke="#8ea8c7" stroke-width="4"/>
+<line x1="214" y1="342" x2="1264" y2="342" stroke="#8ea8c7" stroke-width="4"/>
+<text x="70" y="229" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="19" fill="#ccedfc">RGB 30fps</text>
+<text x="70" y="337" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="19" fill="#ccedfc">IMU 原生</text>
+<g fill="#7dd3fc" stroke="#062338" stroke-width="3"><rect x="298" y="218" width="35" height="39" rx="6"/><rect x="628" y="218" width="35" height="39" rx="6"/><rect x="1056" y="218" width="35" height="39" rx="6"/></g>
+<g fill="#34d399"><circle cx="269" cy="342" r="11"/><circle cx="362" cy="342" r="11"/><circle cx="456" cy="342" r="11"/><circle cx="550" cy="342" r="11"/><circle cx="645" cy="342" r="11"/><circle cx="739" cy="342" r="11"/><circle cx="833" cy="342" r="11"/><circle cx="927" cy="342" r="11"/><circle cx="1021" cy="342" r="11"/><circle cx="1115" cy="342" r="11"/></g>
+<g stroke="#5c9eb2" stroke-width="3" stroke-dasharray="8 7"><path d="M315 260 V329"/><path d="M645 260 V329"/><path d="M1073 260 V329"/></g>
+<path d="M550 326 L645 265 L739 326" stroke="#fbbf24" stroke-width="3" fill="none"/>
+<circle cx="645" cy="265" r="9" fill="#fbbf24"/>
+<text x="678" y="204" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="17" fill="#fcd34d">离线插值含后一采样（右邻居）</text>
+<text x="71" y="400" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#9db6d3">视频用 capture timestamp；帧索引 / 30 不能代替真时间，60→30 重编码可能重复帧</text>
+<rect x="48" y="464" width="618" height="235" rx="18" fill="#173e45" stroke="#34d399" stroke-width="2"/>
+<text x="73" y="506" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="24" font-weight="700" fill="#9af4dc">离线目标生成：可使用双侧样本</text>
+<text x="73" y="546" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#d1fae5">linear interpolation: z(t) = (1−α) zᵢ + α zᵢ₊₁</text>
+<text x="73" y="583" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#d1fae5">作为训练标签：允许观察未来的 GT</text>
+<text x="73" y="620" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#d1fae5">先检查采样单调性、间隔、缺失和单位</text>
+<text x="73" y="659" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#93dec5">不是保证头部 IMU 能代表手部真实动作</text>
+<rect x="724" y="464" width="666" height="235" rx="18" fill="#4b353d" stroke="#fb923c" stroke-width="2"/>
+<text x="749" y="506" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="24" font-weight="700" fill="#ffd4aa">在线感知输入：只能使用历史</text>
+<text x="749" y="546" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#ffedd5">z(t) = most recent sample at or before t</text>
+<text x="749" y="583" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#ffedd5">如果右邻居采样晚于决策时刻：不得访问</text>
+<text x="749" y="620" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#ffedd5">延迟 / stale queue / 采样时间都应显式记录</text>
+<text x="749" y="659" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#ffd0aa">offline-only features ≠ deploy-time observations</text>
+<text x="48" y="740" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#93a9c3">Model-specific extra safety contract, not claimed as native HubEgo policy implementation. Synthetic illustrations; no GPU experiment.</text>
+</svg>
