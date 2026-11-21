@@ -73,7 +73,7 @@ $$
 a_{\mathrm{m/s^2}}=
 \begin{cases}
 9.80665\,a_g & \text{原始频道单位为 g}\\
-a_{\mathrm{raw}} & \text{原始频道单位为 m/s^2}
+a_{\mathrm{raw}} & \text{原始频道单位为 m/s²}
 \end{cases}
 $$
 
