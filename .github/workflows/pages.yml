@@ -65,6 +65,17 @@ jobs:
           grep -q 'PASS untrusted state rollback and accepted-version increment' /tmp/egosim-contract.log
           grep -q 'PASS 61-frame overlap and source-clip leakage guard' /tmp/egosim-contract.log
           grep -q 'PASS ALL: EgoSim geometry-action-world-state CPU contracts' /tmp/egosim-contract.log
+      - name: Explain rendered KaTeX failures before blocking audit
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const html = fs.readFileSync('dist/02-data-engineering/hubego100k-rgb-imu-curation-training-contract/index.html', 'utf8');
+          const errors = [...html.matchAll(/<[^>]*katex-error[^>]*>/g)];
+          for (const [i,m] of errors.entries()) {
+            console.log('KATEX_DEBUG', i, m[0].slice(0,1000));
+          }
+          console.log('KATEX_DEBUG_TOTAL', errors.length);
+          NODE
       - name: Audit rendered pages (blocking, site-wide)
         run: npm run validate:render
       - name: Validate executable EGO UMI synthetic pose benchmark
