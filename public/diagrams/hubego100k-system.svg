@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 770" role="img" aria-labelledby="t d">
+<title id="t">HubEgo-100K v1.0 data materialization and training routes</title>
+<desc id="d">One episode index joins five stores. Quality gates protect separate human visual learning and robot action supervision.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#67e8f9"/></marker><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#fbbf24"/></marker></defs>
+<rect width="1440" height="770" fill="#0a1628" rx="28"/>
+<text x="46" y="54" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-weight="700" font-size="30" fill="#ffffff">HubEgo-100K v1.0 | 多源存储 → 可信样本 → 分源联合训练</text>
+<text x="46" y="86" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="17" fill="#9db2d0">10,124h 首版 · 72,754 episodes · RGB + 头戴 IMU · 无机器人控制量</text>
+<rect x="44" y="120" width="1352" height="290" rx="22" fill="#10233a" stroke="#385572"/>
+<text x="64" y="159" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="22" font-weight="700" fill="#a5f3fc">episode_index：五种存储的唯一主键</text>
+<rect x="65" y="188" width="250" height="116" rx="13" fill="#194361"/>
+<text x="83" y="220" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700" fill="#e0f2fe">MP4 / 视频</text>
+<text x="83" y="249" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#d1e8f7">1080p · 输出 30fps</text>
+<text x="83" y="274" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#a7c6de">每帧有 capture time</text>
+<rect x="330" y="188" width="250" height="116" rx="13" fill="#194361"/>
+<text x="348" y="220" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700" fill="#e0f2fe">Parquet / 帧表</text>
+<text x="348" y="249" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#d1e8f7">timestamp, frame_index</text>
+<text x="348" y="274" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#a7c6de">state = accel + gyro</text>
+<rect x="595" y="188" width="250" height="116" rx="13" fill="#194361"/>
+<text x="613" y="220" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700" fill="#e0f2fe">MCAP / 原生流</text>
+<text x="613" y="249" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#d1e8f7">/imu/*, /video/frames</text>
+<text x="613" y="274" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#a7c6de">100~500Hz，单位不同</text>
+<rect x="860" y="188" width="250" height="116" rx="13" fill="#194361"/>
+<text x="878" y="220" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700" fill="#e0f2fe">Catalog / 元索引</text>
+<text x="878" y="249" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#d1e8f7">recording, contributor</text>
+<text x="878" y="274" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#a7c6de">QC、视频/归档定位</text>
+<rect x="1125" y="188" width="245" height="116" rx="13" fill="#194361"/>
+<text x="1143" y="220" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="20" font-weight="700" fill="#e0f2fe">Annotations / 弱标注</text>
+<text x="1143" y="249" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#d1e8f7">task, skill, instruction</text>
+<text x="1143" y="274" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#a7c6de">episode 级，非时序动作</text>
+<path d="M715 305 V333" stroke="#67e8f9" stroke-width="4" marker-end="url(#arr)"/>
+<rect x="175" y="339" width="1090" height="51" rx="14" fill="#245a63" stroke="#4fd1c5"/>
+<text x="195" y="372" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="19" font-weight="700" fill="#effffa">数据门控：单调时钟 · 单位一致 · 原录制/人员防泄漏 · 手部可见性 · 授权与复核</text>
+<path d="M720 410 V456" stroke="#67e8f9" stroke-width="4" marker-end="url(#arr)"/>
+<rect x="125" y="462" width="518" height="218" rx="22" fill="#113b4e" stroke="#2dd4bf" stroke-width="2"/>
+<text x="156" y="503" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="23" font-weight="700" fill="#99f6e4">人类 EGO：视觉/未来特征监督</text>
+<text x="156" y="543" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#e0f2fe">输入：历史 RGB + 文本 + 可选 IMU</text>
+<text x="156" y="578" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#e0f2fe">目标：future latent / 表征一致性</text>
+<text x="156" y="614" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#fcd34d">禁止：伪造机器人 Action GT</text>
+<text x="156" y="651" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="15" fill="#96c8c5">data: action-free, gradient only to visual objectives</text>
+<rect x="790" y="462" width="518" height="218" rx="22" fill="#3b3046" stroke="#fbbf24" stroke-width="2"/>
+<text x="820" y="503" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="23" font-weight="700" fill="#ffdf95">机器人数据：动作监督</text>
+<text x="820" y="543" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#f1e9f8">输入：RGB + language + proprioception</text>
+<text x="820" y="578" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#f1e9f8">目标：动作 Flow Matching</text>
+<text x="820" y="614" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="18" fill="#fcd34d">必须：动作维度/坐标系/Mask 合约</text>
+<text x="820" y="651" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="15" fill="#d5bd94">固定 robot action budget，比较 OOD success</text>
+<path d="M646 568 H788" stroke="#67e8f9" stroke-width="4" stroke-dasharray="9 7" marker-end="url(#arr)"/>
+<text x="655" y="551" font-family="Arial,'Noto Sans CJK SC',sans-serif" fill="#c5eaff" font-size="14">共享视觉主干</text>
+<text x="48" y="728" font-family="Arial,'Noto Sans CJK SC',sans-serif" font-size="16" fill="#93a9c3">Source: HubEgo-100K arXiv 2611.21938 + official HF dataset card | Diagram and co-training extension: educational design</text>
+</svg>
