@@ -31,3 +31,8 @@ sidebar:
 ## 2026-11-17 新增：EgoActionBench 双手原子动作语义质量基准
 
 **[EgoActionBench：Left/Right/Both 动作时间线、五阶段人审与 Agent QC、Omin/tIoU/一对一 F1、Qwen3-VL SFT→GRPO 及工业 EGO 标注验收](./egoactionbench-dense-atomic-actions-source-audit/)**。补上 EGO/UMI 数据管线中容易被忽视的**语义标注可评估性**：为什么同一段话覆盖两个原子动作也不能得满分，为什么 0.6 秒中位长度让低帧率视频推理不足，以及为何 GRPO 的提升不能冒充动作策略收益。包含系统图、三轨时间线、可执行纯 CPU 负例。**作者目前尚未开源完整 evaluator、模型与训练脚本；本页明确列出可复现边界。**
+
+
+## 2026-11-21 新增：HubEgo-100K 万小时 EGO 数据的训练契约
+
+**[HubEgo-100K：真实工作场景的 10,124 小时 RGB/IMU、五存储结构、时间因果、元数据防泄漏和 π₀.₅ 共训设计](./hubego100k-rgb-imu-curation-training-contract/)**。核实 2026-11-16 发布的 [论文](https://arxiv.org/abs/2611.21938) 和 [官方 HF 数据卡](https://huggingface.co/datasets/HubLabs/HubEgo-100K)。重点解析 LeRobot v3 帧级 6D 状态只是**头部加速度与角速度，不是工具动作**；同源录制和人员切分的重要性、iOS/Android 原生 IMU 单位差异，以及离线插值和在线因果的差别。附两张原创 SVG 图和纯 CPU 五项负例；不将受限数据集的发布等同于真实视频下载、模型复现或成功率提升。
