@@ -38,3 +38,7 @@ sidebar:
 ### 2026-11-16 新增：τ₀-VLA 分层决策、可纠错记忆与世界模型TTC
 
 [τ₀-VLA源码级教学：Proposal三目输入、执行记忆修复、token置信路由、World模型终态、Value/Beam/Reflection以及40D Masked Flow](./world-models/tau0-vla-ttc-memory-search-source-audit/)。特别标注已发布Proposal/World权重与未定位完整TTC可运行编排的区别；含两张原创SVG、标准库CPU合成契约、LIBERO后训练复现命令及因果评测设计。
+
+### 2026-11-22 新增：Open-HumanWAM 5万小时 EGO 预训练与 49D Goal 动作接口
+
+[Open-HumanWAM 源码审计：50K 子集、IA/IDM 注意力、Vanilla/Goal 两条训练线、49D→64D SharedEEF、48/32 时间窗、合法视觉目标与放缩定量边界](./world-models/open-humanwam-50k-scaling-goal-source-audit/)。重点区分论文与当前 README 的 RoboTwin 版本数值，并指出 Vanilla 原始预训练 loader 的未绑定部分；附两张原创 SVG 和六项纯 CPU 接口反例，**不是完整 GPU 复现**。

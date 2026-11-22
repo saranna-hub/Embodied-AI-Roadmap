@@ -36,3 +36,8 @@ sidebar:
 ## 2026-11-21 新增：HubEgo-100K 万小时 EGO 数据的训练契约
 
 **[HubEgo-100K：真实工作场景的 10,124 小时 RGB/IMU、五存储结构、时间因果、元数据防泄漏和 π₀.₅ 共训设计](./hubego100k-rgb-imu-curation-training-contract/)**。核实 2026-11-16 发布的 [论文](https://arxiv.org/abs/2611.21938) 和 [官方 HF 数据卡](https://huggingface.co/datasets/HubLabs/HubEgo-100K)。重点解析 LeRobot v3 帧级 6D 状态只是**头部加速度与角速度，不是工具动作**；同源录制和人员切分的重要性、iOS/Android 原生 IMU 单位差异，以及离线插值和在线因果的差别。附两张原创 SVG 图和纯 CPU 五项负例；不将受限数据集的发布等同于真实视频下载、模型复现或成功率提升。
+
+
+## 2026-11-22 续读：EGO 规模化数据如何进入世界动作模型
+
+[Open-HumanWAM 50K 源码级精读](../01-foundations/world-models/open-humanwam-50k-scaling-goal-source-audit/) 连接 EGO 数据治理与机器人后训练：七种子集索引的源片段去重、训练时相机系动作的可信度 Mask、49D/64D 动作 ABI、Goal 在线因果与 RoboTwin 分组评测；对照本节的 [HubEgo](./hubego100k-rgb-imu-curation-training-contract/) 区分“只有 RGB/IMU”与“有可信手动作伪标签”。

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="640" viewBox="0 0 1140 640" role="img" aria-label="GoalWAM 输入维度 时间与RTC前缀验证图">
+<defs><marker id="m" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0 0L8 3.5L0 7Z" fill="#5ad4e7"/></marker></defs>
+<rect width="1140" height="640" rx="20" fill="#10243a"/><text x="32" y="47" fill="#fff" font-family="Arial,sans-serif" font-size="27" font-weight="700">GoalWAM · 49D 物理接口 / 64D 内部模型 / 48 步动作块</text><text x="32" y="75" fill="#bcd6e8" font-size="16">输入与输出不是同一个维度；历史、Goal 和 RTC 必须是因果的</text>
+<rect x="35" y="111" width="250" height="157" rx="13" fill="#204463" stroke="#63b4ec"/><text x="54" y="143" fill="#fff" font-size="19">当前在线输入</text><text x="54" y="178" fill="#e0f0ff" font-size="16">Head RGB + 左右腕可选</text><text x="54" y="206" fill="#e0f0ff" font-size="16">Goal RGB + Instruction</text><text x="54" y="234" fill="#e0f0ff" font-size="16">State [49] + 过去 History</text>
+<rect x="352" y="111" width="360" height="157" rx="13" fill="#2a4667" stroke="#92b7ec"/><text x="375" y="143" fill="#fff" font-size="19">文本塔 / 视频-动作 Generator</text><text x="375" y="178" fill="#e0f0ff" font-size="16">SharedEEF: 23 joints + 19 shared</text><text x="375" y="206" fill="#e0f0ff" font-size="16">22 padded invalid → internal 64D</text><text x="375" y="234" fill="#e0f0ff" font-size="16">10-step UniPC, 48-step horizon</text>
+<rect x="784" y="111" width="316" height="157" rx="13" fill="#1d504a" stroke="#80dcc1"/><text x="806" y="143" fill="#fff" font-size="19">输出给控制适配层</text><text x="806" y="178" fill="#e0f0ff" font-size="16">actions [48,49] absolute</text><text x="806" y="206" fill="#e0f0ff" font-size="16">relative_actions [48,49]</text><text x="806" y="234" fill="#e0f0ff" font-size="16">valid_mask [48,49]</text>
+<path d="M292 190H344M719 190H776" stroke="#5ad4e7" stroke-width="3" marker-end="url(#m)"/>
+<text x="35" y="315" fill="#fff" font-size="20">49D 物理通道分解（Python slice，左闭右开）</text>
+<rect x="35" y="338" width="450" height="65" rx="10" fill="#2b5b8d"/><text x="52" y="364" fill="#fff" font-size="17">[0:23] · 本体关节与关节夹爪</text><text x="52" y="389" fill="#daefff" font-size="14">Domain-specific, mask inactive joints</text>
+<rect x="493" y="338" width="380" height="65" rx="10" fill="#28766d"/><text x="511" y="364" fill="#fff" font-size="17">[23:42] · Shared EEF 19D</text><text x="511" y="389" fill="#daefff" font-size="14">Chassis 3 + left 8 + right 8</text>
+<rect x="881" y="338" width="219" height="65" rx="10" fill="#80554a"/><text x="901" y="364" fill="#fff" font-size="17">[42:49] · Camera 7D</text><text x="901" y="389" fill="#fce3d8" font-size="14">State only / action off</text>
+<text x="35" y="446" fill="#fff" font-size="20">RTC 前缀时间线：仍需结合当前 State 转换</text>
+<rect x="35" y="471" width="260" height="54" rx="7" fill="#6d8eb6"/><text x="54" y="504" fill="#fff" font-size="16">前段 absolute prev_chunk</text>
+<rect x="303" y="471" width="450" height="54" rx="7" fill="#22716d"/><text x="332" y="504" fill="#fff" font-size="16">未固定的未来动作：重新预测 48-N 行</text>
+<rect x="761" y="471" width="339" height="54" rx="7" fill="#385267"/><text x="782" y="504" fill="#fff" font-size="16">控制执行 ≤ 32 行 / query</text>
+<rect x="35" y="561" width="1065" height="49" rx="9" fill="#1b324d" stroke="#5b7a96"/><text x="52" y="591" fill="#ffd9aa" font-size="16">禁止：Goal 取测试真实终帧；History 晚于当前时刻；相机位姿作为 action；relative chunk 冒充 absolute prev_chunk。</text>
+</svg>

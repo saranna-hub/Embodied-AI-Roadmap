@@ -278,6 +278,17 @@ jobs:
           grep -q 'PASS contributor and original-recording disjoint split' /tmp/hubego100k-contract.log
           grep -q 'PASS action-free EGO supervision mask' /tmp/hubego100k-contract.log
           grep -q 'PASS ALL: HubEgo-100K synthetic' /tmp/hubego100k-contract.log
+      - name: Validate Open-HumanWAM source/data/action CPU contract
+        run: |
+          set -euo pipefail
+          python3 examples/open_humanwam_contract_cpu.py | tee /tmp/open-humanwam-contract.log
+          grep -q 'PASS half-open LeRobot clip and episode boundary' /tmp/open-humanwam-contract.log
+          grep -q 'PASS source-recording leakage split' /tmp/open-humanwam-contract.log
+          grep -q 'PASS 49D physical, internal 64D and camera action mask' /tmp/open-humanwam-contract.log
+          grep -q 'PASS train-only q01/q99 roundtrip' /tmp/open-humanwam-contract.log
+          grep -q 'PASS RTC absolute prefix current-state reanchor' /tmp/open-humanwam-contract.log
+          grep -q 'PASS in-range log-linear endpoint' /tmp/open-humanwam-contract.log
+          grep -q 'PASS ALL: Open-HumanWAM' /tmp/open-humanwam-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -639,6 +650,17 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS EgoSim page KaTeX >= 12, 2 SVGs, CPU contract and original 8 HTML/8 SVG/favicon gates."
+          check_html "/01-foundations/world-models/open-humanwam-50k-scaling-goal-source-audit/" 12
+          for name in open-humanwam-system open-humanwam-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/open-humanwam-verified.svg
+            grep -q '<svg' /tmp/open-humanwam-verified.svg
+            grep -q '</svg>' /tmp/open-humanwam-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS Open-HumanWAM HTML KaTeX >=12, two SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
+
           check_html "/02-data-engineering/hubego100k-rgb-imu-curation-training-contract/" 6
           for name in hubego100k-system hubego100k-detail; do
             file="/diagrams/$name.svg"
