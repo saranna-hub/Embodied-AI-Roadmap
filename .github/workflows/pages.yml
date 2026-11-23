@@ -289,6 +289,18 @@ jobs:
           grep -q 'PASS RTC absolute prefix current-state reanchor' /tmp/open-humanwam-contract.log
           grep -q 'PASS in-range log-linear endpoint' /tmp/open-humanwam-contract.log
           grep -q 'PASS ALL: Open-HumanWAM' /tmp/open-humanwam-contract.log
+      - name: Validate MonoTag metric Atlas and LeRobot action CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/monotag_atlas_contract_cpu.py | tee /tmp/monotag-atlas-contract.log
+          grep -q 'PASS IPPE dual-positive-depth ambiguity gate' /tmp/monotag-atlas-contract.log
+          grep -q 'PASS metric gauge needs multiframe baseline and parallax' /tmp/monotag-atlas-contract.log
+          grep -q 'PASS retrospective PnP needs image-to-map evidence' /tmp/monotag-atlas-contract.log
+          grep -q 'PASS map id revision segment and metric validity isolation' /tmp/monotag-atlas-contract.log
+          grep -q 'PASS wrist-local SE3 translation direction negative control' /tmp/monotag-atlas-contract.log
+          grep -q 'PASS source-frame sampling and terminal action invalid' /tmp/monotag-atlas-contract.log
+          grep -q 'PASS 147D 12D masks and no zero-filled invalid supervision' /tmp/monotag-atlas-contract.log
+          grep -q 'PASS ALL: MonoTag synthetic metric Atlas' /tmp/monotag-atlas-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -660,6 +672,17 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS Open-HumanWAM HTML KaTeX >=12, two SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
+
+          check_html "/02-data-engineering/monotag-slam-metric-atlas-validity-source-audit/" 12
+          for name in monotag-atlas-system monotag-atlas-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/monotag-atlas-verified.svg
+            grep -q '<svg' /tmp/monotag-atlas-verified.svg
+            grep -q '</svg>' /tmp/monotag-atlas-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS MonoTag HTML KaTeX >=12, 2 SVGs, CPU contracts and original 8 HTML/8 SVG/favicon."
 
           check_html "/02-data-engineering/hubego100k-rgb-imu-curation-training-contract/" 6
           for name in hubego100k-system hubego100k-detail; do
