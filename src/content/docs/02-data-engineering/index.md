@@ -41,3 +41,7 @@ sidebar:
 ## 2026-11-22 续读：EGO 规模化数据如何进入世界动作模型
 
 [Open-HumanWAM 50K 源码级精读](../01-foundations/world-models/open-humanwam-50k-scaling-goal-source-audit/) 连接 EGO 数据治理与机器人后训练：七种子集索引的源片段去重、训练时相机系动作的可信度 Mask、49D/64D 动作 ABI、Goal 在线因果与 RoboTwin 分组评测；对照本节的 [HubEgo](./hubego100k-rgb-imu-curation-training-contract/) 区分“只有 RGB/IMU”与“有可信手动作伪标签”。
+
+## 2026-11-23 新增：MonoTag SLAM 官方源码与米制 Atlas 有效性审计
+
+**[MonoTag 源码级进阶：IPPE 双解判别、尺度可观性、A/B 工位 Metric Reanchor、回溯 PnP、147D 状态 / 12D 腕局部动作与 LeRobot v3 Mask](./monotag-slam-metric-atlas-validity-source-audit/)**。在原有 [MonoEgo 采集入门](./monoego-deep/) 的基础上对照 2026-09 原论文、官方 MonoTag-SLAM 发布、运行哈希和 LeRobot 导出源码，给出两张原创架构图及7组 CPU 正负例。特别区分静止腕标记 1–3mm 精密性与动态绝对腕定位、map_id/revision 及零填充无效标签；不将本地合成测试当成官方 C++ 系统或 VLA 真实复现。
