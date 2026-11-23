@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="640" viewBox="0 0 1140 640" role="img" aria-label="MonoTag单目米制地图和双腕标注系统架构">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#091c31"/><stop offset="1" stop-color="#163c56"/></linearGradient><marker id="a" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0 0L8 3.5L0 7Z" fill="#72c8ee"/></marker></defs>
+<rect width="1140" height="640" fill="url(#bg)" rx="20"/>
+<text x="38" y="49" fill="#fff" font-size="29" font-family="Arial,sans-serif" font-weight="700">MonoTag SLAM | 单 RGB 的米制 Atlas 与可信腕轨迹</text>
+<text x="38" y="80" fill="#b6d6e8" font-size="16">论文 Section III–IV + 官方 process_monotag / exporter 源码审计 · 原创教学重绘 · 2026-11-23</text>
+<rect x="36" y="113" width="230" height="157" rx="12" fill="#1f4462" stroke="#70b9e7"/>
+<text x="57" y="150" fill="#fff" font-size="20">采集与校准</text>
+<text x="57" y="186" fill="#e4f2ff" font-size="16">90FPS RGB + 图像时钟</text>
+<text x="57" y="214" fill="#e4f2ff" font-size="16">镜头 K + distortion</text>
+<text x="57" y="242" fill="#e4f2ff" font-size="16">标记尺寸 / 双腕布局</text>
+<rect x="334" y="113" width="257" height="157" rx="12" fill="#235879" stroke="#75caef"/>
+<text x="353" y="150" fill="#fff" font-size="20">前端几何判别</text>
+<text x="353" y="186" fill="#e4f2ff" font-size="16">ORB features / Mask</text>
+<text x="353" y="214" fill="#e4f2ff" font-size="16">Marker corners + IPPE</text>
+<text x="353" y="242" fill="#ffe0ab" font-size="16">双解未消歧 → Reject</text>
+<rect x="659" y="113" width="235" height="157" rx="12" fill="#284b6d" stroke="#86b4ed"/>
+<text x="678" y="150" fill="#fff" font-size="20">地图后端</text>
+<text x="678" y="186" fill="#e4f2ff" font-size="16">ORB + Marker BA</text>
+<text x="678" y="214" fill="#e4f2ff" font-size="16">Metric Gauge / Atlas</text>
+<text x="678" y="242" fill="#e4f2ff" font-size="16">Reanchor / Recovery</text>
+<rect x="961" y="113" width="143" height="157" rx="12" fill="#1c615a" stroke="#70dbc0"/>
+<text x="977" y="150" fill="#fff" font-size="19">数据导出</text>
+<text x="977" y="186" fill="#e4f2ff" font-size="14">camera T_WC</text>
+<text x="977" y="214" fill="#e4f2ff" font-size="14">wrist T_WB</text>
+<text x="977" y="242" fill="#e4f2ff" font-size="14">valid / map ID</text>
+<path d="M272 191H326M598 191H652M900 191H953" stroke="#72c8ee" stroke-width="3" marker-end="url(#a)"/>
+<text x="40" y="325" fill="#f4fbff" font-size="22" font-weight="700">两条 marker 角色不同：固定锚点 ≠ 动态腕部</text>
+<rect x="35" y="347" width="512" height="145" rx="14" fill="#183a62" stroke="#65ace3"/>
+<text x="59" y="382" fill="#99d9ff" font-size="20" font-weight="700">STATIC | 工位 anchor</text>
+<text x="59" y="414" fill="#ecf5ff" font-size="17">已知边长 / 米制尺度证据</text>
+<text x="59" y="441" fill="#ecf5ff" font-size="17">静态 BA / 地图回环 / Sim3 重锚</text>
+<text x="59" y="469" fill="#ffcf95" font-size="15">不能：单帧角点就声明整个 Atlas 米制化</text>
+<rect x="565" y="347" width="539" height="145" rx="14" fill="#1c5553" stroke="#6bd4b5"/>
+<text x="589" y="382" fill="#b5ffe5" font-size="20" font-weight="700">DYNAMIC | 左右腕 constellation</text>
+<text x="589" y="414" fill="#ecfff8" font-size="17">多面固定布局 / 相机系腕佩戴件位姿</text>
+<text x="589" y="441" fill="#ecfff8" font-size="17">T_WB = T_WC · T_CB，单手各自有效</text>
+<text x="589" y="469" fill="#ffcf95" font-size="15">不能：当静态 ORB landmark 或人体腕中心</text>
+<rect x="35" y="523" width="1069" height="88" rx="13" fill="#112b42" stroke="#497c9d"/>
+<text x="58" y="556" fill="#fff" font-size="17">导出合同： RGB + 147D state + 12D wrist-local delta + 5D/2D validity masks</text>
+<text x="58" y="587" fill="#f4c794" font-size="16">重要：失效轨迹保留缺测和来源；零填充不能当作零动作真值；仅腕部轨迹不能直接控制目标本体。</text>
+</svg>

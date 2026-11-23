@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="690" viewBox="0 0 1140 690" role="img" aria-label="MonoTag米制地图状态机和LeRobot动作合同失效案例">
+<defs><marker id="arr" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0 0L8 3.5L0 7Z" fill="#6bcdf4"/></marker></defs>
+<rect width="1140" height="690" rx="21" fill="#0c2136"/>
+<text x="34" y="46" font-size="28" fill="#fff" font-weight="700">MonoTag | Metric Atlas 判据、回溯与 Action Mask</text>
+<text x="35" y="76" font-size="16" fill="#b6d1e5">从可观测性到有效监督：三个不同问题，三个独立 Gate</text>
+<rect x="37" y="111" width="321" height="171" rx="12" fill="#234d74" stroke="#77afe2"/>
+<text x="56" y="142" font-size="19" fill="#fff">Gate 1 | IPPE 双解</text>
+<text x="56" y="176" font-size="16" fill="#e0efff">两候选偏差 > 5° 或 20mm</text>
+<text x="56" y="202" font-size="16" fill="#e0efff">且像素 RMS 差 &lt; 0.5px</text>
+<text x="56" y="229" font-size="16" fill="#ffe7b4">结果：不能独立初始化尺度</text>
+<text x="56" y="255" font-size="15" fill="#bfd7eb">历史和多视图几何继续消歧</text>
+<rect x="409" y="111" width="323" height="171" rx="12" fill="#254763" stroke="#9daadd"/>
+<text x="428" y="142" font-size="19" fill="#fff">Gate 2 | Metric Reanchor</text>
+<text x="428" y="176" font-size="16" fill="#e0efff">旧地图：8观测 + 3关键帧</text>
+<text x="428" y="202" font-size="16" fill="#e0efff">约4cm基线 + 足够视差</text>
+<text x="428" y="229" font-size="16" fill="#ffe7b4">比例超3%和3σ → 提案</text>
+<text x="428" y="255" font-size="15" fill="#bfd7eb">检查失败则回滚，地图不拼接</text>
+<rect x="781" y="111" width="323" height="171" rx="12" fill="#1b5856" stroke="#7ed8bd"/>
+<text x="800" y="142" font-size="19" fill="#fff">Gate 3 | Retrospective PnP</text>
+<text x="800" y="176" font-size="16" fill="#e0efff">至少30个几何内点</text>
+<text x="800" y="202" font-size="16" fill="#e0efff">像素 RMS 不大于3px</text>
+<text x="800" y="229" font-size="16" fill="#ffe7b4">需要最终图像到地图证据</text>
+<text x="800" y="255" font-size="15" fill="#bfd7eb">插值、平滑和显示不是恢复</text>
+<text x="38" y="321" fill="#fff" font-size="22" font-weight="700">从地图图结构到动作段，必须携带 provenance</text>
+<rect x="37" y="342" width="323" height="110" rx="11" fill="#1d405d" stroke="#679cc9"/>
+<text x="55" y="373" fill="#fff" font-size="18">map A / revision 4</text>
+<text x="55" y="400" fill="#bde1fb" font-size="16">Camera valid + metric</text>
+<text x="55" y="430" fill="#c7f5e5" font-size="16">Left wrist valid</text>
+<rect x="409" y="342" width="323" height="110" rx="11" fill="#5d3944" stroke="#df9f9c"/>
+<text x="427" y="373" fill="#fff" font-size="18">map B / 未验证合并</text>
+<text x="427" y="400" fill="#fff0e8" font-size="16">坐标值相近不等于同一世界</text>
+<text x="427" y="430" fill="#ffd0a4" font-size="16">跨图 delta → INVALID</text>
+<rect x="781" y="342" width="323" height="110" rx="11" fill="#1d5054" stroke="#70c9b0"/>
+<text x="799" y="373" fill="#fff" font-size="18">map A / revision 5</text>
+<text x="799" y="400" fill="#c8fff4" font-size="16">重新 BA 已更新历史帧</text>
+<text x="799" y="430" fill="#ffd0a4" font-size="16">不能混用旧 revision 数值</text>
+<path d="M367 397H400M739 397H773" stroke="#6bcdf4" stroke-width="3" marker-end="url(#arr)"/>
+<text x="37" y="505" fill="#fff" font-size="22" font-weight="700">LeRobot v3 导出：必须把维度和有效性一起传递</text>
+<rect x="37" y="530" width="294" height="91" rx="12" fill="#2b4b7c"/>
+<text x="57" y="564" fill="#fff" font-size="19">state [147]</text>
+<text x="57" y="597" fill="#d4eafd" font-size="15">camera7 + 双腕14 + 手点126</text>
+<rect x="349" y="530" width="253" height="91" rx="12" fill="#256d69"/>
+<text x="369" y="564" fill="#fff" font-size="19">action [12]</text>
+<text x="369" y="597" fill="#d4f8ec" font-size="15">双腕 local SE3 delta</text>
+<rect x="620" y="530" width="484" height="91" rx="12" fill="#755043"/>
+<text x="638" y="564" fill="#fff" font-size="19">validity [5] + action mask [2]</text>
+<text x="638" y="597" fill="#fff0e4" font-size="15">丢手、跳图、末帧，置无效，零值仅占位</text>
+<text x="38" y="662" fill="#ffdbac" font-size="16">红线：无相机 ≠ 米制腕轨迹；相同 marker ID ≠ 可以并图；静止低 RMS ≠ 动态绝对精度。</text>
+</svg>
