@@ -21,3 +21,5 @@ sidebar:
 其余运动学、力控和多臂协作章节待逐项补充。
 
 - [τ₀-VLA：高层子任务决策、失败记忆纠错、预演搜索与低层40D动作契约](/Embodied-AI-Roadmap/01-foundations/world-models/tau0-vla-ttc-memory-search-source-audit/)（2026-11-16）：与RTC不同，专门解决长流程子任务选择及执行结果回写；基于官方论文与开源文件逐项审计，标识尚未完整开放的TTC编排。
+
+- [InteractVLA：几何引导、软时间匹配与可审计失败恢复](/Embodied-AI-Roadmap/05-control/interactvla-soft-time-geometric-guidance/)（2026-11-24）：冻结模型的输入梯度、命令位姿映射、兼容性拒绝、版本化候选执行、两张原创图与 CPU 合同。
