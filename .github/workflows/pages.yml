@@ -301,6 +301,11 @@ jobs:
           grep -q 'PASS source-frame sampling and terminal action invalid' /tmp/monotag-atlas-contract.log
           grep -q 'PASS 147D 12D masks and no zero-filled invalid supervision' /tmp/monotag-atlas-contract.log
           grep -q 'PASS ALL: MonoTag synthetic metric Atlas' /tmp/monotag-atlas-contract.log
+      - name: Validate InteractVLA geometry and input-gradient CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/interactvla_guidance_contract_cpu.py | tee /tmp/interactvla-contract.log
+          grep -q 'PASS ALL: InteractVLA synthetic contracts' /tmp/interactvla-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -694,4 +699,12 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS HubEgo-100K HTML KaTeX >= 6, two SVG, CPU and baseline 8 HTML/8 SVG/favicon checks."
-
+          check_html "/05-control/interactvla-soft-time-geometric-guidance/" 8
+          for name in interactvla-system interactvla-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/interactvla-verified.svg
+            grep -q '<svg' /tmp/interactvla-verified.svg
+            grep -q '</svg>' /tmp/interactvla-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS InteractVLA HTML KaTeX >=8, two SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
