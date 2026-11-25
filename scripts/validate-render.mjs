@@ -3,6 +3,7 @@ import {join} from 'node:path';
 
 const base='dist';
 const pages=[
+  ['01-foundations/vla/tacinno-tactile-innovation',12],
   ['',0],
   ['00-prerequisites/transformer',5],
   ['02-data-engineering/hifi-umi-deep',1],
@@ -27,6 +28,7 @@ const pages=[
   ['01-foundations/world-models/tau0-vla-ttc-memory-search-source-audit',16],
 ];
 const diagrams=[
+  'tacinno-innovation-system.svg', 'tacinno-attention-detail.svg',
   ...['hifi-umi','kiwi','monoego','ego-oscar'].flatMap(name => [name+'-system.svg', name+'-detail.svg']),
   'delta-flow-architecture.svg', 'delta-flow-timeline.svg',
   'pi0-joint-attention-dataflow.svg', 'pi0-joint-attention-mask.svg',

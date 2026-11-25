@@ -306,6 +306,11 @@ jobs:
           set -euo pipefail
           python3 examples/interactvla_guidance_contract_cpu.py | tee /tmp/interactvla-contract.log
           grep -q 'PASS ALL: InteractVLA synthetic contracts' /tmp/interactvla-contract.log
+      - name: Validate TacInno conditional code and attention CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/tacinno_contract_cpu.py | tee /tmp/tacinno-contract.log
+          grep -q 'PASS ALL: TacInno synthetic contracts' /tmp/tacinno-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -708,3 +713,12 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS InteractVLA HTML KaTeX >=8, two SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
+          check_html "/01-foundations/vla/tacinno-tactile-innovation/" 12
+          for name in tacinno-innovation-system tacinno-attention-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/tacinno-verified.svg
+            grep -q '<svg' /tmp/tacinno-verified.svg
+            grep -q '</svg>' /tmp/tacinno-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS TacInno HTML KaTeX >=12, two SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
