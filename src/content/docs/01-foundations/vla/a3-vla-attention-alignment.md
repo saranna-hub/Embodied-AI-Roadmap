@@ -228,7 +228,7 @@ python3 examples/a3_vla_attention_contract_cpu.py
 
 将抓取物料 A/B、目标工位位置、光照、背景和操作速度独立随机化。报告任务成功、错抓率、首次接触成功、人工接管率与耗时，至少按熟悉/新场景分组；保留失败录像和策略版本。不要把辅助 loss 下降当作真实成功率提升。
 
-若错抓率下降但插入卡滞不变，说明可能改善的是目标识别，不是接触控制；可再结合 [TacInno](../tacinno-tactile-innovation/) 的触觉监督思路进行独立消融。若错误主要来自时间同步、TCP 标定、相机坐标偏差，则应优先修数据和控制，而不是加注意力 loss。
+若错抓率下降但插入卡滞不变，说明可能改善的是目标识别，不是接触控制；可再结合 [TacInno](/Embodied-AI-Roadmap/01-foundations/vla/tacinno-tactile-innovation/) 的触觉监督思路进行独立消融。若错误主要来自时间同步、TCP 标定、相机坐标偏差，则应优先修数据和控制，而不是加注意力 loss。
 
 ## 8. 复现边界与下一步
 
