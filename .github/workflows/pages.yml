@@ -311,6 +311,11 @@ jobs:
           set -euo pipefail
           python3 examples/tacinno_contract_cpu.py | tee /tmp/tacinno-contract.log
           grep -q 'PASS ALL: TacInno synthetic contracts' /tmp/tacinno-contract.log
+      - name: Validate A3-VLA attention contracts
+        run: |
+          set -euo pipefail
+          python3 examples/a3_vla_attention_contract_cpu.py | tee /tmp/a3-vla-contract.log
+          grep -q 'PASS ALL: A3-VLA synthetic contracts' /tmp/a3-vla-contract.log
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload built site
@@ -722,3 +727,12 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS TacInno HTML KaTeX >=12, two SVGs, CPU contracts and baseline 8 HTML/8 SVG/favicon."
+          check_html "/01-foundations/vla/a3-vla-attention-alignment/" 10
+          for name in a3-vla-system a3-vla-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/a3-vla-verified.svg
+            grep -q '<svg' /tmp/a3-vla-verified.svg
+            grep -q '</svg>' /tmp/a3-vla-verified.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS A3-VLA HTML KaTeX and two SVG checks."
