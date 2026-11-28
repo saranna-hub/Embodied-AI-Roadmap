@@ -70,6 +70,11 @@ jobs:
           set -euo pipefail
           python3 examples/egostudy_action_scaling_cpu.py | tee /tmp/egostudy-cpu.log
           grep -q 'PASS ALL: EgoStudy independent synthetic contracts' /tmp/egostudy-cpu.log
+      - name: Validate SLA spatial representation CPU contracts
+        run: |
+          set -euo pipefail
+          python3 examples/sla_spatial_contract_cpu.py | tee /tmp/sla-spatial.log
+          grep -q 'PASS ALL: SLA independent synthetic spatial contracts' /tmp/sla-spatial.log
       - name: Audit rendered pages (blocking, site-wide)
         run: npm run validate:render
       - name: Validate executable EGO UMI synthetic pose benchmark
@@ -751,3 +756,13 @@ jobs:
             echo "PASS SVG $file"
           done
           echo "PASS EgoStudy HTML KaTeX and two SVG checks."
+          check_html "/01-foundations/vla/sla-spatial-continual-pretraining/" 12
+          for name in sla-spatial-system sla-spatial-detail; do
+            file="/diagrams/$name.svg"
+            curl --fail --location --retry 8 --retry-delay 10 --retry-all-errors \
+              --max-time 25 --silent --show-error "$ROOT$file" -o /tmp/sla-spatial.svg
+            grep -q '<svg' /tmp/sla-spatial.svg
+            grep -q '</svg>' /tmp/sla-spatial.svg
+            echo "PASS SVG $file"
+          done
+          echo "PASS SLA HTML KaTeX and two SVG checks."
